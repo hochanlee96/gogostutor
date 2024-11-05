@@ -1,0 +1,209 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 90vh;
+  width: 100vw;
+}
+
+.LeftBox {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  border-right: solid;
+  border-color: rgb(228, 228, 228);
+}
+
+.TitleBox {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px 10px;
+}
+
+.SearchBarBox {
+  padding: 10px 10px;
+}
+
+.SearchBar {
+  width: 100%;
+}
+
+.SearchBar div {
+  position: absolute;
+}
+.IconBox {
+  padding: 10px;
+}
+.InputField {
+  width: 100%;
+  padding: 10px;
+  padding-left: 35px;
+  border-radius: 20px;
+}
+
+.RoomListBox {
+  display: block;
+  overflow-y: scroll;
+}
+
+.RoomBox {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.RoomBoxCurrent {
+  background-color: azure;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.RoomBoxCurrent:hover {
+  cursor: pointer;
+}
+
+.RoomBox:hover {
+  cursor: pointer;
+}
+
+.ImageBox {
+  width: 20%;
+  padding: 10px 10px;
+}
+
+.ProfileImage {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.RoomInfoBox {
+  width: 80%;
+  padding: 10px 10px;
+}
+
+.RoomTitleBox {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.RoomLastMessageBox {
+  color: gray;
+  font-size: 15px;
+}
+
+.CenterBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 75%;
+  /* padding: 25px; */
+}
+.CurrentChatterBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10%;
+  border-bottom: solid;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-color: rgb(228, 228, 228);
+}
+
+.ChatterImageBox {
+  width: 70px;
+  padding: 10px 10px;
+}
+.ChatterImage {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.ChatterTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+.CurrentMessages {
+  overflow-y: scroll;
+  height: 83%;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.MyMessageBox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.MyMessageBox div {
+  background-color: yellow;
+
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.OthersMessageBox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.DateDelimiterBox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.OthersMessageBox div {
+  background-color: rgb(150, 150, 150);
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.MessageInputBox {
+  height: 7%;
+  padding-top: 3px;
+}
+.MessageInputBox form {
+  height: 100%;
+}
+
+.MessageInputBox input {
+  height: 100%;
+  width: 90%;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: rgb(241, 241, 241);
+}
+.MessageInputBox button {
+  height: 100%;
+  width: 10%;
+  border-width: 0;
+  border-radius: 20px;
+  background-color: rgb(116 113 150);
+  border-width: 0;
+}
+
+.RightBox {
+  background-color: Red;
+  display: block;
+  width: 25%;
+}

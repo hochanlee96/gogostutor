@@ -1,0 +1,56 @@
+.Container {
+  width: 100vw;
+  height: 100vh;
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.TitleBox {
+  text-align: center;
+  margin-top: 5%;
+}
+
+.InstructionLine {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 5%;
+}
+
+.LeftFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  gap: 30px;
+}
+
+.RightFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  gap: 30px;
+}
+
+.TextBox {
+  width: 30%;
+}
+
+.ButtonBox {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: auto;
+}
+
+.Button {
+  width: 150px;
+  border: none;
+  border-radius: 50px;
+  background-color: yellow;
+  font-size: 13px;
+  font-weight: bold;
+}

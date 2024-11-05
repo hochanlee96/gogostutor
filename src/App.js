@@ -1,24 +1,249 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, useCallback } from "react";
+import { BrowserRouter } from "react-router-dom";
+import io from "socket.io-client";
 
+import Loading from "./shared/pages/Loading";
+
+import StudentRoutes from "./Routes/Student";
+import TutorRoutes from "./Routes/Tutor";
+
+import { AuthContext } from "./shared/context/auth-context";
+import { ModeContext } from "./shared/context/mode-context";
+import { ProfileContext } from "./shared/context/profile-context";
+
+const login_duration = process.env.REACT_APP_LOGIN_DURATION;
+let logoutTimer;
 function App() {
+  // const [accessToken, setAccessToken] = useState(null);
+  // const [refreshToken, setRefreshToken] = useState(null);
+  // const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [studentMode, setStudentMode] = useState(true);
+  const [authData, setAuthData] = useState(null);
+  const [socket, setSocket] = useState(null);
+  const [profileData, setProfileData] = useState(null);
+
+  const switchMode = useCallback(() => {
+    setStudentMode((prev) => {
+      localStorage.setItem(
+        "appMode",
+        JSON.stringify({
+          studentMode: !prev,
+        })
+      );
+      return !prev;
+    });
+  }, []);
+
+  const login = useCallback((authData) => {
+    const tokenExpiryDate = new Date(
+      new Date().getTime() + 1000 * login_duration
+    );
+    // setAccessToken(authData.accessToken);
+    // setRefreshToken(authData.refreshToken);
+    // setTokenExpirationDate(tokenExpiryDate);
+    setAuthData({ ...authData, tokenExpirationData: tokenExpiryDate });
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        ...authData,
+        expiration: tokenExpiryDate.toISOString(),
+      })
+    );
+    const newSocket = io(`${process.env.REACT_APP_SOCKET_URL}`);
+    setSocket(newSocket);
+  }, []);
+
+  const verifyUser = useCallback(() => {
+    setAuthData((prev) => {
+      return { ...prev, verified: true };
+    });
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        ...authData,
+        verified: true,
+      })
+    );
+  }, [authData]);
+
+  const setApprovalStatus = useCallback(
+    (status) => {
+      setAuthData((prev) => {
+        return { ...prev, approval: status };
+      });
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          ...authData,
+          approval: status,
+        })
+      );
+    },
+    [authData]
+  );
+
+  const addProfileData = useCallback((profileData) => {
+    setProfileData(profileData);
+    localStorage.setItem("profileData", JSON.stringify(profileData));
+  }, []);
+
+  const logout = useCallback(() => {
+    setAuthData(null);
+    localStorage.removeItem("userData");
+
+    setProfileData(null);
+    localStorage.removeItem("profileData");
+  }, []);
+
+  const verifyRefreshToken = useCallback(async () => {
+    try {
+      if (authData && authData.refreshToken) {
+        const response = await fetch(
+          process.env.REACT_APP_BACKEND_URL + "/user/verify-refreshtoken",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              refreshToken: authData.refreshToken,
+            },
+          }
+        );
+        const data = await response.json(); // {userId, email, token: refreshtoken: expirationDate, message:}
+        const newAuthData = data.authData;
+        if (data.message === "new tokens generated") {
+          login(newAuthData);
+        } else if (data.message === "refresh token expired") {
+          logout();
+        }
+      }
+    } catch (err) {
+      logout();
+    }
+  }, [login, logout, authData]);
+
+  const getProfileData = useCallback(
+    async (agent) => {
+      try {
+        if (authData.accessToken) {
+          const response = await fetch(
+            process.env.REACT_APP_BACKEND_URL +
+              "/" +
+              agent +
+              "/get-profile-data",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authData.accessToken,
+              },
+            }
+          );
+          const data = await response.json();
+          const profileData = data.profileData;
+          if (data.status === 200) {
+            setProfileData(profileData);
+          } else if (data.status === 404) {
+            logout();
+          }
+        }
+      } catch (err) {
+        logout();
+      }
+    },
+    [authData, logout]
+  );
+
+  //remember mode. it could be student or tutor
+  useEffect(() => {
+    const appMode = JSON.parse(localStorage.getItem("appMode"));
+    if (appMode) {
+      if (appMode.studentMode) {
+        setStudentMode(true);
+      } else setStudentMode(false);
+    } else {
+      setStudentMode(true);
+    }
+  }, []);
+
+  //auto logout when token is expired
+  useEffect(() => {
+    if (authData && authData.accessToken && authData.tokenExpirationDate) {
+      const remainingTime =
+        authData.tokenExpirationDate.getTime() - new Date().getTime();
+      logoutTimer = setTimeout(verifyRefreshToken, remainingTime); // instead of logout, send refresh token request
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  }, [authData, logout, verifyRefreshToken]);
+
+  //auto login when page refresh
+  useEffect(() => {
+    setIsLoading(true);
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const profileData = JSON.parse(localStorage.getItem("profileData"));
+    if (
+      userData &&
+      userData.accessToken &&
+      new Date(userData.expiration) > new Date()
+    ) {
+      login(userData);
+    }
+    if (profileData) {
+      addProfileData(profileData);
+    }
+    setIsLoading(false);
+  }, [login, addProfileData]);
+
+  let routes;
+  if (isLoading) {
+    routes = <Loading />;
+  } else if (studentMode) {
+    routes = <StudentRoutes isSignedIn={!!authData} />;
+  } else {
+    routes = <TutorRoutes isSignedIn={!!authData} />;
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ModeContext.Provider
+      value={{
+        studentMode: studentMode,
+        switchMode: switchMode,
+      }}
+    >
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: !!authData,
+          accessToken:
+            authData && authData.accessToken ? authData.accessToken : null,
+          refreshToken:
+            authData && authData.refreshToken ? authData.refreshToken : null,
+          userId: authData && authData.userId ? authData.userId : null,
+          email: authData && authData.email ? authData.email : null,
+          verified: authData && authData.verified ? authData.verified : false,
+          approval: authData && authData.approval ? authData.approval : false,
+          socket: socket,
+          // firstName: profileData.firstName,
+          // lastName: profileData.lastName,
+          // profileImage: profileData.profileImage,
+          login: login,
+          logout: logout,
+          verifyRefreshToken: verifyRefreshToken,
+          verifyUser: verifyUser,
+          setApprovalStatus: setApprovalStatus,
+          // getProfileData: getProfileData,
+        }}
+      >
+        <ProfileContext.Provider
+          value={{
+            profileData: profileData,
+            setProfileData: addProfileData,
+            getProfileData: getProfileData,
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <BrowserRouter>{routes}</BrowserRouter>
+        </ProfileContext.Provider>
+      </AuthContext.Provider>
+    </ModeContext.Provider>
   );
 }
 

@@ -1,0 +1,140 @@
+@media (min-width: 333px) {
+  .Container {
+    width: 100vw;
+    height: auto;
+    background-color: rgb(235, 229, 220);
+
+    padding-top: 100px;
+    padding-bottom: 200px;
+  }
+  .LoginBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 10%;
+    border-radius: 10px;
+
+    width: 400px;
+    height: auto;
+  }
+
+  .Title {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5%;
+    margin-left: 18%;
+  }
+  .Logo {
+    width: 50px;
+    height: auto;
+  }
+
+  .FormBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    row-gap: 0.5rem;
+    width: 90%;
+    margin-top: 5%;
+  }
+
+  .Button {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    border-width: 1px;
+    background-color: black;
+    color: white;
+    margin-top: 5%;
+  }
+
+  .SocialLoginBox {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .SocialLoginItem {
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border-color: rgb(235, 229, 220);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 13px;
+    padding-left: 10px;
+  }
+
+  .SocialLoginItem:hover {
+    background-color: rgb(218, 216, 216);
+  }
+
+  .SocialLogo {
+    height: 20px;
+    width: auto;
+  }
+
+  .RedirectLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    width: 75%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  .RedirectMessage {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+  }
+
+  .RedirectLink {
+    background: black;
+    border-color: black;
+    border-radius: 5px;
+    border-width: 1px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+  }
+
+  .ErrorMessage {
+    display: block;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 26px;
+    font-size: 13px;
+    padding-left: 10px;
+    color: red;
+    margin-bottom: 10px;
+  }
+  .SuccessMessage {
+    display: block;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 26px;
+    font-size: 13px;
+    padding-left: 10px;
+    color: green;
+    margin-bottom: 3px;
+  }
+}

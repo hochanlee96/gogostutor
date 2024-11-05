@@ -1,0 +1,56 @@
+.Container {
+  width: 25%;
+  margin-left: 5%;
+  margin-top: 3%;
+  margin-right: auto;
+  border-color: rgb(213, 208, 208);
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.SubjectType {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.SubjectContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* gap: 80px; */
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.SubjectBox {
+  width: 30%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.SubjectIcon {
+  width: 40px;
+  height: auto;
+}
+
+.EmptySubjectIcon {
+  width: 40px;
+  height: auto;
+}
+
+.SubjectName {
+  font-size: 0.8rem;
+  margin-top: 5%;
+  font-weight: bold;
+}
+
+.MoreButton {
+  border: none;
+  background-color: yellow;
+  border-radius: 15px;
+  width: 100px;
+  height: 40px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

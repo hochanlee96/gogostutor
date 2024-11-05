@@ -1,0 +1,165 @@
+/* .MainContainer {
+  width: 100vw;
+  height: 70vh;
+  align-items: center;
+  background-color: rgb(236, 208, 169);
+  display: flex;
+  flex-direction: row;
+}
+
+.ContentBox {
+  height: 100%;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding-top: 0%;
+  background-color: rgb(236, 208, 169);
+}
+
+.TextContent {
+  background-color: rgb(236, 208, 169);
+  padding-top: 2%;
+  width: 50%;
+  height: 60%;
+  display: inline-block;
+}
+
+.IntroText {
+  margin-top: 10%;
+  margin-bottom: 5%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+}
+
+.ImageBox {
+  width: 420px;
+  height: auto;
+  display: inline-block;
+}
+
+.Button {
+  width: 50%;
+  margin-top: 5%;
+  margin-left: 25%;
+  margin-right: 25%;
+  border-radius: 3px;
+  border-width: 1px;
+  background: yellow;
+  padding: 2%;
+  border-radius: 15px;
+  color: black;
+  font-weight: bold;
+} */
+
+@media (min-width: 333px) {
+  .MainContainer {
+    width: 100vw;
+    height: auto;
+    align-items: center;
+    background-color: rgb(236, 208, 169);
+  }
+
+  .ContentBox {
+    width: 80%;
+    height: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-top: 0%;
+    background-color: rgb(236, 208, 169);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .TextContent {
+    background-color: rgb(236, 208, 169);
+    padding-top: 2%;
+    width: 400px;
+    height: auto;
+    display: inline-block;
+  }
+
+  .IntroText {
+    margin-top: 10%;
+    margin-bottom: 5%;
+    font-size: 25px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+  }
+
+  .ImageBox {
+    width: 400px;
+    height: auto;
+    display: inline-block;
+  }
+
+  .Button {
+    width: 130px;
+    height: auto;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+
+    border-radius: 3px;
+    border-width: 1px;
+    background: yellow;
+    padding: 8px;
+    border-radius: 15px;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .MainContainer {
+    width: 100vw;
+    height: auto;
+    align-items: center;
+    background-color: rgb(236, 208, 169);
+  }
+
+  .ContentBox {
+    width: 80%;
+    height: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-top: 0%;
+    background-color: rgb(236, 208, 169);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .TextContent {
+    background-color: rgb(236, 208, 169);
+    width: 400px;
+    height: auto;
+    display: inline-block;
+  }
+
+  .IntroText {
+    margin-top: -10%;
+    margin-bottom: 10%;
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+  }
+
+  .ImageBox {
+    width: 400px;
+    height: auto;
+    display: inline-block;
+  }
+}

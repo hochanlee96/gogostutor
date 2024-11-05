@@ -1,0 +1,23 @@
+.VideoContainer video-player-container {
+  width: 100%;
+  height: auto;
+}
+
+.VideoContainer video-player {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
+
+.VideoContainer #my-screen-share-content-video {
+  width: 100%;
+  height: auto;
+}
+.VideoContainer #my-screen-share-content-canvas {
+  width: 100%;
+  height: auto;
+}
+.VideoContainer #users-screen-share-content-canvas {
+  width: 100%;
+  height: auto;
+}

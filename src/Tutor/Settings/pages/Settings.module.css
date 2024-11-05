@@ -1,0 +1,70 @@
+.Container {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.AccountBox {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.ImageWrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.ButtonImage {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  line-height: 90px;
+  text-align: center;
+}
+.UserIcon {
+  width: 100px;
+  height: 100px;
+  object-fit: over;
+  border-radius: 50%;
+}
+
+input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+}
+input[type="file"]:hover {
+  cursor: pointer;
+}
+
+.AccountInfoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.SettingsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.SettingsRow {
+  display: flex;
+  flex-direction: row;
+}

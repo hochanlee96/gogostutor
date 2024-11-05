@@ -1,0 +1,22 @@
+.Container {
+  padding-top: 57px;
+  padding-left: 111px;
+  padding-bottom: 57px;
+  position: relative;
+}
+
+.JoinButton {
+  position: absolute;
+  top: 533px;
+  left: 850px;
+  /* padding: 20px 40px; */
+  background-color: #0068ff;
+  color: white;
+  border-radius: 50px;
+  border-style: none;
+  font-size: 24px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 207px;
+  height: 64px;
+}
