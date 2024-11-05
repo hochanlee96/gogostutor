@@ -1,18 +1,31 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 import ActionsModal from "./ActionsModal";
 
 import classes from "./AuthComponents.module.css";
 
+import { AuthContext } from "../../../context/auth-context";
 import { ProfileContext } from "../../../context/profile-context";
 
 const AuthComponents = ({ isLoggedIn, verified }) => {
   const [newMessage, setNewMessage] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const socket = useContext(AuthContext).socket;
   const profile = useContext(ProfileContext).profileData;
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("message", (chatData) => {
+        if (location.pathname !== "/messages") {
+          setNewMessage(true);
+        }
+      });
+    }
+  }, [socket, location.pathname]);
+
   let contents = null;
   if (isLoggedIn) {
     contents = (
