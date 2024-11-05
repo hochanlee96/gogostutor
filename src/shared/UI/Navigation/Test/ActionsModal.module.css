@@ -1,0 +1,56 @@
+.darkBG {
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.modal {
+  width: 250px;
+  height: auto;
+  background: white;
+  z-index: 10;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+  position: absolute;
+  transform: translate(-60%, 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ActionsBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.ActionButton {
+  width: 100%;
+  padding: 5px, 5px;
+}
+
+.SignoutBox {
+  border-top: solid;
+  border-color: gray;
+  padding: 5px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ActionButton:hover {
+  cursor: pointer;
+}
+
+.SignoutBox:hover {
+  cursor: pointer;
+}

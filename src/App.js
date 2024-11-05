@@ -2,46 +2,25 @@ import { useState, useEffect, useCallback } from "react";
 import { BrowserRouter } from "react-router-dom";
 import io from "socket.io-client";
 
-import Loading from "./shared/pages/Loading";
+import Loading from "./shared/UI/pages/Loading";
 
-import StudentRoutes from "./Routes/Student";
-import TutorRoutes from "./Routes/Tutor";
+import Routes from "./Routes";
 
 import { AuthContext } from "./shared/context/auth-context";
-import { ModeContext } from "./shared/context/mode-context";
 import { ProfileContext } from "./shared/context/profile-context";
 
 const login_duration = process.env.REACT_APP_LOGIN_DURATION;
 let logoutTimer;
 function App() {
-  // const [accessToken, setAccessToken] = useState(null);
-  // const [refreshToken, setRefreshToken] = useState(null);
-  // const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [studentMode, setStudentMode] = useState(true);
   const [authData, setAuthData] = useState(null);
   const [socket, setSocket] = useState(null);
   const [profileData, setProfileData] = useState(null);
-
-  const switchMode = useCallback(() => {
-    setStudentMode((prev) => {
-      localStorage.setItem(
-        "appMode",
-        JSON.stringify({
-          studentMode: !prev,
-        })
-      );
-      return !prev;
-    });
-  }, []);
 
   const login = useCallback((authData) => {
     const tokenExpiryDate = new Date(
       new Date().getTime() + 1000 * login_duration
     );
-    // setAccessToken(authData.accessToken);
-    // setRefreshToken(authData.refreshToken);
-    // setTokenExpirationDate(tokenExpiryDate);
     setAuthData({ ...authData, tokenExpirationData: tokenExpiryDate });
     localStorage.setItem(
       "userData",
@@ -154,18 +133,6 @@ function App() {
     [authData, logout]
   );
 
-  //remember mode. it could be student or tutor
-  useEffect(() => {
-    const appMode = JSON.parse(localStorage.getItem("appMode"));
-    if (appMode) {
-      if (appMode.studentMode) {
-        setStudentMode(true);
-      } else setStudentMode(false);
-    } else {
-      setStudentMode(true);
-    }
-  }, []);
-
   //auto logout when token is expired
   useEffect(() => {
     if (authData && authData.accessToken && authData.tokenExpirationDate) {
@@ -198,52 +165,40 @@ function App() {
   let routes;
   if (isLoading) {
     routes = <Loading />;
-  } else if (studentMode) {
-    routes = <StudentRoutes isSignedIn={!!authData} />;
   } else {
-    routes = <TutorRoutes isSignedIn={!!authData} />;
+    routes = <Routes isSignedIn={!!authData} />;
   }
   return (
-    <ModeContext.Provider
+    <AuthContext.Provider
       value={{
-        studentMode: studentMode,
-        switchMode: switchMode,
+        isLoggedIn: !!authData,
+        accessToken:
+          authData && authData.accessToken ? authData.accessToken : null,
+        refreshToken:
+          authData && authData.refreshToken ? authData.refreshToken : null,
+        userId: authData && authData.userId ? authData.userId : null,
+        email: authData && authData.email ? authData.email : null,
+        verified: authData && authData.verified ? authData.verified : false,
+        approval: authData && authData.approval ? authData.approval : false,
+        socket: socket,
+
+        login: login,
+        logout: logout,
+        verifyRefreshToken: verifyRefreshToken,
+        verifyUser: verifyUser,
+        setApprovalStatus: setApprovalStatus,
       }}
     >
-      <AuthContext.Provider
+      <ProfileContext.Provider
         value={{
-          isLoggedIn: !!authData,
-          accessToken:
-            authData && authData.accessToken ? authData.accessToken : null,
-          refreshToken:
-            authData && authData.refreshToken ? authData.refreshToken : null,
-          userId: authData && authData.userId ? authData.userId : null,
-          email: authData && authData.email ? authData.email : null,
-          verified: authData && authData.verified ? authData.verified : false,
-          approval: authData && authData.approval ? authData.approval : false,
-          socket: socket,
-          // firstName: profileData.firstName,
-          // lastName: profileData.lastName,
-          // profileImage: profileData.profileImage,
-          login: login,
-          logout: logout,
-          verifyRefreshToken: verifyRefreshToken,
-          verifyUser: verifyUser,
-          setApprovalStatus: setApprovalStatus,
-          // getProfileData: getProfileData,
+          profileData: profileData,
+          setProfileData: addProfileData,
+          getProfileData: getProfileData,
         }}
       >
-        <ProfileContext.Provider
-          value={{
-            profileData: profileData,
-            setProfileData: addProfileData,
-            getProfileData: getProfileData,
-          }}
-        >
-          <BrowserRouter>{routes}</BrowserRouter>
-        </ProfileContext.Provider>
-      </AuthContext.Provider>
-    </ModeContext.Provider>
+        <BrowserRouter>{routes}</BrowserRouter>
+      </ProfileContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
