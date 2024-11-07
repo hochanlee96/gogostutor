@@ -24,14 +24,22 @@ const InZoomContainer = () => {
         userVideo.id = "tutor";
         document.querySelector("video-player-container").appendChild(userVideo);
 
+        const label = document.createElement("label");
+        label.htmlFor = "tutor";
+        label.textContent = "Tutor Camera";
+        label.id = "tutor-label";
+        document.querySelector("video-player-container").appendChild(label);
+
         setVideoStarted(true);
       } else {
         await stream.stopVideo();
         stream.detachVideo(client.getCurrentUserInfo().userId);
         //destroy child element
         let videoElement = document.getElementById("tutor");
+        let labelElement = document.getElementById("tutor-label");
         // videoElement.parentNode.removeChild(videoElement);
         videoElement.remove();
+        labelElement.remove();
 
         setVideoStarted(false);
       }
@@ -90,12 +98,19 @@ const InZoomContainer = () => {
         console.log("CU: ", client.getAllUser());
         let userVideo = await stream.attachVideo(event.userId, 3);
         userVideo.id = "student";
-        console.log("user video after attach: ", userVideo);
         document.querySelector("video-player-container").appendChild(userVideo);
+
+        const label = document.createElement("label");
+        label.htmlFor = "student";
+        label.textContent = "Student Camera";
+        label.id = "student-label";
+        document.querySelector("video-player-container").appendChild(label);
       } else if (event.action === "Stop") {
         let videoElement = document.getElementById("student");
-        console.log("ve", videoElement);
+        let labelElement = document.getElementById("student-label");
+
         videoElement.remove();
+        labelElement.remove();
         await stream.detachVideo(event.userId);
       }
     });
