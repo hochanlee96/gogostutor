@@ -101,16 +101,16 @@ const Profile = () => {
       />
       <label>About Me</label>
       <textarea value={profileForm.about} name="about" disabled={!isEditMode} />
-      <label>Work Experience</label>
-      <textarea
-        value={profileForm.experience}
-        name="experience"
-        disabled={!isEditMode}
-      />
       <label>Education</label>
       <textarea
         value={profileForm.education}
         name="education"
+        disabled={!isEditMode}
+      />
+      <label>Tutor Experience</label>
+      <textarea
+        value={profileForm.experience}
+        name="experience"
         disabled={!isEditMode}
       />
     </>

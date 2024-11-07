@@ -20,6 +20,7 @@ import Settings from "./Pages/Settings/containers/Settings";
 // import Test from "../Tutor/Test/pages/Test";
 import Test from "./Pages/Zoom/containers/ZoomTest";
 import Verify from "./Pages/Test/containers/Test";
+import AccountSettingsTest from "./Pages/Settings/Test/containers/AccountSettings";
 
 const TutorRoutes = ({ isSignedIn }) => {
   let routes;
@@ -38,6 +39,11 @@ const TutorRoutes = ({ isSignedIn }) => {
         <Route exact path="/messages" element={<Chatting />} />
         <Route exact path="/test/:sessionId" element={<Test />} />
         <Route exact path="/test" element={<Verify />} />
+        <Route
+          exact
+          path="/account-settings-test"
+          element={<AccountSettingsTest />}
+        />
         <Route path="/*" element={<Navigate replace to="/" />} />
       </Routes>
     );

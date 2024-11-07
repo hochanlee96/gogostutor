@@ -35,7 +35,6 @@ const PreZoomContainer = () => {
       );
     }
   }, [currentDevices.camera]);
-  console.log("DD", devices);
   const stopPreviewVideo = () => {
     if (currentDevices.camera) {
       videoInputTrack.current.stop();
@@ -155,13 +154,14 @@ const PreZoomContainer = () => {
   const cameraDeviceSelectHandler = async (event) => {
     changeDevice("camera", event.target.value);
 
-    videoInputTrack.stop();
-    videoInputTrack.switchCamera(event.target.value);
+    videoInputTrack.current = ZoomVideo.createLocalVideoTrack(
+      event.target.value
+    );
   };
   const speakerDeviceSelectHandler = async (event) => {
     changeDevice("speaker", event.target.value);
 
-    const localAudioOutputTrack = ZoomVideo.createLocalAudioTrack(
+    const localAudioOutputTrack = ZoomVideo.createLocalVideoTrack(
       event.target.value
     );
     setTracks((prev) => {
@@ -231,7 +231,6 @@ const PreZoomContainer = () => {
         ) : (
           <button
             onClick={() => {
-              console.log("UUUUU", client.getAllUser());
               setVideoStarted(true);
             }}
           >

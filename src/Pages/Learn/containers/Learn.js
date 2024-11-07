@@ -136,6 +136,7 @@ const Learn = () => {
 
   const getDevices = useCallback(async () => {
     const deviceList = await ZoomVideo.getDevices();
+
     let camId, micId, spkId;
     let cameraDevices, microphoneDevices, speakerDevices;
 
@@ -146,6 +147,7 @@ const Learn = () => {
       if (cameraDevices && cameraDevices.length > 0) {
         camId = cameraDevices[0].deviceId;
       }
+      console.log("cam deviceList: " + cameraDevices);
       microphoneDevices = deviceList.filter((device) => {
         return device.kind === "audioinput";
       });

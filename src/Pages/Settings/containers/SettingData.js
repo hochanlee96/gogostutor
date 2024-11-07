@@ -13,7 +13,7 @@ const SettingData1 = [
   },
   {
     iconName: "MdVpnKey",
-    title: "Login Methods",
+    title: "Login Method",
     description: "Manage your login methods",
     link: "/",
   },
