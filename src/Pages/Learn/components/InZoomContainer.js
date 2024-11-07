@@ -5,7 +5,7 @@ import ZoomContext from "../context/zoom-context";
 import classes from "./InZoomContainer.module.css";
 
 const InZoomContainer = () => {
-  const { client, stream, joinConfig, endZoomSession } =
+  const { client, stream, joinConfig, endZoomSession, currentDevices } =
     useContext(ZoomContext);
   const [videoStarted, setVideoStarted] = useState(false);
   const [audioStarted, setAudioStarted] = useState(false);
@@ -16,19 +16,28 @@ const InZoomContainer = () => {
   const startVideoButton = useCallback(async () => {
     try {
       if (!videoStarted) {
-        await stream.startVideo();
+        await stream.startVideo({
+          cameraId: currentDevices.camera,
+          virtualBackground: {
+            imageUrl:
+              // "https://media.istockphoto.com/id/1316043925/ko/%EB%B2%A1%ED%84%B0/%EC%9D%B8%EC%87%84%ED%95%98%EB%8B%A4.jpg?s=612x612&w=0&k=20&c=JTKSTxRcGJn9Ic8uFP4rFaiK7KzdPTqH6RVl4pjv22E=",
+              "blur",
+          },
+        });
         let userVideo = await stream.attachVideo(
           client.getCurrentUserInfo().userId,
           { fullHd: true }
         );
-        userVideo.id = "tutor";
-        document.querySelector("video-player-container").appendChild(userVideo);
 
         const label = document.createElement("label");
         label.htmlFor = "tutor";
         label.textContent = "Tutor Camera";
         label.id = "tutor-label";
+        label.className = classes.VideoLabel;
+
         document.querySelector("video-player-container").appendChild(label);
+        userVideo.id = "tutor";
+        document.querySelector("video-player-container").appendChild(userVideo);
 
         setVideoStarted(true);
       } else {
@@ -37,7 +46,7 @@ const InZoomContainer = () => {
         //destroy child element
         let videoElement = document.getElementById("tutor");
         let labelElement = document.getElementById("tutor-label");
-        // videoElement.parentNode.removeChild(videoElement);
+
         videoElement.remove();
         labelElement.remove();
 
@@ -46,7 +55,7 @@ const InZoomContainer = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [stream, videoStarted, client]);
+  }, [stream, videoStarted, client, currentDevices.camera]);
 
   const startAudioButton = useCallback(async () => {
     try {
@@ -95,16 +104,15 @@ const InZoomContainer = () => {
     client.on("peer-video-state-change", async (event) => {
       console.log("changed state: ", event);
       if (event.action === "Start") {
-        console.log("CU: ", client.getAllUser());
-        let userVideo = await stream.attachVideo(event.userId, 3);
-        userVideo.id = "student";
-        document.querySelector("video-player-container").appendChild(userVideo);
-
         const label = document.createElement("label");
         label.htmlFor = "student";
         label.textContent = "Student Camera";
         label.id = "student-label";
+        label.className = classes.VideoLabel;
         document.querySelector("video-player-container").appendChild(label);
+        let userVideo = await stream.attachVideo(event.userId, 3);
+        userVideo.id = "student";
+        document.querySelector("video-player-container").appendChild(userVideo);
       } else if (event.action === "Stop") {
         let videoElement = document.getElementById("student");
         let labelElement = document.getElementById("student-label");
@@ -139,11 +147,26 @@ const InZoomContainer = () => {
 
   const initVideoAudio = useCallback(async () => {
     if (!joinConfig.videoOff) {
-      await stream.startVideo();
+      await stream.startVideo({
+        cameraId: currentDevices.camera,
+        virtualBackground: {
+          imageUrl:
+            // "https://media.istockphoto.com/id/1316043925/ko/%EB%B2%A1%ED%84%B0/%EC%9D%B8%EC%87%84%ED%95%98%EB%8B%A4.jpg?s=612x612&w=0&k=20&c=JTKSTxRcGJn9Ic8uFP4rFaiK7KzdPTqH6RVl4pjv22E=",
+            "blur",
+        },
+      });
       let userVideo = await stream.attachVideo(
         client.getCurrentUserInfo().userId,
         { fullHd: true }
       );
+
+      const label = document.createElement("label");
+      label.htmlFor = "tutor";
+      label.textContent = "Tutor Camera";
+      label.id = "tutor-label";
+      label.className = classes.VideoLabel;
+
+      document.querySelector("video-player-container").appendChild(label);
       userVideo.id = "tutor";
       console.log("userVideo: ", userVideo);
       document.querySelector("video-player-container").appendChild(userVideo);
@@ -163,6 +186,13 @@ const InZoomContainer = () => {
           );
         }
         if (user.bVideoOn) {
+          const label = document.createElement("label");
+          label.htmlFor = "student";
+          label.textContent = "Student Camera";
+          label.id = "student-label";
+          label.className = classes.VideoLabel;
+          document.querySelector("video-player-container").appendChild(label);
+
           const userVideo = await stream.attachVideo(user.userId, 3);
           userVideo.id = "student";
           document
@@ -172,7 +202,7 @@ const InZoomContainer = () => {
       }
     });
     setLoadedVideoContents(true);
-  }, [client, joinConfig, stream]);
+  }, [client, joinConfig, stream, currentDevices.camera]);
   //Initial self video,audio loading
   useEffect(() => {
     if (!loadedVideoContents) {

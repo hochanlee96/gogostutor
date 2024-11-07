@@ -161,7 +161,7 @@ const PreZoomContainer = () => {
   const speakerDeviceSelectHandler = async (event) => {
     changeDevice("speaker", event.target.value);
 
-    const localAudioOutputTrack = ZoomVideo.createLocalVideoTrack(
+    const localAudioOutputTrack = ZoomVideo.createLocalAudioTrack(
       event.target.value
     );
     setTracks((prev) => {

@@ -1,11 +1,15 @@
 .VideoContainer video-player-container {
   width: 50%;
   height: auto;
+  display: flex !important;
+  flex-wrap: wrap;
+  align-content: baseline;
 }
 
 .VideoContainer video-player {
   width: 100%;
   height: auto;
+  flex: 0 0 50%;
   aspect-ratio: 16/9;
 }
 
@@ -20,4 +24,10 @@
 .VideoContainer #users-screen-share-content-canvas {
   width: 100%;
   height: auto;
+}
+
+.VideoLabel {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
 }
