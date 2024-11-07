@@ -76,23 +76,29 @@ const Signup = () => {
 
   const emailValidateHandler = async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL +
-          "/tutor/validate-email/" +
-          emailInput,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const isEmail = validator.isEmail(emailInput);
+      console.log("isEmail? ", isEmail);
+      if (isEmail) {
+        const response = await fetch(
+          process.env.REACT_APP_BACKEND_URL +
+            "/tutor/validate-email/" +
+            emailInput,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        console.log(data.message);
+        if (data.status === 200) {
+          setEmailValidity("valid");
+        } else if (data.status === 403) {
+          setEmailValidity("invalid");
         }
-      );
-      const data = await response.json();
-      console.log(data.message);
-      if (data.status === 200) {
-        setEmailValidity("valid");
-      } else if (data.status === 403) {
-        setEmailValidity("invalid");
+      } else {
+        setEmailValidity("wrong format");
       }
     } catch (err) {
       console.log(err);
@@ -172,6 +178,10 @@ const Signup = () => {
             <div className={classes.SuccessMessage}>
               This email is available
             </div>
+          ) : emailValidity === "wrong format" ? (
+            <div className={classes.ErrorMessage}>
+              Please provide a proper email format
+            </div>
           ) : null}
           <Input
             title="Password"
@@ -247,7 +257,7 @@ const Signup = () => {
           <button
             className={classes.RedirectLink}
             onClick={() => {
-              navigate("/tutor/login");
+              navigate("/login");
             }}
           >
             Log in here

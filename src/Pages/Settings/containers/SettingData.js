@@ -3,13 +3,13 @@ const SettingData1 = [
     iconName: "MdFace",
     title: "Tutor Profile",
     description: "Share your tutor experiences and skillsets",
-    link: "/tutor/profile",
+    link: "/profile",
   },
   {
     iconName: "MdAccountCircle",
     title: "Account",
     description: "Enter your personal details and tell us how to reach you",
-    link: "/tutor/profile",
+    link: "/profile",
   },
   {
     iconName: "MdVpnKey",

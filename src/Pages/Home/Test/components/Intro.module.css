@@ -1,22 +1,35 @@
 .Container {
-  padding-top: 57px;
-  padding-left: 111px;
-  padding-bottom: 57px;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  height: 80vh;
+  margin-bottom: 5%;
+}
+
+.TitleImageBox {
   position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.TitleImage {
+  width: 100%;
+  height: 100%;
 }
 
 .JoinButton {
   position: absolute;
-  top: 533px;
-  left: 850px;
-  /* padding: 20px 40px; */
+  top: 53%;
+  left: 45%;
+
   background-color: #0068ff;
   color: white;
   border-radius: 50px;
   border-style: none;
-  font-size: 24px;
+  font-size: 1.6rem;
   font-weight: 500;
   cursor: pointer;
-  width: 207px;
-  height: 64px;
+  width: 14%;
+  height: 8%;
 }

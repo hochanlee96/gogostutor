@@ -8,15 +8,17 @@ const Intro = () => {
   const navigate = useNavigate();
   return (
     <div className={classes.Container}>
-      <img src={TitleImage} alt="" />
-      <button
-        className={classes.JoinButton}
-        onClick={() => {
-          navigate("/tutor/signup");
-        }}
-      >
-        Join Gogos
-      </button>
+      <div className={classes.TitleImageBox}>
+        <img className={classes.TitleImage} src={TitleImage} alt="" />
+        <button
+          className={classes.JoinButton}
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          Join Gogos
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import NavLinks from "./NavLinksTest";
 import AuthComponents from "./AuthComponents";
 
@@ -10,16 +11,21 @@ import LogoImage from "./assets/GogosEdu_icon_text_logo.svg";
 
 const NavigationTest = () => {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <header className={classes.MainHeader}>
       <div className={classes.HeaderRows}>
         <div className={classes.TopRow}>
-          <img
-            className={classes.Logo}
-            src={LogoImage}
-            alt=""
-            // onClick={homeButtonClickedHandler}
-          />
+          <div className={classes.LogoBox}>
+            <img
+              className={classes.Logo}
+              src={LogoImage}
+              alt=""
+              onClick={() => {
+                navigate("/");
+              }}
+            />
+          </div>
           <div className={classes.SearchBarBox}>
             <input type="text" placeholder="Tutoring reinvented" />
             {/* <img className={classes.SearchButton} src={SearchButton} alt="" /> */}

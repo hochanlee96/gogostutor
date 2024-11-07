@@ -132,7 +132,7 @@ const Login = () => {
           <button
             className={classes.RedirectLink}
             onClick={() => {
-              navigate("/tutor/signup");
+              navigate("/signup");
             }}
           >
             Sign up here

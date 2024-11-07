@@ -1,17 +1,12 @@
 .MainHeader {
   width: 100%;
   height: 150px;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
   position: sticky;
   top: 0;
   left: 0;
   background: white;
-  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.26); */
   border-width: 1px;
   border-bottom-style: solid;
-  padding: 0 1rem;
   z-index: 2;
   box-sizing: border-box;
   border-color: #e5e2e2;
@@ -21,9 +16,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  /* padding-left: 154px;
-  padding-right: 154px; */
+  width: 90%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
   padding-top: 36px;
 }
 
@@ -31,17 +27,30 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-around;
+  height: 70px;
+  /* gap: 10%; */
   width: 100%;
 }
 
-.Logo {
+.LogoBox {
   width: 232px;
+  /* width: 15%; */
+  height: auto;
+}
+.Logo {
+  /* width: 232px; */
+  width: 100%;
+
   height: auto;
 }
 
+.Logo:hover {
+  cursor: pointer;
+}
+
 .SearchBarBox {
-  margin-left: 77px;
-  margin-right: 77px;
+  width: 60%;
 }
 
 .SearchBarBox input {
@@ -50,7 +59,8 @@
   border-radius: 30px;
   padding: 12px 60px;
   color: #9e9595;
-  width: 800px;
+
+  width: 100%;
   height: 60px;
   font-size: 20px;
   background-image: url("./assets/Search.svg");
@@ -64,7 +74,12 @@
 } */
 
 .AuthComponents {
-  width: 100%;
+  width: 15%;
+}
+
+.AuthComponents div:hover,
+.Authcomponents li:hover {
+  cursor: pointer;
 }
 
 .BottomRow {

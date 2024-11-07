@@ -1,0 +1,57 @@
+.container {
+  padding: 2rem;
+  background-color: #f9fafb;
+}
+
+.banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bannerImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.bannerText {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(
+    30,
+    42,
+    71,
+    0.9
+  ); /* Semi-transparent blue background */
+  padding: 1rem 2rem;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ff6263; /* Accent color for subtitle */
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.description {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.learnMore {
+  color: #3b82f6;
+  font-weight: bold;
+  text-decoration: none;
+}

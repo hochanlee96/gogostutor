@@ -1,0 +1,68 @@
+.container {
+  padding: 2rem;
+  background-color: #f9fafb;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #ff6f61;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.instructions {
+  max-width: 400px;
+}
+
+.step {
+  margin-bottom: 1.5rem;
+}
+
+.stepTitle {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.stepText {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.joinButton {
+  background-color: #000;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.imageSection {
+  flex-shrink: 0;
+}
+
+.image {
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+}
