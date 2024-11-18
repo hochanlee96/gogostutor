@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { ProfileContext } from "../../../shared/context/profile-context";
 
+import {
+  API_ApplyForApproval,
+  API_GetProfileImageFromCloudinary,
+} from "../../../API";
+
 import classes from "./Dashboard.module.css";
 
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
@@ -21,19 +26,15 @@ const Dashboard = () => {
 
   const profile = useContext(ProfileContext);
   const profileData = profile.profileData;
+  const [profileImage, setProfileImage] = useState(null);
 
   const navigate = useNavigate();
 
   const applyForApproval = async () => {
-    const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/tutor/apply-for-approval",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-      }
+    const response = await API_ApplyForApproval(
+      auth.id,
+      { approval: "pending" },
+      auth.accessToken
     );
     const data = await response.json();
     if (data.status === 200) {
@@ -43,29 +44,22 @@ const Dashboard = () => {
     }
   };
 
-  const fetchTutorData = useCallback(async () => {
-    const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/tutor/get-profile-data",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-      }
-    );
-    const tutorData = await response.json();
-    if (tutorData.status === 200) {
-      profile.setProfileData(tutorData.profileData);
-    } else {
-      console.log(tutorData.message);
+  useEffect(() => {
+    if (profileData) {
+      setIsLoading(false);
     }
-  }, [auth.accessToken, profile]);
+  }, [profileData]);
+
+  const getProfileImageFromCloudinary = useCallback(async (imageURL) => {
+    const image = await API_GetProfileImageFromCloudinary(imageURL);
+    setProfileImage(image);
+  }, []);
 
   useEffect(() => {
-    fetchTutorData();
-    setIsLoading(false);
-  }, [fetchTutorData]);
+    if (profileData.imageURL) {
+      getProfileImageFromCloudinary(profileData.imageURL);
+    }
+  }, [getProfileImageFromCloudinary, profileData.imageURL]);
 
   let contents;
   if (isLoading) {
@@ -135,12 +129,8 @@ const Dashboard = () => {
       ) : (
         <div className={classes.ContentsBox}>
           <div className={classes.LeftContent}>
-            {profileData && profileData.imageURL ? (
-              <img
-                className={classes.UserIcon}
-                src={profileData.imageURL}
-                alt="/"
-              />
+            {profileImage ? (
+              <img className={classes.UserIcon} src={profileImage} alt="/" />
             ) : (
               <img className={classes.UserIcon} src={emptyUserImage} alt="/" />
             )}

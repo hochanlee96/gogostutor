@@ -1,6 +1,6 @@
 const SessionInfoContainer = ({ sessionInfo }) => {
-  const { subjectId, tutorId, studentId } = sessionInfo;
   console.log("session info: ", sessionInfo);
+  const { subjectId, tutorId, studentId } = sessionInfo;
   return (
     <div>
       <h1>{"course title: " + subjectId.title}</h1>

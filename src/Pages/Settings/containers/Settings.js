@@ -1,8 +1,13 @@
-import { useContext } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import SettingBox from "../components/SettingBox";
 
 import { AuthContext } from "../../../shared/context/auth-context";
 import { ProfileContext } from "../../../shared/context/profile-context";
+
+import {
+  API_UpdateProfileImage,
+  API_GetProfileImageFromCloudinary,
+} from "../../../API";
 
 import classes from "./Settings.module.css";
 import { SettingData1, SettingData2 } from "./SettingData";
@@ -12,10 +17,11 @@ const Settings = () => {
   const auth = useContext(AuthContext);
   const profile = useContext(ProfileContext);
   const profileData = profile.profileData;
+  const [profileImage, setProfileImage] = useState(null);
 
   const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
   const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
-  const handleFileUpload = async (event) => {
+  const updateProfileImage = async (event) => {
     try {
       const file = event.target.files[0];
       const formData = new FormData();
@@ -33,21 +39,15 @@ const Settings = () => {
       );
       if (cloudResponse.ok) {
         const cloudData = await cloudResponse.json();
-        const updateData = { imageURL: cloudData.secure_url };
-        const response = await fetch(
-          process.env.REACT_APP_BACKEND_URL + "/tutor/update-profile",
-          {
-            method: "POST",
-            body: JSON.stringify({ profileData: updateData }),
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + auth.accessToken,
-            },
-          }
+        const imageURL = cloudData.secure_url;
+        const response = await API_UpdateProfileImage(
+          auth.id,
+          imageURL,
+          auth.accessToken
         );
         const data = await response.json();
         if (data.status === 200) {
-          profile.getProfileData("tutor");
+          profile.getProfileData();
 
           //delete previous profile image if successfully uploaded
         } else {
@@ -63,26 +63,33 @@ const Settings = () => {
     }
   };
 
+  const getProfileImageFromCloudinary = useCallback(async (imageURL) => {
+    const image = await API_GetProfileImageFromCloudinary(imageURL);
+    setProfileImage(image);
+  }, []);
+
+  useEffect(() => {
+    if (profileData.imageURL) {
+      getProfileImageFromCloudinary(profileData.imageURL);
+    }
+  }, [getProfileImageFromCloudinary, profileData.imageURL]);
+
   return (
     <div className={classes.Container}>
       <div className={classes.AccountBox}>
         <div className={classes.ImageWrapper}>
           <div className={classes.ButtonImage}>
-            {profileData && profileData.imageURL ? (
-              <img
-                className={classes.UserIcon}
-                src={profileData.imageURL}
-                alt=""
-              />
+            {profileImage ? (
+              <img className={classes.UserIcon} src={profileImage} alt="" />
             ) : (
               <img className={classes.UserIcon} src={emptyUserImage} alt="" />
             )}
           </div>
-          <input type="file" onChange={handleFileUpload} />
+          <input type="file" onChange={updateProfileImage} />
         </div>
         <div className={classes.AccountInfoBox}>
           <div>{profileData.email}</div>
-          <div>Tutor ID: {" " + profileData.userId}</div>
+          <div>Tutor ID: {" " + auth.id}</div>
         </div>
       </div>
       <div className={classes.SettingsContainer}>

@@ -2,28 +2,27 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../shared/context/auth-context";
 
+import {
+  API_SendVerificationCode,
+  API_CheckVerificationCode,
+} from "../../../API";
+
 import VerificationInput from "react-verification-input";
 
-const Test = () => {
+const VerifyEmail = () => {
   const [showDigitInput, setShowDigitInput] = useState(false);
   const [emailState, setEmailState] = useState("initial");
   const [digitInputs, setDigitInputs] = useState("");
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const sendVerificationEmail = async () => {
+  const sendVerificationCode = async () => {
     try {
       setEmailState("loading");
       setShowDigitInput(true);
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/send-verification-email",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        }
+      const response = await API_SendVerificationCode(
+        auth.id,
+        auth.accessToken
       );
       await response.json();
       setEmailState("6 digit verification code sent");
@@ -34,16 +33,10 @@ const Test = () => {
 
   const checkVerificationCode = async (digits) => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/check-verification-code",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-          body: JSON.stringify({ verificationCode: digits }),
-        }
+      const response = await API_CheckVerificationCode(
+        auth.id,
+        { verificationCode: digits },
+        auth.accessToken
       );
       const data = await response.json();
       if (data.status === 200) {
@@ -70,7 +63,7 @@ const Test = () => {
         {auth.isLoggedIn && !auth.verified && emailState !== "loading" ? (
           <button
             onClick={() => {
-              sendVerificationEmail();
+              sendVerificationCode();
               setShowDigitInput(true);
             }}
           >
@@ -97,4 +90,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default VerifyEmail;

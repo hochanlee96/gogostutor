@@ -34,7 +34,7 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
           <li>
             <div
               onClick={() => {
-                navigate("/test");
+                navigate("/verify-email");
               }}
             >
               Verify your email!

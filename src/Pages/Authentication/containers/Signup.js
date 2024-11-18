@@ -4,6 +4,8 @@ import validator from "validator";
 
 import { AuthContext } from "../../../shared/context/auth-context";
 import { ProfileContext } from "../../../shared/context/profile-context";
+
+import { API_CheckEmailExists, API_Signup } from "../../../API";
 import Input from "../../../shared/UI/components/FormElements/Input";
 
 import CustomGoogleLogin from "../components/GoogleLogin";
@@ -79,17 +81,7 @@ const Signup = () => {
       const isEmail = validator.isEmail(emailInput);
       console.log("isEmail? ", isEmail);
       if (isEmail) {
-        const response = await fetch(
-          process.env.REACT_APP_BACKEND_URL +
-            "/tutor/validate-email/" +
-            emailInput,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await API_CheckEmailExists(emailInput);
         const data = await response.json();
         console.log(data.message);
         if (data.status === 200) {
@@ -112,19 +104,10 @@ const Signup = () => {
         passwordValidity === "valid" &&
         confirmPasswordValidity === "valid"
       ) {
-        const response = await fetch(
-          process.env.REACT_APP_BACKEND_URL + "/tutor/signup",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              email: emailInput,
-              password: passwordInput,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await API_Signup({
+          email: emailInput,
+          password: passwordInput,
+        });
         const data = await response.json();
         const authData = data.authData;
         const profileData = data.profileData;

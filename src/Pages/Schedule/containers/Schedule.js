@@ -4,13 +4,15 @@ import { EditSession } from "../components/Session.js";
 import Calendar from "../components/Calendar.js";
 import { AuthContext } from "../../../shared/context/auth-context.js";
 
+import { API_GetTutorSubjects, API_AddNewSession } from "../../../API";
+
 const Schedule = () => {
   const [isAddingSession, setIsAddingSession] = useState(false);
   const [subjectList, setSubjectList] = useState([]);
   const [isLoadingSubjectList, setIsLoadingSubjectList] = useState(true);
   const auth = useContext(AuthContext);
 
-  const saveHandler = async (sessionForm) => {
+  const sessionSaveHandler = async (sessionForm) => {
     const startTime = new Date(
       sessionForm["year"],
       sessionForm["month"] - 1,
@@ -19,47 +21,34 @@ const Schedule = () => {
       0,
       0
     );
-    console.log(startTime);
     setIsAddingSession(false);
-    const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/tutor/add-session",
+    const response = await API_AddNewSession(
+      auth.id,
       {
-        method: "POST",
-        body: JSON.stringify({
-          startTime: startTime,
-          subjectId: sessionForm.subjectId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-      }
+        startTime: startTime,
+        subjectId: sessionForm.subjectId,
+      },
+      auth.accessToken
     );
     const data = await response.json();
     console.log(data);
     window.location.reload();
   };
 
-  const fetchTeachableSubjects = useCallback(async () => {
-    const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/tutor/get-my-subject-list",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-      }
-    );
+  const getTutorSubjects = useCallback(async () => {
+    const response = await API_GetTutorSubjects(auth.id, auth.accessToken);
+
     const data = await response.json();
-    console.log(data.subjectList);
+
     setSubjectList(data.subjectList);
-  }, [auth.accessToken]);
+  }, [auth]);
 
   useEffect(() => {
-    fetchTeachableSubjects();
-    setIsLoadingSubjectList(false);
-  }, [fetchTeachableSubjects, isLoadingSubjectList]);
+    if (auth) {
+      getTutorSubjects();
+      setIsLoadingSubjectList(false);
+    }
+  }, [auth, getTutorSubjects, isLoadingSubjectList]);
 
   return (
     <div>
@@ -69,7 +58,7 @@ const Schedule = () => {
       ) : subjectList && subjectList.length > 0 ? (
         isAddingSession ? (
           <EditSession
-            saveHandler={saveHandler}
+            saveHandler={sessionSaveHandler}
             year={new Date().getFullYear()}
             month={new Date().getMonth() + 1}
             date={new Date().getDate()}

@@ -1,47 +1,32 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 import { AuthContext } from "../../../shared/context/auth-context";
 
+import { API_GetTutorSubjects, API_ModifyTutorSubjects } from "../../../API";
+
 import SubjectCard from "./SubjectCard";
 
 const SubjectList = ({ setCurrentMode }) => {
   const [subjectList, setSubjectList] = useState(null);
   const auth = useContext(AuthContext);
 
-  const getMySubjectList = useCallback(async () => {
+  const getTutorSubjects = useCallback(async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/get-my-subject-list",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        }
-      );
+      const response = await API_GetTutorSubjects(auth.id, auth.accessToken);
       const data = await response.json();
-      console.log(data);
-      console.log(data.subjectList);
       setSubjectList(data.subjectList);
     } catch (err) {
       console.log(err);
     }
-  }, [auth.accessToken]);
+  }, [auth]);
 
-  const deleteSubject = useCallback(
+  const deregisterTutorSubject = useCallback(
     async (subjectId) => {
       try {
-        const response = await fetch(
-          process.env.REACT_APP_BACKEND_URL +
-            "/tutor/deregister-my-subject/" +
-            subjectId,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + auth.accessToken,
-            },
-          }
+        const response = await API_ModifyTutorSubjects(
+          auth.tutorId,
+          "deregister",
+          subjectId,
+          auth.accessToken
         );
         const data = await response.json();
         console.log(data);
@@ -50,12 +35,12 @@ const SubjectList = ({ setCurrentMode }) => {
         console.log(err);
       }
     },
-    [auth.accessToken]
+    [auth]
   );
 
   useEffect(() => {
-    getMySubjectList();
-  }, [getMySubjectList]);
+    getTutorSubjects();
+  }, [getTutorSubjects]);
 
   let subjectListCards = null;
   if (subjectList) {
@@ -70,7 +55,7 @@ const SubjectList = ({ setCurrentMode }) => {
           field={currentSubject.field}
           grade={currentSubject.grade}
           status={current.status}
-          deleteSubject={deleteSubject}
+          deleteSubject={deregisterTutorSubject}
         />
       );
     });

@@ -6,6 +6,8 @@ import { AuthContext } from "../../../shared/context/auth-context";
 import { ProfileContext } from "../../../shared/context/profile-context";
 // import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
+import { API_Login } from "../../../API";
+
 import CustomGoogleLogin from "../components/GoogleLogin";
 
 import classes from "./Auth.module.css";
@@ -32,17 +34,12 @@ const Login = () => {
 
   const loginRequestHandler = async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/login",
-        {
-          method: "POST",
-          body: JSON.stringify({ email: emailInput, password: passwordInput }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await API_Login({
+        email: emailInput,
+        password: passwordInput,
+      });
       const data = await response.json();
+      console.log("data: ", data);
       const authData = data.authData;
       const profileData = data.profileData;
       if (data.status === 200) {
@@ -55,7 +52,6 @@ const Login = () => {
       }
     } catch (err) {}
   };
-
   // const socialLoginHandler = async (social) => {
   //   window.location.href =
   //     process.env.REACT_APP_BACKEND_URL + `/tutor/${social}-login`;

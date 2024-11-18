@@ -6,6 +6,8 @@ import ZoomVideo from "@zoom/videosdk";
 import { AuthContext } from "../../../shared/context/auth-context";
 import ZoomContext from "../context/zoom-context";
 
+import { API_InitializeSession } from "../../../API";
+
 import SessionInfoContainer from "../components/SessionInfoContainer";
 // import PreZoomContainer from "../components/Test";
 import PreZoomContainer from "../components/PreZoomContainer";
@@ -53,23 +55,19 @@ const Learn = () => {
   const fetchSessionInfo = useCallback(
     async (sessionId) => {
       setSessionStage(sessionStages[1]);
-      let response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/sessions/" + sessionId,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        }
+      const response = await API_InitializeSession(
+        auth.id,
+        sessionId,
+        auth.accessToken
       );
       const data = await response.json();
       const sessionInfo = data.sessionInfo;
-      console.log("session info: ", sessionInfo);
+      console.log("learn sessionInfo: " + data);
       setSessionInfo(sessionInfo);
       setMeetingArgs({
         topic: sessionId,
-        name: auth.userId,
-        userId: auth.userId,
+        name: auth.id,
+        userId: auth.id,
         signature: data.signature,
       });
       setSessionStage(sessionStages[2]);

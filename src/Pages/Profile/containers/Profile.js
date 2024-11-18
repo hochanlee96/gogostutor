@@ -5,6 +5,8 @@ import Button from "../../../shared/UI/components/FormElements/Button";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { ProfileContext } from "../../../shared/context/profile-context";
 
+import { API_UpdateProfileData } from "../../../API";
+
 import classes from "./Profile.module.css";
 
 const Profile = () => {
@@ -29,25 +31,16 @@ const Profile = () => {
 
   useEffect(() => {
     if (profile && profile.profileData) {
-      console.log("profile: ", profile);
       setProfileForm({ ...profile.profileData });
     }
   }, [profile]);
 
   const updateProfileData = useCallback(async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/update-profile-data",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            profileData: tempProfileForm,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        }
+      const response = await API_UpdateProfileData(
+        auth.tutorId,
+        tempProfileForm,
+        auth.accessToken
       );
       const data = await response.json();
 
@@ -67,7 +60,7 @@ const Profile = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [auth.accessToken, profile, tempProfileForm]);
+  }, [auth, profile, tempProfileForm]);
 
   const editModeToggler = async () => {
     if (isEditMode) {

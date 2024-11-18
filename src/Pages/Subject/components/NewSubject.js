@@ -1,42 +1,29 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 import { AuthContext } from "../../../shared/context/auth-context";
+import { API_GetTotalSubjects, API_ModifyTutorSubjects } from "../../../API";
 
 const NewSubject = ({ setCurrentMode }) => {
   const [totalSubjectList, setTotalSubjectList] = useState(null);
   const [currentSubject, setCurrentSubject] = useState(null);
   const auth = useContext(AuthContext);
 
-  const getTotalSubjectList = useCallback(async () => {
+  const getTotalSubjects = useCallback(async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/get-total-subject-list",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        }
-      );
+      const response = await API_GetTotalSubjects();
       const data = await response.json();
       setTotalSubjectList(data.subjectList);
     } catch (err) {
       console.log(err);
     }
-  }, [auth.accessToken]);
+  }, []);
 
   const applyNewSubject = useCallback(async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/apply-new-subject",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-          body: JSON.stringify({ subjectId: currentSubject._id }),
-        }
+      const response = await API_ModifyTutorSubjects(
+        auth.tutorId,
+        "apply",
+        currentSubject._id,
+        auth.accessToken
       );
       const data = await response.json();
       if (data.status === 200) {
@@ -47,11 +34,11 @@ const NewSubject = ({ setCurrentMode }) => {
     } catch (err) {
       console.log(err);
     }
-  }, [auth.accessToken, currentSubject]);
+  }, [auth, currentSubject]);
 
   useEffect(() => {
-    getTotalSubjectList();
-  }, [getTotalSubjectList]);
+    getTotalSubjects();
+  }, [getTotalSubjects]);
 
   return (
     <div>

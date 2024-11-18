@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
 
 import { AuthContext } from "../../../shared/context/auth-context";
+import { API_GetTutorSessions, API_DeleteTutorSessions } from "../../../API";
 
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -16,20 +17,12 @@ const CalendarView = () => {
 
   const auth = useContext(AuthContext);
 
-  const fetchSessions = useCallback(async () => {
+  const getTutorSessions = useCallback(async () => {
     try {
       setIsLoadingSessions(true);
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/get-sessions",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        }
-      );
+      const response = await API_GetTutorSessions(auth.id, auth.accessToken);
       const data = await response.json();
+      console.log("tutor sessions: ", data);
       if (data.status === 200) {
         setSessionList(data.sessionList);
         console.log("data: ", data);
@@ -42,9 +35,11 @@ const CalendarView = () => {
   }, [auth]);
 
   useEffect(() => {
-    fetchSessions();
-    setIsLoadingSessions(false);
-  }, [fetchSessions]);
+    if (auth) {
+      getTutorSessions();
+      setIsLoadingSessions(false);
+    }
+  }, [getTutorSessions, auth]);
   useEffect(() => {
     if (sessionList && sessionList.length > 0) {
       setCurrentDaySessions(
@@ -63,15 +58,10 @@ const CalendarView = () => {
   }, [value, sessionList, isLoadingSessions]);
 
   const sessionDeleteHandler = async (sessionId) => {
-    const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/tutor/delete-session/" + sessionId,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-      }
+    const response = await API_DeleteTutorSessions(
+      auth.id,
+      sessionId,
+      auth.accessToken
     );
     const data = await response.json();
     console.log(data);

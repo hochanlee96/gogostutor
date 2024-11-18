@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../../shared/context/auth-context";
 
+import { API_UpdateTutorSession } from "../../../API";
+
 const Session = ({
   startTime,
   sessionDeleteHandler,
@@ -28,7 +30,7 @@ const Session = ({
     setEditForm({ ...editForm, [event.target.name]: event.target.value });
   };
 
-  const sessionSaveHandler = useCallback(async () => {
+  const saveEditedSessionHandler = useCallback(async () => {
     const startTime = new Date(
       sessionForm["year"],
       sessionForm["month"] - 1,
@@ -37,41 +39,26 @@ const Session = ({
       0,
       0
     );
-    const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/tutor/edit-session",
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          sessionId: sessionId,
-          startTime: startTime,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-      }
+    const response = await API_UpdateTutorSession(
+      auth.tutorId,
+      sessionId,
+      { action: "edit", sessionData: { startTime: startTime } },
+      auth.accessToken
     );
     const data = await response.json();
     console.log(data);
     window.location.reload();
     setSessionForm({});
-  }, [auth.accessToken, sessionForm, sessionId]);
+  }, [auth, sessionForm, sessionId]);
 
-  const approveSessionHandler = useCallback(async () => {
-    const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + "/tutor/sessions",
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          action: "approve",
-          sessionId: sessionId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.accessToken,
-        },
-      }
+  const approveStudentHandler = useCallback(async () => {
+    const response = await API_UpdateTutorSession(
+      auth.id,
+      sessionId,
+      { action: "approve" },
+      auth.accessToken
     );
+
     const data = await response.json();
     console.log(data);
     window.location.reload();
@@ -99,7 +86,7 @@ const Session = ({
           <div>
             <button
               onClick={() => {
-                approveSessionHandler();
+                approveStudentHandler();
               }}
             >
               approve
@@ -145,7 +132,7 @@ const Session = ({
           value={editForm.start}
           onChange={sessionEditHandler}
         />
-        <button onClick={sessionSaveHandler}>Save</button>
+        <button onClick={saveEditedSessionHandler}>Save</button>
         <button
           onClick={() => {
             setEditForm(sessionForm);

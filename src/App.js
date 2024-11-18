@@ -9,6 +9,8 @@ import Routes from "./Routes";
 import { AuthContext } from "./shared/context/auth-context";
 import { ProfileContext } from "./shared/context/profile-context";
 
+import { API_GetProfileData } from "./API";
+
 const login_duration = process.env.REACT_APP_LOGIN_DURATION;
 let logoutTimer;
 function App() {
@@ -29,6 +31,7 @@ function App() {
         expiration: tokenExpiryDate.toISOString(),
       })
     );
+    console.log("logging in...", authData);
     const newSocket = io(`${process.env.REACT_APP_SOCKET_URL}`);
     setSocket(newSocket);
   }, []);
@@ -101,37 +104,25 @@ function App() {
     }
   }, [login, logout, authData]);
 
-  const getProfileData = useCallback(
-    async (agent) => {
-      try {
-        if (authData.accessToken) {
-          const response = await fetch(
-            process.env.REACT_APP_BACKEND_URL +
-              "/" +
-              agent +
-              "/get-profile-data",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + authData.accessToken,
-              },
-            }
-          );
-          const data = await response.json();
-          const profileData = data.profileData;
-          if (data.status === 200) {
-            setProfileData(profileData);
-          } else if (data.status === 404) {
-            logout();
-          }
+  const getProfileData = useCallback(async () => {
+    try {
+      if (authData.accessToken) {
+        const response = await API_GetProfileData(
+          authData.id,
+          authData.accessToken
+        );
+        const data = await response.json();
+        const profileData = data.profileData;
+        if (data.status === 200) {
+          addProfileData(profileData);
+        } else if (data.status === 404) {
+          logout();
         }
-      } catch (err) {
-        logout();
       }
-    },
-    [authData, logout]
-  );
+    } catch (err) {
+      logout();
+    }
+  }, [authData, logout, addProfileData]);
 
   //auto logout when token is expired
   useEffect(() => {
@@ -176,7 +167,7 @@ function App() {
           authData && authData.accessToken ? authData.accessToken : null,
         refreshToken:
           authData && authData.refreshToken ? authData.refreshToken : null,
-        userId: authData && authData.userId ? authData.userId : null,
+        id: authData && authData.id ? authData.id : null,
         email: authData && authData.email ? authData.email : null,
         verified: authData && authData.verified ? authData.verified : false,
         approval: authData && authData.approval ? authData.approval : false,

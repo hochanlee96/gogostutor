@@ -2,8 +2,15 @@ import { useState, useEffect, useCallback, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../../shared/context/auth-context";
 
+import {
+  API_GetChatRooms,
+  API_GetChatMessages,
+  API_GetProfileImageFromCloudinary,
+} from "../../../API";
+
 import classes from "./Chatting.module.css";
 import { FaSearch } from "react-icons/fa";
+import emptyUserImage from "../../../shared/assets/icons/user.png";
 
 const addDelimiters = (chatData) => {
   const result = [];
@@ -35,10 +42,10 @@ const addDelimiters = (chatData) => {
 const Chatting = () => {
   const { state } = useLocation();
   const [roomId, setRoomId] = useState(""); // 나중에 통합해야함
-  const [currentRoom, setCurrentRoom] = useState(null);
+  const [currentStudentImage, setCurrentStudentImage] = useState(null);
   const [roomList, setRoomList] = useState([]);
-  const [userId, setUserId] = useState(state ? state.userId : "");
-  const [userName, setUserName] = useState("");
+  const [studentId, setStudentId] = useState(state ? state.studentId : "");
+  const [studentName, setStudentName] = useState("");
   const [message, setMessage] = useState("");
   const [, setMessages] = useState([]);
   const [processedMessageList, setProcessedMessageList] = useState([]);
@@ -46,53 +53,35 @@ const Chatting = () => {
   const auth = useContext(AuthContext);
   const socket = auth.socket;
 
-  const fetchRooms = useCallback(async () => {
-    try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/get-rooms",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.accessToken,
-          },
-        }
-      );
-      const data = await response.json();
-      if (data.status === 200) {
-        //
-        const dummy_rooms = [];
-        const numberOfDuplicates = 20;
+  // const getChatRooms = useCallback(async () => {
+  //   try {
+  //     const response = await API_GetChatRooms(auth.id, auth.accessToken);
+  //     const data = await response.json();
+  //     if (data.status === 200) {
+  //       //
+  //       const dummy_rooms = [];
+  //       const numberOfDuplicates = 20;
 
-        for (let i = 0; i < numberOfDuplicates; i++) {
-          dummy_rooms.push(...data.roomList);
-        }
-        setRoomList(dummy_rooms);
-        //
+  //       for (let i = 0; i < numberOfDuplicates; i++) {
+  //         dummy_rooms.push(...data.roomList);
+  //       }
+  //       setRoomList(dummy_rooms);
+  //       //
 
-        // setRoomList(data.roomList);
-      } else if (data.status === 401) {
-        console.log("verifying refresh token");
-        auth.verifyRefreshToken();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }, [auth]);
+  //       // setRoomList(data.roomList);
+  //     } else if (data.status === 401) {
+  //       console.log("verifying refresh token");
+  //       auth.verifyRefreshToken();
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, [auth]);
 
-  const fetchMessages = useCallback(
-    async (userId) => {
+  const getChatMessages = useCallback(
+    async (roomId) => {
       try {
-        const response = await fetch(
-          process.env.REACT_APP_BACKEND_URL + "/tutor/get-messages/" + userId,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + auth.accessToken,
-            },
-          }
-        );
+        const response = await API_GetChatMessages(roomId, auth.accessToken);
         const data = await response.json();
         if (data.status === 200) {
           console.log(data);
@@ -105,17 +94,16 @@ const Chatting = () => {
             return data.messageList;
           });
           setRoomId(data.roomId);
-          console.log("joining room: ", data.roomId);
-          socket.emit("join_room", auth.userId);
+          // socket.emit("join-room", auth.id);
         } else if (data.status === 401) {
-          console.log("verifying refresh token");
-          auth.verifyRefreshToken();
+          // console.log("verifying refresh token");
+          // auth.verifyRefreshToken();
         }
       } catch (err) {
         console.log(err);
       }
     },
-    [auth, socket]
+    [auth]
   );
   // useEffect(() => {
   //   const newSocket = io("http://localhost:5001");
@@ -123,20 +111,53 @@ const Chatting = () => {
   // }, []);
 
   useEffect(() => {
-    if (auth.userId) {
-      fetchRooms();
-      console.log("fetchRooms");
-      if (userId) {
-        console.log(userId);
-        fetchMessages(userId);
+    const initializeMessageRoom = async (tutorId, accessToken) => {
+      const response = await API_GetChatRooms(tutorId, accessToken);
+      const data = await response.json();
+      const roomList = data.roomList;
+      setRoomList(roomList);
+      socket.emit("join-room", auth.id);
+
+      if (state && state.studentId) {
+        if (state.studentData && state.studentData.iamgeURL) {
+          const image = await API_GetProfileImageFromCloudinary(
+            state.studentData.iamgeURL
+          );
+          setCurrentStudentImage(image);
+        }
+        let studentRoom = roomList.find(
+          (room) => room.studentId === state.studentId
+        );
+        if (studentRoom) {
+          setRoomId(studentRoom._id);
+          getChatMessages(studentRoom._id);
+        } else {
+          setStudentId(state.studentId);
+          setStudentName(state.studentData.fullName);
+        }
       }
+    };
+    if (auth) {
+      initializeMessageRoom(auth.id, auth.accessToken);
     }
-  }, [userId, auth.userId, fetchRooms, fetchMessages]);
+  }, [getChatMessages, state, auth]);
+
+  // useEffect(() => {
+  //   if (auth && auth.accessToken) {
+  //     getChatRooms();
+  //   }
+  // }, [auth, getChatRooms]);
+
+  // useEffect(() => {
+  //   if (auth && roomId) {
+  //     getChatMessages(roomId);
+  //   }
+  // }, [auth, getChatMessages, roomId]);
 
   useEffect(() => {
     if (socket) {
-      socket.on("message", (chatData) => {
-        console.log("received message: ", chatData);
+      socket.on("emit-message", (chatData) => {
+        console.log("touched");
         if (roomId && chatData.roomId._id === roomId) {
           setMessages((messages) => {
             const newMessages = [...messages, chatData];
@@ -150,11 +171,11 @@ const Chatting = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (userId && message) {
-      socket.emit("sendMessage", {
-        userId: userId,
-        tutorId: auth.userId,
-        speakerId: auth.userId,
+    if (studentId && message) {
+      socket.emit("send-message", {
+        studentId: studentId,
+        tutorId: auth.id,
+        speakerId: auth.id,
         roomId,
         message,
       });
@@ -189,29 +210,28 @@ const Chatting = () => {
                     }
                     key={index}
                     onClick={() => {
-                      fetchMessages(room.userId._id);
-                      setUserId(room.userId._id);
-                      setUserName(
-                        room.userId.profile.firstName +
+                      getChatMessages(room._id);
+                      setStudentId(room.studentId._id);
+                      setStudentName(
+                        room.studentId.profile.firstName +
                           " " +
-                          room.userId.profile.lastName
+                          room.studentId.profile.lastName
                       );
                       setRoomId(room._id);
-                      setCurrentRoom(room);
                     }}
                   >
                     <div className={classes.ImageBox}>
                       <img
                         className={classes.ProfileImage}
-                        src={room.userId.profile.imageURL}
+                        src={room.studentId.profile.imageURL}
                         alt=""
                       />
                     </div>
                     <div className={classes.RoomInfoBox}>
                       <div className={classes.RoomTitleBox}>
-                        {room.userId.profile.firstName +
+                        {room.studentId.profile.firstName +
                           " " +
-                          room.userId.profile.lastName}
+                          room.studentId.profile.lastName}
                       </div>
                       <div className={classes.RoomLastMessageBox}>
                         Last message
@@ -225,20 +245,18 @@ const Chatting = () => {
       </div>
       <div className={classes.CenterBox}>
         <div className={classes.CurrentChatterBox}>
-          {userId ? (
+          {studentId ? (
             <>
               <div className={classes.ChatterImageBox}>
                 <img
                   className={classes.ChatterImage}
                   src={
-                    currentRoom
-                      ? currentRoom.userId.profile.imageURL
-                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8wafDKRSMF8lFcbu24YYkhocJtZT46iNXsg&s"
+                    currentStudentImage ? currentStudentImage : emptyUserImage
                   }
                   alt=""
                 />
               </div>
-              <div className={classes.ChatterTitle}>{userName}</div>
+              <div className={classes.ChatterTitle}>{studentName}</div>
             </>
           ) : null}
         </div>
@@ -249,7 +267,7 @@ const Chatting = () => {
         >
           {processedMessageList.map((chatData, index) => {
             if (chatData.type === "chat") {
-              const userId = chatData.roomId.userId._id;
+              const studentId = chatData.roomId.studentId._id;
               const tutorId = chatData.roomId.tutorId._id;
               let myMessage = true;
               let currentSpeaker;
@@ -258,12 +276,12 @@ const Chatting = () => {
                   chatData.roomId.tutorId.profile.firstName +
                   " " +
                   chatData.roomId.tutorId.profile.lastName;
-              } else if (chatData.speakerId === userId) {
+              } else if (chatData.speakerId === studentId) {
                 myMessage = false;
                 currentSpeaker =
-                  chatData.roomId.userId.profile.firstName +
+                  chatData.roomId.studentId.profile.firstName +
                   " " +
-                  chatData.roomId.userId.profile.lastName;
+                  chatData.roomId.studentId.profile.lastName;
               }
 
               return (
@@ -293,7 +311,7 @@ const Chatting = () => {
         </div>
 
         <div className={classes.MessageInputBox}>
-          {userId ? (
+          {studentId ? (
             <form onSubmit={handleSubmit}>
               <input
                 type="text"

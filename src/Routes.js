@@ -9,17 +9,15 @@ import Footer from "./shared/UI/Navigation/Footer";
 import Home from "./Pages/Home/Test/pages/HomeTest";
 import Login from "./Pages/Authentication/containers/Login";
 import Signup from "./Pages/Authentication/containers/Signup";
-import Dashboard from "./Pages/Tutor/containers/Dashboard";
+import Dashboard from "./Pages/Dashboard/containers/Dashboard";
 import Profile from "./Pages/Profile/containers/Profile";
 import MySubjects from "./Pages/Subject/containers/MySubjects";
 import Schedule from "./Pages/Schedule/containers/Schedule";
 import Chatting from "./Pages/Chatting/containers/Chatting";
-import Zoom from "./Pages/Zoom/containers/Zoom";
 import Learn from "./Pages/Learn/containers/Learn";
 import Settings from "./Pages/Settings/containers/Settings";
 // import Test from "../Tutor/Test/pages/Test";
-import Test from "./Pages/Zoom/containers/ZoomTest";
-import Verify from "./Pages/Test/containers/Test";
+import VerifyEmail from "./Pages/Verify/containers/VerifyEmail";
 import AccountSettingsTest from "./Pages/Settings/Test/containers/AccountSettings";
 
 const TutorRoutes = ({ isSignedIn }) => {
@@ -33,12 +31,12 @@ const TutorRoutes = ({ isSignedIn }) => {
 
         <Route exact path="/my-subjects" element={<MySubjects />} />
         <Route exact path="/schedule" element={<Schedule />} />
-        <Route exact path="/zoom/:sessionId" element={<Zoom />} />
+
         <Route exact path="/learn/:sessionId" element={<Learn />} />
         <Route exact path="/account-settings" element={<Settings />} />
         <Route exact path="/messages" element={<Chatting />} />
-        <Route exact path="/test/:sessionId" element={<Test />} />
-        <Route exact path="/test" element={<Verify />} />
+
+        <Route exact path="/verify-email" element={<VerifyEmail />} />
         <Route
           exact
           path="/account-settings-test"
