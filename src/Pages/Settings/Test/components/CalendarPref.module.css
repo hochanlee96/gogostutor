@@ -1,0 +1,78 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.calendarItem {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px 0;
+}
+
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+
+.checkboxLabel {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.button {
+  background-color: #c5b2b2;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #a09090;
+}
+
+.saveButton {
+  display: block;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.saveButton:hover {
+  background-color: #333;
+}

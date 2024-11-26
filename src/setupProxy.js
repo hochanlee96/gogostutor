@@ -22,7 +22,8 @@ module.exports = function (app) {
     if (!whitelist.includes(`https://${requestHost}`)) {
       // Set headers for cross-origin isolation if the request URL is not whitelisted
       res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-      res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+      res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+      // res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
     }
 
     // Proceed to the next middleware or route handler

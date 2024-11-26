@@ -39,6 +39,42 @@ export const API_Login = async (body) => {
     return error;
   }
 };
+export const API_GoogleLogin = async (body) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/tutors/login/social-login/google",
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+export const API_FacebookLogin = async (body) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/tutors/login/social-login/facebook",
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const API_CheckEmailExists = async (email) => {
   try {

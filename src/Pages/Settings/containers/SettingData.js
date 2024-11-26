@@ -1,8 +1,14 @@
-const SettingData1 = [
+const SettingData = [
   {
     iconName: "MdFace",
     title: "Tutor Profile",
     description: "Share your tutor experiences and skillsets",
+    link: "/profile",
+  },
+  {
+    iconName: "MdFace",
+    title: "Class Profile",
+    description: "Share your Class information",
     link: "/profile",
   },
   {
@@ -17,18 +23,17 @@ const SettingData1 = [
     description: "Manage your login methods",
     link: "/",
   },
-  {
-    iconName: "IoIosSettings",
-    title: "Settings",
-    description: "Set your language, timezone, country and more",
-    link: "/",
-  },
-];
-const SettingData2 = [
+
   {
     iconName: "FaEnvelope",
     title: "Notifications",
     description: "Choose when you want to be contated",
+    link: "/",
+  },
+  {
+    iconName: "IoIosSettings",
+    title: "Settings",
+    description: "Set your language, timezone, country and more",
     link: "/",
   },
   {
@@ -45,5 +50,4 @@ const SettingData2 = [
   },
 ];
 
-module.exports.SettingData1 = SettingData1;
-module.exports.SettingData2 = SettingData2;
+module.exports.SettingData = SettingData;

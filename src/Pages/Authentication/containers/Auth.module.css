@@ -80,6 +80,11 @@
     padding-left: 10px;
   }
 
+  /* .SocialLoginItem svg {
+    width: 30px;
+    height: 30px;
+  } */
+
   .SocialLoginItem:hover {
     background-color: rgb(218, 216, 216);
   }

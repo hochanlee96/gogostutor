@@ -15,7 +15,7 @@ import MySubjects from "./Pages/Subject/containers/MySubjects";
 import Schedule from "./Pages/Schedule/containers/Schedule";
 import Chatting from "./Pages/Chatting/containers/Chatting";
 import Learn from "./Pages/Learn/containers/Learn";
-import Settings from "./Pages/Settings/containers/Settings";
+import Settings from "./Pages/Settings/containers/AccountSettings";
 // import Test from "../Tutor/Test/pages/Test";
 import VerifyEmail from "./Pages/Verify/containers/VerifyEmail";
 import AccountSettingsTest from "./Pages/Settings/Test/containers/AccountSettings";

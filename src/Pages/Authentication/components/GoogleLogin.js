@@ -1,54 +1,73 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import {
+  GoogleOAuthProvider,
+  GoogleLogin,
+  useGoogleLogin,
+} from "@react-oauth/google";
 
 import { AuthContext } from "../../../shared/context/auth-context";
+import { ProfileContext } from "../../../shared/context/profile-context";
 
-const { REACT_APP_GOOGLE_CLIENT_ID, REACT_APP_LOGIN_DURATION } = process.env;
+import { API_GoogleLogin } from "../../../API";
+import classes from "../containers/Auth.module.css";
+import GoogleLogo from "../../../shared/assets/icons/google-logo.png";
+
+const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
 
 const GoogleLoginButton = () => {
   const auth = useContext(AuthContext);
+  const profile = useContext(ProfileContext);
   const navigate = useNavigate();
 
   const LoginSuccessHandler = async (res) => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutor/social-login",
-        {
-          method: "POST",
-          body: JSON.stringify({ credential: res.credential }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await API_GoogleLogin({ credential: res.credential });
       const data = await response.json();
       console.log(data);
-      auth.login(
-        data.tutorId,
-        data.email,
-        data.accessToken,
-        data.refreshToken,
-        new Date(new Date().getTime() + 1000 * REACT_APP_LOGIN_DURATION) // 웹사이트에 얼마나 로그인 상태로 남아있도록 할 것인지 (지금은 1시간. 나중에는 1d정도로 바꿔도 될듯)
-      );
-      navigate("/dashboard");
+      const authData = data.authData;
+      const profileData = data.profileData;
+      if (data.status === 200) {
+        auth.login(authData);
+        profile.setProfileData(profileData);
+        navigate("/dashboard");
+      } else {
+        alert(data.message);
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
+  const login = useGoogleLogin({
+    onSuccess: (res) => {
+      console.log(res);
+      LoginSuccessHandler(res);
+    },
+    onFailure: (err) => {
+      console.log(err);
+    },
+  });
+
   return (
-    <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
-      <GoogleLogin
-        onSuccess={(res) => {
-          LoginSuccessHandler(res);
-        }}
-        onFailure={(err) => {
-          console.log(err);
-        }}
-        type="icon"
-      />
-    </GoogleOAuthProvider>
+    // <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+    <GoogleLogin
+      onSuccess={(res) => {
+        console.log(res);
+        LoginSuccessHandler(res);
+      }}
+      onError={(err) => {
+        console.log("err");
+        console.log(err);
+      }}
+      // type="icon"
+    />
+    /* <div className={classes.SocialLoginItem} onClick={login}>
+        <img className={classes.SocialLogo} src={GoogleLogo} alt="/" />
+        Login with Google
+      </div> */
+    // </GoogleOAuthProvider>
   );
 };
 

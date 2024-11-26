@@ -1,20 +1,19 @@
 import { useState, useContext } from "react";
-import { SettingData } from "../../containers/SettingData.js";
+import { SettingData } from "./SettingData.js";
 
-import { AuthContext } from "../../../../shared/context/auth-context";
-import { ProfileContext } from "../../../../shared/context/profile-context";
+import { AuthContext } from "../../../shared/context/auth-context";
+import { ProfileContext } from "../../../shared/context/profile-context";
 
 import Account from "../components/Account";
 import CalendarPref from "../components/CalendarPref";
 import LoginMethod from "../components/LoginMethod";
 import Notifications from "../components/Notifications";
 import Payout from "../components/Payout";
-// import Profile from "../components/Profile";
-import Profile from "../components/ProfileTest";
+import Profile from "../components/Profile";
 import ClassProfile from "../components/ClassProfile";
 import GeneralSettings from "../components/GeneralSettings.js";
 
-import defaultProfileImage from "../../../../shared/assets/icons/user.png";
+import defaultProfileImage from "../../../shared/assets/icons/user.png";
 import classes from "./AccountSettings.module.css";
 
 const AccountSettings = () => {

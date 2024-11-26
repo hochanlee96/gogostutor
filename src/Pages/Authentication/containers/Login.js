@@ -4,17 +4,20 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../../shared/UI/components/FormElements/Input";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { ProfileContext } from "../../../shared/context/profile-context";
-// import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import { API_Login } from "../../../API";
 
 import CustomGoogleLogin from "../components/GoogleLogin";
+import CustomFacebookLogin from "../components/FacebookLogin";
 
 import classes from "./Auth.module.css";
 import Logo from "../../../shared/assets/icons/A-List_logo_rmbg.svg";
-// import GoogleLogo from "../../shared/icons/google-logo.png";
+import GoogleLogo from "../../../shared/assets/icons/google-logo.png";
 import FacebookLogo from "../../../shared/assets/icons/facebook-logo.png";
 import AppleLogo from "../../../shared/assets/icons/apple-logo.png";
+
+const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
 
 // const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
 const Login = () => {
@@ -52,10 +55,6 @@ const Login = () => {
       }
     } catch (err) {}
   };
-  // const socialLoginHandler = async (social) => {
-  //   window.location.href =
-  //     process.env.REACT_APP_BACKEND_URL + `/tutor/${social}-login`;
-  // };
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -89,15 +88,11 @@ const Login = () => {
           <hr />
         </form>
         <div className={classes.SocialLoginBox}>
-          {/* <div
-            className={classes.SocialLoginItem}
-            onClick={() => {
-              socialLoginHandler("google");
-            }}
-          >
+          {/* <div className={classes.SocialLoginItem}>
             <img className={classes.SocialLogo} src={GoogleLogo} alt="/" />
             Login with Google
           </div> */}
+
           <div className={classes.SocialLoginItem}>
             {/* <img className={classes.SocialLogo} src={GoogleLogo} alt="/" />
             Login with Google
@@ -111,11 +106,12 @@ const Login = () => {
                 }}
               />
             </GoogleOAuthProvider> */}
-            <CustomGoogleLogin />
+            <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+              <CustomGoogleLogin />
+            </GoogleOAuthProvider>
           </div>
           <div className={classes.SocialLoginItem}>
-            <img className={classes.SocialLogo} src={FacebookLogo} alt="/" />
-            Login with Facebook
+            <CustomFacebookLogin />
           </div>
           <div className={classes.SocialLoginItem}>
             <img className={classes.SocialLogo} src={AppleLogo} alt="/" />

@@ -1,0 +1,93 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.methodName {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.statusConnected {
+  font-size: 14px;
+  color: #4a90e2;
+}
+
+.statusDisconnected {
+  font-size: 14px;
+  color: #a0a0a0;
+}
+
+.button {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.connectedButton {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.disconnectedButton {
+  background-color: #c5b2b2;
+  color: #fff;
+}
+
+.connectedButton:hover {
+  background-color: #357ac9;
+}
+
+.disconnectedButton:hover {
+  background-color: #a09090;
+}
+
+.saveButton {
+  display: block;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.saveButton:hover {
+  background-color: #333;
+}
