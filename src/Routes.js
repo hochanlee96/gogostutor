@@ -3,7 +3,8 @@ import { Route, Navigate, Routes } from "react-router-dom";
 // import Navigation from "../Tutor/Navigation/Navigation";
 import Navigation from "./shared/UI/Navigation/Test/NavigationTest";
 import ScrollToTop from "./shared/UI/Navigation/ScrollToTop";
-import Footer from "./shared/UI/Navigation/Footer";
+// import Footer from "./shared/UI/Navigation/Footer";
+import Footer from "./shared/UI/Navigation/Test/Footer";
 
 // import Home from "../Tutor/Home/pages/Home";
 import Home from "./Pages/Home/Test/pages/HomeTest";
@@ -18,7 +19,6 @@ import Learn from "./Pages/Learn/containers/Learn";
 import Settings from "./Pages/Settings/containers/AccountSettings";
 // import Test from "../Tutor/Test/pages/Test";
 import VerifyEmail from "./Pages/Verify/containers/VerifyEmail";
-import AccountSettingsTest from "./Pages/Settings/Test/containers/AccountSettings";
 
 const TutorRoutes = ({ isSignedIn }) => {
   let routes;
@@ -37,11 +37,7 @@ const TutorRoutes = ({ isSignedIn }) => {
         <Route exact path="/messages" element={<Chatting />} />
 
         <Route exact path="/verify-email" element={<VerifyEmail />} />
-        <Route
-          exact
-          path="/account-settings-test"
-          element={<AccountSettingsTest />}
-        />
+
         <Route path="/*" element={<Navigate replace to="/" />} />
       </Routes>
     );

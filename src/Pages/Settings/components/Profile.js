@@ -103,7 +103,11 @@ const TutorProfile = () => {
               <img className={classes.UserIcon} src={emptyUserImage} alt="" />
             )}
           </div>
-          <input type="file" onChange={updateProfileImage} />
+          <input
+            className={classes.FileInput}
+            type="file"
+            onChange={updateProfileImage}
+          />
         </div>
       </div>
 
