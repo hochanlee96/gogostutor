@@ -441,3 +441,41 @@ export const API_GetProfileImageFromCloudinary = async (imageURL) => {
     return error;
   }
 };
+
+export const API_GetCreditData = async (tutorId, accessToken) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND_URL + `/tutors/${tutorId}/credits`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+export const API_Payout = async (tutorId, body, accessToken) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND_URL + `/tutors/${tutorId}/payment`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

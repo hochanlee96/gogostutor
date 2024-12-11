@@ -19,6 +19,12 @@ import Learn from "./Pages/Learn/containers/Learn";
 import Settings from "./Pages/Settings/containers/AccountSettings";
 // import Test from "../Tutor/Test/pages/Test";
 import VerifyEmail from "./Pages/Verify/containers/VerifyEmail";
+import PaymentTest from "./Pages/PaymentTest/containers/PaymentTest";
+import {
+  CheckoutTest,
+  ReturnTest,
+} from "./Pages/PaymentTest/containers/CheckoutTest";
+import PayoutTest from "./Pages/PaymentTest/containers/PayoutTest";
 
 const TutorRoutes = ({ isSignedIn }) => {
   let routes;
@@ -37,6 +43,10 @@ const TutorRoutes = ({ isSignedIn }) => {
         <Route exact path="/messages" element={<Chatting />} />
 
         <Route exact path="/verify-email" element={<VerifyEmail />} />
+        <Route exact path="/payment-test" element={<PaymentTest />} />
+        <Route exact path="/checkout-test" element={<CheckoutTest />} />
+        <Route exact path="/checkout-return-test" element={<ReturnTest />} />
+        <Route exact path="/payout-test" element={<PayoutTest />} />
 
         <Route path="/*" element={<Navigate replace to="/" />} />
       </Routes>

@@ -7,13 +7,10 @@ import { ProfileContext } from "../../../shared/context/profile-context";
 
 import { API_CheckEmailExists, API_Signup } from "../../../API";
 import Input from "../../../shared/UI/components/FormElements/Input";
-
-import CustomGoogleLogin from "../components/GoogleLogin";
+import SocialLoginBox from "../components/SocialLoginBox";
 
 import Logo from "../../../shared/assets/icons/A-List_logo_rmbg.svg";
 // import GoogleLogo from "../../shared/icons/google-logo.png";
-import FacebookLogo from "../../../shared/assets/icons/facebook-logo.png";
-import AppleLogo from "../../../shared/assets/icons/apple-logo.png";
 
 import classes from "./Auth.module.css";
 
@@ -219,21 +216,7 @@ const Signup = () => {
           </button>
           <hr />
         </form>
-        <div className={classes.SocialLoginBox}>
-          <div className={classes.SocialLoginItem}>
-            {/* <img className={classes.SocialLogo} src={GoogleLogo} alt="/" />
-            Login with Google */}
-            <CustomGoogleLogin />
-          </div>
-          <div className={classes.SocialLoginItem}>
-            <img className={classes.SocialLogo} src={FacebookLogo} alt="/" />
-            Login with Facebook
-          </div>
-          <div className={classes.SocialLoginItem}>
-            <img className={classes.SocialLogo} src={AppleLogo} alt="/" />
-            Login with Apple
-          </div>
-        </div>
+        <SocialLoginBox />
 
         <div className={classes.RedirectLine}>
           <p className={classes.RedirectMessage}>Already a member?</p>
