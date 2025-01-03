@@ -9,6 +9,7 @@ export const API_GetProfileData = async (tutorId, accessToken) => {
             "Content-Type": "application/json",
             Authorization: "Bearer " + accessToken,
           },
+          credentials: "include",
         }
       );
       return response;
@@ -31,6 +32,7 @@ export const API_Login = async (body) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       }
     );
     return response;
@@ -67,6 +69,25 @@ export const API_FacebookLogin = async (body) => {
         headers: {
           "Content-Type": "application/json",
         },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const API_Logout = async () => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/tutors/logout",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       }
     );
     return response;
@@ -242,6 +263,7 @@ export const API_GetTutorSubjects = async (tutorId, accessToken) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + accessToken,
         },
+        credentials: "include",
       }
     );
     return response;
@@ -324,6 +346,7 @@ export const API_GetTutorSessions = async (tutorId, accessToken) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + accessToken,
         },
+        credentials: "include",
       }
     );
     return response;

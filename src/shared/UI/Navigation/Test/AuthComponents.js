@@ -12,7 +12,11 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
   const [newMessage, setNewMessage] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const socket = useContext(AuthContext).socket;
-  const profile = useContext(ProfileContext).profileData;
+  const profile = useContext(ProfileContext);
+  const profileData =
+    profile.userData && profile.userData.profile
+      ? profile.userData.profile
+      : null;
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -55,12 +59,12 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
         </li>
         <li>
           <div onClick={() => setModalOpen(true)}>
-            {profile.firstName && profile.lastName
-              ? profile.firstName
-              : profile.email}
+            {profileData && profileData.firstName
+              ? profileData.firstName
+              : "user"}
           </div>
           {modalOpen ? (
-            <ActionsModal setIsOpen={setModalOpen} email={profile.email} />
+            <ActionsModal setIsOpen={setModalOpen} email={profileData.email} />
           ) : null}
         </li>
         {/* <li>

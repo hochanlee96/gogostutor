@@ -1,7 +1,9 @@
 import { createContext } from "react";
 
 export const ProfileContext = createContext({
-  profileData: null,
+  userData: null,
+  verifyUser: () => {},
+  setApprovalStatus: () => {},
   setProfileData: () => {},
   getProfileData: () => {},
 });

@@ -22,11 +22,13 @@ import emptyUserImage from "../../../shared/assets/icons/user.png";
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const auth = useContext(AuthContext);
-  const tutorStatus = auth.approval;
 
   const profile = useContext(ProfileContext);
-  const profileData = profile.profileData;
-  const [profileImage, setProfileImage] = useState(null);
+  const userData = profile.userData;
+  const tutorStatus =
+    userData && userData.approval ? userData.approval : "pending";
+  // const [profileImage, setProfileImage] = useState(null);
+  console.log("pprofile", profile);
 
   const navigate = useNavigate();
 
@@ -45,25 +47,25 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (profileData) {
+    if (userData) {
       setIsLoading(false);
     }
-  }, [profileData]);
+  }, [userData]);
 
-  const getProfileImageFromCloudinary = useCallback(async (imageURL) => {
-    const image = await API_GetProfileImageFromCloudinary(imageURL);
-    setProfileImage(image);
-  }, []);
+  // const getProfileImageFromCloudinary = useCallback(async (imageURL) => {
+  //   const image = await API_GetProfileImageFromCloudinary(imageURL);
+  //   setProfileImage(image);
+  // }, []);
 
-  useEffect(() => {
-    if (profileData.imageURL) {
-      getProfileImageFromCloudinary(profileData.imageURL);
-    }
-  }, [getProfileImageFromCloudinary, profileData.imageURL]);
+  // useEffect(() => {
+  //   if (profileData.imageURL) {
+  //     getProfileImageFromCloudinary(profileData.imageURL);
+  //   }
+  // }, [getProfileImageFromCloudinary, profileData.imageURL]);
 
-  let contents;
+  let loadingContents;
   if (isLoading) {
-    contents = (
+    loadingContents = (
       <div>
         <h1>Loading...</h1>
       </div>
@@ -125,18 +127,24 @@ const Dashboard = () => {
   return (
     <div className={classes.Container}>
       {isLoading ? (
-        contents
+        loadingContents
       ) : (
         <div className={classes.ContentsBox}>
           <div className={classes.LeftContent}>
-            {profileImage ? (
-              <img className={classes.UserIcon} src={profileImage} alt="/" />
+            {profile.imageURL ? (
+              <img
+                className={classes.UserIcon}
+                src={profile.imageURL}
+                alt="/"
+              />
             ) : (
               <img className={classes.UserIcon} src={emptyUserImage} alt="/" />
             )}
 
-            {profileData && profileData.firstName ? (
-              <h3>{"Welcome to Gogos Edu " + profileData.firstName + " !"}</h3>
+            {userData && userData.profile && userData.profile.firstName ? (
+              <h3>
+                {"Welcome to Gogos Edu " + userData.profile.firstName + " !"}
+              </h3>
             ) : (
               <h3>Welcom to Gogos Edu!</h3>
             )}

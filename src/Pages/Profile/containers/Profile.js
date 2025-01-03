@@ -30,8 +30,8 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (profile && profile.profileData) {
-      setProfileForm({ ...profile.profileData });
+    if (profile && profile.userData && profile.userData.profile) {
+      setProfileForm({ ...profile.userData.profile });
     }
   }, [profile]);
 

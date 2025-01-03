@@ -1,190 +1,242 @@
 import { useState, useEffect, useCallback } from "react";
 import { BrowserRouter } from "react-router-dom";
 import io from "socket.io-client";
+import { jwtDecode } from "jwt-decode";
 
-import Loading from "./shared/UI/pages/Loading";
+import api, { setupAxiosInterceptors } from "./customFetch";
 
 import Routes from "./Routes";
 
 import { AuthContext } from "./shared/context/auth-context";
 import { ProfileContext } from "./shared/context/profile-context";
 
-import { API_GetProfileData } from "./API";
+import { API_GetProfileData, API_Logout } from "./API";
 
-const login_duration = process.env.REACT_APP_LOGIN_DURATION;
+// const login_duration = process.env.REACT_APP_LOGIN_DURATION;
 let logoutTimer;
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [authData, setAuthData] = useState(null);
   const [socket, setSocket] = useState(null);
-  const [profileData, setProfileData] = useState(null);
+  const [userData, setUserData] = useState(null);
 
-  const login = useCallback((authData) => {
-    const tokenExpiryDate = new Date(
-      new Date().getTime() + 1000 * login_duration
-    );
-    setAuthData({ ...authData, tokenExpirationData: tokenExpiryDate });
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        ...authData,
-        expiration: tokenExpiryDate.toISOString(),
-      })
-    );
-    console.log("logging in...", authData);
-    const newSocket = io(`${process.env.REACT_APP_SOCKET_URL}`);
-    setSocket(newSocket);
-  }, []);
+  const [accessToken, setAccessToken] = useState(null);
+  const [id, setId] = useState(null);
+  const [expiration, setExpiration] = useState(null);
+  const [checkedLoginStatus, setCheckedLoginStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const verifyUser = useCallback(() => {
-    setAuthData((prev) => {
-      return { ...prev, verified: true };
-    });
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        ...authData,
-        verified: true,
-      })
-    );
-  }, [authData]);
-
-  const setApprovalStatus = useCallback(
-    (status) => {
-      setAuthData((prev) => {
-        return { ...prev, approval: status };
-      });
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          ...authData,
-          approval: status,
-        })
-      );
-    },
-    [authData]
-  );
-
-  const addProfileData = useCallback((profileData) => {
-    setProfileData(profileData);
-    localStorage.setItem("profileData", JSON.stringify(profileData));
-  }, []);
-
-  const logout = useCallback(() => {
-    setAuthData(null);
-    localStorage.removeItem("userData");
-
-    setProfileData(null);
-    localStorage.removeItem("profileData");
-  }, []);
-
-  const verifyRefreshToken = useCallback(async () => {
-    try {
-      if (authData && authData.refreshToken) {
-        const response = await fetch(
-          process.env.REACT_APP_BACKEND_URL + "/user/verify-refreshtoken",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              refreshToken: authData.refreshToken,
-            },
-          }
-        );
-        const data = await response.json(); // {userId, email, token: refreshtoken: expirationDate, message:}
-        const newAuthData = data.authData;
-        if (data.message === "new tokens generated") {
-          login(newAuthData);
-        } else if (data.message === "refresh token expired") {
-          logout();
+  const updateAuthData = useCallback(
+    (token = null) => {
+      if (token) {
+        setAccessToken(token);
+        const decoded = jwtDecode(token);
+        setId(decoded.id);
+        setExpiration(decoded.exp);
+        const newSocket = io(`${process.env.REACT_APP_SOCKET_URL}`);
+        setSocket(newSocket);
+        setupAxiosInterceptors(() => accessToken, setAccessToken);
+      } else {
+        setAccessToken(null);
+        setId(null);
+        setExpiration(null);
+        if (socket) {
+          socket.disconnect();
+          setSocket(null);
         }
       }
-    } catch (err) {
-      logout();
-    }
-  }, [login, logout, authData]);
+      setLoading(false);
+    },
+    [socket, accessToken]
+  );
 
-  const getProfileData = useCallback(async () => {
+  const logout = useCallback(async () => {
     try {
-      if (authData.accessToken) {
-        const response = await API_GetProfileData(
-          authData.id,
-          authData.accessToken
-        );
-        const data = await response.json();
-        const profileData = data.profileData;
+      const response = await API_Logout();
+      if (response.status === 200) {
+        // localStorage.removeItem("userData");
+
+        setUserData(null);
+        // localStorage.removeItem("profileData");
+
+        updateAuthData(null);
+        // setAccessToken(null);
+        // setTutorId(null);
+        // setExpiration(null);
+      } else {
+        alert("Logout Failed");
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [updateAuthData]);
+
+  const getUserData = useCallback(
+    async (tutorId, accessToken) => {
+      try {
+        // const response = await API_GetProfileData(tutorId, accessToken);
+
+        const response = await api.get(`/tutors/${tutorId}/profile`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        const data = response.data;
+        console.log("dataaa:", data);
         if (data.status === 200) {
-          addProfileData(profileData);
+          // setProfileData({ ...data.profileData });
+          setUserData({ ...data.data });
         } else if (data.status === 404) {
           logout();
         }
+      } catch (err) {
+        logout();
+      }
+    },
+    [logout]
+  );
+
+  const login = useCallback(
+    async (token) => {
+      // const tokenExpiryDate = new Date(
+      //   new Date().getTime() + 1000 * login_duration
+      // );
+      // setAuthData({ ...authData, tokenExpirationData: tokenExpiryDate });
+      // localStorage.setItem(
+      //   "userData",
+      //   JSON.stringify({
+      //     ...authData,
+      //     expiration: tokenExpiryDate.toISOString(),
+      //   })
+      // );
+      console.log("logging in...", token);
+      updateAuthData(token);
+      // setAccessToken(authData.accessToken);
+      const decoded = jwtDecode(token);
+      console.log("decoded", decoded);
+      // setTutorId(decoded.id);
+      // setExpiration(decoded.exp);
+      console.log("get profile data!");
+      getUserData(decoded.id, token);
+    },
+    [updateAuthData, getUserData]
+  );
+
+  const verifyUser = useCallback(() => {
+    setUserData((prev) => {
+      return { ...prev, verified: true };
+    });
+    // localStorage.setItem(
+    //   "userData",
+    //   JSON.stringify({
+    //     ...authData,
+    //     verified: true,
+    //   })
+    // );
+  }, []);
+
+  const setApprovalStatus = useCallback((status) => {
+    setUserData((prev) => {
+      return { ...prev, approval: status };
+    });
+    // localStorage.setItem(
+    //   "userData",
+    //   JSON.stringify({
+    //     ...authData,
+    //     approval: status,
+    //   })
+    // );
+  }, []);
+
+  // const addProfileData = useCallback((profileData) => {
+  //   setProfileData(profileData);
+  //   // localStorage.setItem("profileData", JSON.stringify(profileData));
+  // }, []);
+
+  const verifyRefreshToken = useCallback(async () => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/tutors/refresh-token",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json(); // {userId, email, token: refreshtoken: expirationDate, message:}
+      const newAccessToken = data.accessToken;
+      if (data.message === "new tokens generated") {
+        login(newAccessToken);
+      } else {
+        logout();
       }
     } catch (err) {
       logout();
     }
-  }, [authData, logout, addProfileData]);
+  }, [login, logout]);
 
   //auto logout when token is expired
   useEffect(() => {
-    if (authData && authData.accessToken && authData.tokenExpirationDate) {
-      const remainingTime =
-        authData.tokenExpirationDate.getTime() - new Date().getTime();
+    if (accessToken && expiration) {
+      const remainingTime = expiration - new Date().getTime();
       logoutTimer = setTimeout(verifyRefreshToken, remainingTime); // instead of logout, send refresh token request
     } else {
       clearTimeout(logoutTimer);
     }
-  }, [authData, logout, verifyRefreshToken]);
+  }, [accessToken, expiration, logout, verifyRefreshToken]);
 
   //auto login when page refresh
   useEffect(() => {
-    setIsLoading(true);
-    const userData = JSON.parse(localStorage.getItem("userData"));
-    const profileData = JSON.parse(localStorage.getItem("profileData"));
-    if (
-      userData &&
-      userData.accessToken &&
-      new Date(userData.expiration) > new Date()
-    ) {
-      login(userData);
+    //if new access token, get profile data,
+    if (!checkedLoginStatus) {
+      setLoading(true);
+      verifyRefreshToken();
     }
-    if (profileData) {
-      addProfileData(profileData);
-    }
-    setIsLoading(false);
-  }, [login, addProfileData]);
+    setCheckedLoginStatus(true);
+    //else remain loggedout
 
+    return () => {
+      if (socket) {
+        socket.disconnect();
+        console.log("Socket disconnected on cleanup");
+      }
+    };
+  }, [verifyRefreshToken, socket, checkedLoginStatus]);
+
+  // useEffect(() => {
+  //   // Example: Fetch accessToken from localStorage (or any initial state)
+  //   console.log("setup interceptors");
+  //   // Configure Axios interceptors
+  //   setupAxiosInterceptors(() => accessToken, setAccessToken);
+  // }, [accessToken]);
   let routes;
-  if (isLoading) {
-    routes = <Loading />;
+  if (loading) {
+    routes = <div>Loading...</div>;
   } else {
-    routes = <Routes isSignedIn={!!authData} />;
+    routes = <Routes isSignedIn={!!accessToken} />;
   }
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: !!authData,
-        accessToken:
-          authData && authData.accessToken ? authData.accessToken : null,
-        refreshToken:
-          authData && authData.refreshToken ? authData.refreshToken : null,
-        id: authData && authData.id ? authData.id : null,
-        email: authData && authData.email ? authData.email : null,
-        verified: authData && authData.verified ? authData.verified : false,
-        approval: authData && authData.approval ? authData.approval : false,
+        isLoggedIn: !!accessToken,
+        accessToken: accessToken,
+        id: id,
         socket: socket,
 
         login: login,
         logout: logout,
-        verifyRefreshToken: verifyRefreshToken,
-        verifyUser: verifyUser,
-        setApprovalStatus: setApprovalStatus,
       }}
     >
       <ProfileContext.Provider
         value={{
-          profileData: profileData,
-          setProfileData: addProfileData,
-          getProfileData: getProfileData,
+          // id: tutorId,
+          // email: profileData&& profileData.email ? profileData.email : null,
+          // verified: profileData && profileData.verified ? profileData.verified : false,
+          // approval: profileData && profileData.approval ? profileData.approval : false,
+          userData: userData,
+          setUserData: setUserData,
+          getUserData: getUserData,
+          verifyUser: verifyUser,
+          setApprovalStatus: setApprovalStatus,
         }}
       >
         <BrowserRouter>{routes}</BrowserRouter>

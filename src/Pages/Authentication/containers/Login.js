@@ -36,10 +36,8 @@ const Login = () => {
       const data = await response.json();
       console.log("data: ", data);
       const authData = data.authData;
-      const profileData = data.profileData;
       if (data.status === 200) {
-        auth.login(authData);
-        profile.setProfileData(profileData);
+        auth.login(authData.accessToken);
         navigate("/dashboard");
       } else if (data.status === 403) {
         setPasswordInput("");

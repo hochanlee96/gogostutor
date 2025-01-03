@@ -15,9 +15,11 @@
     "@zoom/meetingsdk": "^3.9.2",
     "@zoom/videosdk": "^1.12.10",
     "antd": "^5.21.0",
+    "axios": "^1.7.9",
     "cloudinary-react": "^1.8.1",
     "coi-serviceworker": "^0.1.7",
     "http-proxy-middleware": "^3.0.3",
+    "jwt-decode": "^4.0.0",
     "mdb-react-ui-kit": "^9.0.0",
     "moment": "^2.30.1",
     "react": "^18.3.1",
@@ -33,7 +35,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "HTTPS=true SSL_CRT_FILE=./.cert/cert.pem SSL_KEY_FILE=./.cert/key.pem PORT=3001 react-scripts start",
+    "start": "HTTPS=true SSL_CRT_FILE=./.cert/tutor.lvh.me.pem SSL_KEY_FILE=./.cert/tutor.lvh.me-key.pem HOST=tutor.lvh.me PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

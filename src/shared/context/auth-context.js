@@ -11,7 +11,6 @@ export const AuthContext = createContext({
   login: () => {},
   logout: () => {},
   verifyRefreshToken: () => {},
-  verifyUser: () => {},
-  setApprovalStatus: () => {},
+
   socket: null,
 });
