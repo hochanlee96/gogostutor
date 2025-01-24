@@ -28,10 +28,10 @@ const FacebookLoginButton = (props) => {
         const data = await response.json();
         console.log(data);
         const authData = data.authData;
-        const profileData = data.profileData;
+        // const profileData = data.profileData;
         if (data.status === 200) {
-          auth.login(authData);
-          profile.setProfileData(profileData);
+          auth.login(authData.accessToken);
+          // profile.setProfileData(profileData);
           navigate("/dashboard");
         }
       } catch (err) {

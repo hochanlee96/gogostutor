@@ -30,7 +30,7 @@ function App() {
         setAccessToken(token);
         const decoded = jwtDecode(token);
         setId(decoded.id);
-        setExpiration(decoded.exp);
+        setExpiration(decoded.exp * 1000);
         const newSocket = io(`${process.env.REACT_APP_SOCKET_URL}`);
         setSocket(newSocket);
         setupAxiosInterceptors(() => accessToken, setAccessToken);
@@ -75,10 +75,17 @@ function App() {
       try {
         // const response = await API_GetProfileData(tutorId, accessToken);
 
-        const response = await api.get(`/tutors/${tutorId}/profile`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        const data = response.data;
+        const response = await fetch(
+          process.env.REACT_APP_BACKEND_URL + `/tutors/${tutorId}/profile`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + accessToken,
+            },
+            credentials: "include",
+          }
+        );
+        const data = await response.json();
         console.log("dataaa:", data);
         if (data.status === 200) {
           // setProfileData({ ...data.profileData });
@@ -178,6 +185,7 @@ function App() {
   useEffect(() => {
     if (accessToken && expiration) {
       const remainingTime = expiration - new Date().getTime();
+      console.log("remaining time: " + remainingTime);
       logoutTimer = setTimeout(verifyRefreshToken, remainingTime); // instead of logout, send refresh token request
     } else {
       clearTimeout(logoutTimer);
@@ -235,8 +243,8 @@ function App() {
           userData: userData,
           setUserData: setUserData,
           getUserData: getUserData,
-          verifyUser: verifyUser,
-          setApprovalStatus: setApprovalStatus,
+          // verifyUser: verifyUser,
+          // setApprovalStatus: setApprovalStatus,
         }}
       >
         <BrowserRouter>{routes}</BrowserRouter>

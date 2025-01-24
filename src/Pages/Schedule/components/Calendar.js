@@ -4,13 +4,14 @@ import { AuthContext } from "../../../shared/context/auth-context";
 import { API_GetTutorSessions, API_DeleteTutorSessions } from "../../../API";
 
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+// import "react-calendar/dist/Calendar.css";
+import "./Calendar.css";
 import moment from "moment";
 import classes from "./Calendar.module.css";
 import { Session } from "./Session.js";
 
-const CalendarView = () => {
-  const [value, onChange] = useState(new Date(new Date().setHours(0, 0, 0, 0)));
+const CalendarView = ({ focusedDay, setFocusedDay }) => {
+  // const [value, onChange] = useState(new Date(new Date().setHours(0, 0, 0, 0)));
   const [currentDaySessions, setCurrentDaySessions] = useState([]);
   const [sessionList, setSessionList] = useState([]);
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
@@ -45,7 +46,7 @@ const CalendarView = () => {
       setCurrentDaySessions(
         sessionList.filter((x) => {
           const offset = Math.floor(
-            (new Date(x.startTime) - value) / (1000 * 60)
+            (new Date(x.startTime) - focusedDay) / (1000 * 60)
           );
           if (offset >= 0 && offset < 60 * 24) {
             return true;
@@ -55,7 +56,7 @@ const CalendarView = () => {
         })
       );
     }
-  }, [value, sessionList, isLoadingSessions]);
+  }, [focusedDay, sessionList, isLoadingSessions]);
 
   const sessionDeleteHandler = async (sessionId) => {
     const response = await API_DeleteTutorSessions(
@@ -71,8 +72,8 @@ const CalendarView = () => {
   return (
     <div>
       <Calendar
-        onChange={onChange}
-        value={value}
+        onChange={setFocusedDay}
+        value={focusedDay}
         tileContent={({ date, view }) => {
           if (
             sessionList &&
@@ -94,7 +95,7 @@ const CalendarView = () => {
           }
         }}
       />
-      <div>Selected date: {value.toString()}</div>
+      <div>Selected date: {focusedDay.toString()}</div>
       <div>
         {currentDaySessions ? (
           <div>

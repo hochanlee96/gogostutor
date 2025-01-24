@@ -51,6 +51,7 @@ export const API_GoogleLogin = async (body) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       }
     );
     return response;
@@ -69,6 +70,7 @@ export const API_FacebookLogin = async (body) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       }
     );
     return response;

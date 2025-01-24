@@ -1,0 +1,21 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+}
+
+.SidebarContainer {
+  width: 15vw;
+  height: 100vh;
+  background-color: red;
+}
+
+.WeekViewContainer {
+  width: 65vw;
+  height: 100vh;
+}
+
+.MonthViewContainer {
+  width: 20vw;
+  height: 100vh;
+  background-color: blue;
+}

@@ -94,7 +94,15 @@ const Session = ({
             <button>Cancel</button>
           </div>
         ) : status === "approved" ? (
-          <button onClick={() => navigate("/learn/" + sessionId)}>
+          <button
+            onClick={() =>
+              //  navigate("/learn/" + sessionId);
+              window.open(
+                `https://learn.lvh.me:3003/learn/${sessionId}`,
+                "_self"
+              )
+            }
+          >
             Start Session..this is for test purposes
           </button>
         ) : null}

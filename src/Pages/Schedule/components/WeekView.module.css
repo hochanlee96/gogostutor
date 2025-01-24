@@ -1,0 +1,101 @@
+.tableContainer {
+  max-height: 65vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-bottom: 10px;
+}
+
+/* Timetable.module.css */
+.timetable {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr); /* Fixed width for hours, auto for days */
+  grid-template-rows: auto repeat(48, 50px); /* Auto height for header, fixed for hours */
+  /* gap: 1px; */
+  /* background-color: #ccc;  */
+}
+/* .timetable > div:nth-child(16n + 10),
+.timetable > div:nth-child(16n + 11),
+.timetable > div:nth-child(16n + 12),
+.timetable > div:nth-child(16n + 13),
+.timetable > div:nth-child(16n + 14),
+.timetable > div:nth-child(16n + 15),
+.timetable > div:nth-child(16n + 16) {
+  border-top: 1px solid #ddd;
+} */
+.headerTimetable {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr); /* Fixed width for hours, auto for days */
+  grid-template-rows: auto repeat(0, 50px); /* Auto height for header, fixed for hours */
+  /* gap: 1px; */
+  /* background-color: #ccc;  */
+}
+
+.hourCell {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid #f4f4f4; */
+  position: relative;
+}
+
+.hourHeader {
+  /* background-color: #f4f4f4; */
+  font-weight: bold;
+}
+
+.hourText {
+  font-size: 0.8rem;
+
+  position: absolute;
+  bottom: 0; /* Position at the top */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, 50%); /* Adjust to sit on the border */
+  background-color: #fff; /* Optional: Add background for visibility */
+  padding: 0 5px; /* Optional: Add padding around text */
+  z-index: 1;
+}
+
+.cell {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #ddd;
+}
+
+.borderTop {
+  border-top: 1px solid #ddd;
+}
+
+.emptyCell {
+  background-color: white;
+}
+
+.header {
+  background-color: white;
+  font-weight: bold;
+}
+
+.dateHeader {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dateCell {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid #ddd; */
+}
+
+.spanned {
+  background-color: #f0a; /* Distinct color for spanned items */
+  color: #fff;
+  text-align: center;
+  grid-row: span 2;
+  z-index: 1;
+}
