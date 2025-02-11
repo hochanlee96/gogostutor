@@ -92,10 +92,25 @@
   /* border: 1px solid #ddd; */
 }
 
-.spanned {
+.available {
   background-color: #f0a; /* Distinct color for spanned items */
   color: #fff;
   text-align: center;
-  grid-row: span 2;
+  /* grid-row: span 2; */
+  z-index: 1;
+}
+
+.active {
+  background-color: #30a; /* Distinct color for spanned items */
+  color: #fff;
+  text-align: center;
+  /* grid-row: span 2; */
+  z-index: 1;
+}
+.taken {
+  background-color: black; /* Distinct color for spanned items */
+  color: #fff;
+  text-align: center;
+  /* grid-row: span 2; */
   z-index: 1;
 }

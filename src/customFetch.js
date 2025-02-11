@@ -9,7 +9,6 @@ const api = axios.create({
 });
 
 export const setupAxiosInterceptors = (getAccessToken, setAccessToken) => {
-  console.log("inside interceptors");
   // Request Interceptor: Attach accessToken to the Authorization header
   api.interceptors.request.use(
     (config) => {

@@ -86,7 +86,7 @@ function App() {
           }
         );
         const data = await response.json();
-        console.log("dataaa:", data);
+
         if (data.status === 200) {
           // setProfileData({ ...data.profileData });
           setUserData({ ...data.data });
@@ -113,14 +113,14 @@ function App() {
       //     expiration: tokenExpiryDate.toISOString(),
       //   })
       // );
-      console.log("logging in...", token);
+
       updateAuthData(token);
       // setAccessToken(authData.accessToken);
       const decoded = jwtDecode(token);
-      console.log("decoded", decoded);
+
       // setTutorId(decoded.id);
       // setExpiration(decoded.exp);
-      console.log("get profile data!");
+
       getUserData(decoded.id, token);
     },
     [updateAuthData, getUserData]
@@ -185,7 +185,7 @@ function App() {
   useEffect(() => {
     if (accessToken && expiration) {
       const remainingTime = expiration - new Date().getTime();
-      console.log("remaining time: " + remainingTime);
+
       logoutTimer = setTimeout(verifyRefreshToken, remainingTime); // instead of logout, send refresh token request
     } else {
       clearTimeout(logoutTimer);

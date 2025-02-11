@@ -20,9 +20,15 @@ const hours = Array.from({ length: 50 }, (_, n) => {
     : `${i} am`;
 });
 
-const WeekView = ({ focusedDay, setFocusedDay }) => {
+const WeekView = ({
+  focusedDay,
+  setFocusedDay,
+  availabilityList,
+  setAvailabilityList,
+}) => {
   const [currentDay, setCurrentDay] = useState(new Date());
   //   const [focusedDay, setFocusedDay] = useState(new Date());
+  const [selectedList, setSelectedList] = useState([]);
 
   const formatWeekString = (today) => {
     const startDay = new Date(today);
@@ -33,7 +39,6 @@ const WeekView = ({ focusedDay, setFocusedDay }) => {
       new Intl.DateTimeFormat("en-US", { month: "long" }).format(startDay) +
       " " +
       startDay.getDate();
-    console.log("ss: ", startDayString);
 
     const endDay = new Date(startDay);
     endDay.setDate(endDay.getDate() + 6);
@@ -43,8 +48,6 @@ const WeekView = ({ focusedDay, setFocusedDay }) => {
       new Intl.DateTimeFormat("en-US", { month: "long" }).format(endDay) +
       " " +
       endDay.getDate();
-    console.log("ee: ", endDayString);
-    console.log(startDayString + " - " + endDayString.split(" ")[2]);
 
     if (startDay.getFullYear() !== endDay.getFullYear()) {
       return startDayString + " - " + endDayString;
@@ -92,7 +95,7 @@ const WeekView = ({ focusedDay, setFocusedDay }) => {
         {/* Row 0: Day headers */}
         {days.map((day, index) => {
           const currentDate = new Date(focusedDay);
-          console.log("FF: ", focusedDay);
+
           currentDate.setDate(
             currentDate.getDate() - currentDate.getDay() + index
           );
@@ -113,7 +116,7 @@ const WeekView = ({ focusedDay, setFocusedDay }) => {
             const mod = index % 2;
 
             return (
-              <React.Fragment key={hour}>
+              <React.Fragment key={`row-${index}`}>
                 {/* Hour row header */}
                 <div className={`${classes.hourCell} ${classes.hourHeader}`}>
                   <div className={classes.hourText}>{hour}</div>
@@ -121,31 +124,58 @@ const WeekView = ({ focusedDay, setFocusedDay }) => {
 
                 {/* Cells for each day */}
                 {days.map((day) => {
-                  const items = [{ day: "Tue", startHour: 5, duration: 4 }];
-                  const nullList = [
-                    { day: "Tue", startHour: 6 },
-                    { day: "Tue", startHour: 7 },
-                    { day: "Tue", startHour: 8 },
-                  ];
-                  const nullItem = nullList.find(
-                    (item) => item.day === day && item.startHour === index
-                  );
-
-                  const item = items.find(
-                    (i) => i.day === day && i.startHour === index
-                  );
+                  // const items = [{ day: "Tue", startHour: 5, duration: 4 }];
+                  // const nullList = [
+                  //   { day: "Tue", startHour: 6 },
+                  //   { day: "Tue", startHour: 7 },
+                  //   { day: "Tue", startHour: 8 },
+                  // ];
+                  // const nullItem = nullList.find(
+                  //   (item) => item.day === day && item.startHour === index
+                  // );
+                  let item = null;
+                  console.log("al", typeof availabilityList);
+                  if (availabilityList && availabilityList.length > 0) {
+                    console.log("checking availability");
+                    item = availabilityList.find(
+                      (i) => i.day === day && i.timeslot === index
+                    );
+                    if (item) {
+                      console.log("item!", item);
+                    }
+                  }
 
                   return item ? (
                     <div
-                      key={`${hour}-${day}`}
-                      className={`${classes.cell} ${classes.spanned}`}
-                      style={{ gridRow: `span ${item.duration}` }}
+                      key={`item-${hour}-${day}`}
+                      className={`${classes.cell} ${classes.available} ${
+                        selectedList.find((id) => id === item._id) &&
+                        item.status === "open"
+                          ? classes.active
+                          : item.status === "taken"
+                          ? classes.taken
+                          : null
+                      }`}
+                      // style={{ gridRow: `span ${item.duration}` }}
+
+                      onClick={() => {
+                        setSelectedList((prev) => {
+                          console.log("clicked", item._id);
+                          const exists = prev.find((id) => id === item._id);
+                          if (exists) {
+                            return prev.filter((id) => id !== item._id);
+                          } else {
+                            return [...prev, item._id];
+                          }
+                        });
+                      }}
                     >
                       {item.label}
                     </div>
-                  ) : nullItem ? null : (
+                  ) : (
+                    // : nullItem ? null
                     <div
-                      key={`${hour}-${day}`}
+                      key={`empty-${hour}-${day}`}
                       className={`${classes.cell} ${
                         !mod ? "" : classes.borderTop
                       }`}

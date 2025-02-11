@@ -23,10 +23,9 @@ const CalendarView = ({ focusedDay, setFocusedDay }) => {
       setIsLoadingSessions(true);
       const response = await API_GetTutorSessions(auth.id, auth.accessToken);
       const data = await response.json();
-      console.log("tutor sessions: ", data);
+
       if (data.status === 200) {
         setSessionList(data.sessionList);
-        console.log("data: ", data);
       } else if (data.status === 401) {
         auth.verifyRefreshToken();
       }

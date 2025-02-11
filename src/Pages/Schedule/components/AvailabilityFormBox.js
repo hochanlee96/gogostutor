@@ -40,7 +40,7 @@ const AvailabilityFormBox = () => {
       setFormData((prev) => {
         return {
           ...prev,
-          endTime: { ...prev.startTime, [fields[1]]: e.target.value },
+          endTime: { ...prev.endTime, [fields[1]]: e.target.value },
         };
       });
     }
@@ -71,11 +71,27 @@ const AvailabilityFormBox = () => {
     const valid = validator(formData);
     if (valid) {
       // Add new availability to the backend here
+      const timeData = {
+        startTime: new Date(
+          formData.startTime.year,
+          formData.startTime.month - 1,
+          formData.startTime.date,
+          formData.startTime.hour,
+          formData.startTime.minute
+        ).toISOString(),
+        endTime: new Date(
+          formData.endTime.year,
+          formData.endTime.month - 1,
+          formData.endTime.date,
+          formData.endTime.hour,
+          formData.endTime.minute
+        ).toISOString(),
+      };
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL + `/tutors/${auth.id}/availabilities`,
         {
           method: "POST",
-          body: JSON.stringify(formData),
+          body: JSON.stringify(timeData),
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + auth.accessToken,
