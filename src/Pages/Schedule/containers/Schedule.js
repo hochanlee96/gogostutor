@@ -1,14 +1,146 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 
+import Sidebar from "../../../shared/component/Sidebar/Sidebar.js";
+
 import { EditSession } from "../components/Session.js";
 import CalendarView from "../components/Calendar.js";
 import WeekView from "../components/WeekView.js";
 import AvailabilityFormBox from "../components/AvailabilityFormBox.js";
 import { AuthContext } from "../../../shared/context/auth-context.js";
 
-import classees from "./Schedule.module.css";
+import classes from "./Schedule.module.css";
 
 import { API_GetTutorSubjects, API_AddNewSession } from "../../../API";
+
+const generateTimeSlots = (data) => {
+  const slotList = [];
+
+  data.forEach((item) => {
+    const utcDate = new Date(item.startTime);
+
+    // Convert the UTC date to the local timezone
+    const localDate = new Date(
+      utcDate.toLocaleString("en-US", {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      })
+    );
+
+    // Get the hour and minute in local time
+    const localHour = localDate.getHours();
+    const localMinute = localDate.getMinutes();
+    const localDay = localDate.getDay();
+
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    // Calculate the slot number (each slot is 30 minutes)
+    const timeslot = localHour * 2 + Math.floor(localMinute / 30) + 1;
+
+    const newItem = {
+      ...item,
+      timeslot,
+      day: days[localDay],
+      column: localDay + 2,
+      row: timeslot,
+    };
+    slotList.push(newItem);
+  });
+
+  return slotList;
+};
+
+const mergeTimeslots = (timeslots) => {
+  const columnObj = {};
+  const result = [];
+  for (let i = 0; i < timeslots.length; i++) {
+    const currentColumn = timeslots[i].column;
+    if (columnObj[currentColumn]) {
+      const currentMin = columnObj[currentColumn].minrow;
+      columnObj[currentColumn].minrow =
+        currentMin > timeslots[i].row ? timeslots[i].row : currentMin;
+      columnObj[currentColumn].count++;
+    } else {
+      columnObj[currentColumn] = {
+        minrow: timeslots[i].row,
+        count: 1,
+        subject: timeslots[i].subjectList[0],
+      };
+    }
+  }
+
+  for (let key in columnObj) {
+    result.push({
+      column: key,
+      row: columnObj[key].minrow,
+      span: columnObj[key].count,
+      subject: { ...columnObj[key].subject },
+    });
+  }
+  return result;
+};
+
+const generateSessions = (data) => {
+  const sessionObj = {};
+  let result = [];
+  for (let i = 0; i < data.length; i++) {
+    const groupId = data[i].groupId;
+    if (sessionObj[groupId]) {
+      sessionObj[groupId].push(data[i]);
+    } else {
+      sessionObj[groupId] = [data[i]];
+    }
+  }
+
+  for (let key in sessionObj) {
+    const sessionGroup = mergeTimeslots(sessionObj[key]);
+
+    result = result.concat(sessionGroup);
+  }
+
+  return result;
+};
+
+const mergeIntoClusters = (objects) => {
+  // Sort the array to ensure row order
+  const sortedObjects = [...objects].sort(
+    (a, b) =>
+      a.groupId - b.groupId ||
+      a.status.localeCompare(b.status) ||
+      a.column - b.column ||
+      a.row - b.row
+  );
+
+  const clusters = [];
+
+  for (let obj of sortedObjects) {
+    // Check if we can merge with the last cluster
+    let lastCluster = clusters[clusters.length - 1];
+
+    if (
+      lastCluster &&
+      lastCluster.groupId === obj.groupId &&
+      lastCluster.status === obj.status &&
+      lastCluster.column === obj.column &&
+      obj.row === lastCluster.startingRow + lastCluster.count // Ensuring consecutive row index
+    ) {
+      // Extend the existing cluster
+      lastCluster.count += 1;
+      lastCluster.originalObjects.push(obj);
+    } else {
+      // Start a new cluster
+      clusters.push({
+        groupId: obj.groupId,
+        status: obj.status,
+        column: obj.column,
+        startingRow: obj.row,
+        count: 1,
+        title: obj.subjectList[0].title,
+        originalObjects: [obj],
+      });
+    }
+  }
+
+  return clusters;
+};
 
 const Schedule = () => {
   const [isAddingSession, setIsAddingSession] = useState(false);
@@ -16,68 +148,10 @@ const Schedule = () => {
   const [isLoadingSubjectList, setIsLoadingSubjectList] = useState(true);
   const [focusedDay, setFocusedDay] = useState(new Date());
   const [availabilityList, setAvailabilityList] = useState([]);
+  const [sessionSlotList, setSessionSlotList] = useState([]);
+  const [mergedSessionSlotList, setMergedSessionSlotList] = useState([]);
+  const [collapsed, setCollapsed] = useState(false);
   const auth = useContext(AuthContext);
-
-  const generateTimeSlots = (data) => {
-    const slotList = [];
-
-    data.forEach((item) => {
-      const utcDate = new Date(item.startTime);
-
-      // Convert the UTC date to the local timezone
-      const localDate = new Date(
-        utcDate.toLocaleString("en-US", {
-          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        })
-      );
-
-      // Get the hour and minute in local time
-      const localHour = localDate.getHours();
-      const localMinute = localDate.getMinutes();
-      const localDay = localDate.getDay();
-
-      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-      // Calculate the slot number (each slot is 30 minutes)
-      const timeslot = localHour * 2 + Math.floor(localMinute / 30) + 1;
-
-      const newItem = { ...item, timeslot, day: days[localDay] };
-      slotList.push(newItem);
-    });
-
-    return slotList;
-
-    // const groupedById = data.reduce((acc, item) => {
-    //   const { groupId } = item;
-
-    //   const utcDate = new Date(item.startTime);
-
-    //   // Convert the UTC date to the local timezone
-    //   const localDate = new Date(
-    //     utcDate.toLocaleString("en-US", {
-    //       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    //     })
-    //   );
-
-    //   // Get the hour and minute in local time
-    //   const localHour = localDate.getHours();
-    //   const localMinute = localDate.getMinutes();
-    //   const localDay = localDate.getDay();
-
-    //   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    //   // Calculate the slot number (each slot is 30 minutes)
-    //   const timeslot = localHour * 2 + Math.floor(localMinute / 30);
-
-    //   const newItem = { ...item, timeslot, day: days[localDay] };
-    //   if (!acc[groupId]) {
-    //     acc[groupId] = []; // Initialize an empty array for this id
-    //   }
-    //   acc[groupId].push(newItem); // Push the current object into the array
-    //   return acc;
-    // }, {});
-    // return groupedById;
-  };
 
   const fetchAvailability = useCallback(async () => {
     try {
@@ -92,7 +166,7 @@ const Schedule = () => {
       const endTime = new Date(
         new Date(startTime).setDate(startTime.getDate() + 8)
       );
-      console.log(`startTime: ${startTime} endTime: ${endTime}`);
+      // console.log(`startTime: ${startTime} endTime: ${endTime}`);
       const queryString = `startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
       console.log(`queryString: ${queryString}`);
       const response = await fetch(
@@ -109,8 +183,16 @@ const Schedule = () => {
         }
       );
       const data = await response.json();
+      console.log("timeslot raw data: ", data.data);
       const array = generateTimeSlots(data.data);
+      const sessionSlots = generateSessions(array);
+      const merged = mergeIntoClusters(array);
+      console.log("session slots: ", sessionSlots);
+      console.log("session slots new: ", merged);
+      console.log("timeslot processed data", array);
       setAvailabilityList(array);
+      setSessionSlotList(sessionSlots);
+      setMergedSessionSlotList(merged);
     } catch (error) {
       console.log(error);
     }
@@ -135,7 +217,7 @@ const Schedule = () => {
       auth.accessToken
     );
     const data = await response.json();
-    console.log(data);
+
     window.location.reload();
   };
 
@@ -162,19 +244,32 @@ const Schedule = () => {
   }, [auth.id, auth.accessToken, focusedDay, fetchAvailability]);
 
   return (
-    <div className={classees.Container}>
-      <div className={classees.SidebarContainer}>Sidebar</div>
-      <div className={classees.WeekViewContainer}>
-        <AvailabilityFormBox />
+    <div className={classes.Container}>
+      <div
+        className={`${classes.SidebarContainer} ${
+          collapsed ? `${classes.SidebarCollapsed}` : ""
+        }`}
+      >
+        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      </div>
+
+      <div
+        className={`${classes.WeekViewContainer} ${
+          collapsed ? classes.WeekViewContainerCollapsed : ""
+        }`}
+      >
+        <AvailabilityFormBox subjectList={subjectList} />
         <WeekView
           focusedDay={focusedDay}
           setFocusedDay={setFocusedDay}
           availabilityList={availabilityList}
           setAvailabilityList={setAvailabilityList}
+          sessionSlotList={sessionSlotList}
+          mergedSessionSlotList={mergedSessionSlotList}
         />
       </div>
-      <div className={classees.MonthViewContainer}>
-        <h3>Set availability for next month</h3>
+      <div className={classes.MonthViewContainer}>
+        {/* <h3>Set availability for next month</h3>
         {isLoadingSubjectList ? (
           <div>Loading...</div>
         ) : subjectList && subjectList.length > 0 ? (
@@ -197,7 +292,7 @@ const Schedule = () => {
           )
         ) : (
           <div>You should apply for a subject to teach first!</div>
-        )}
+        )} */}
         <CalendarView focusedDay={focusedDay} setFocusedDay={setFocusedDay} />
       </div>
     </div>

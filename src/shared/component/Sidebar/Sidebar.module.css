@@ -1,0 +1,77 @@
+.sidebar {
+  width: 200px;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: column;
+  margin: 50px 50px;
+  position: relative;
+}
+
+.sidebar.collapsed {
+  width: 50px; /* Shrinks sidebar */
+}
+.logoContainer {
+  background-color: rgb(245, 247, 249);
+  border-radius: 10px 10px 0 0;
+  padding: 10px 5px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  width: 90%;
+}
+
+.toggleButton {
+  position: absolute;
+  top: 50%;
+  right: -15px; /* Moves the button out of the sidebar slightly */
+  transform: translateY(-50%);
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.menu li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #666;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.menu li:hover {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+.divider {
+  height: 1px;
+  background: #ddd;
+  margin: 10px 0;
+}

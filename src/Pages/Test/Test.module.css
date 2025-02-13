@@ -1,0 +1,35 @@
+.container {
+  height: 80vh;
+}
+
+.timetable {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr); /* Fixed width for hours, auto for days */
+  grid-template-rows: auto repeat(48, 50px); /* Auto height for header, fixed for hours */
+  /* gap: 1px; */
+  background-color: #ccc;
+}
+
+.cell {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  border-left: 1px solid #ddd;
+}
+
+.cell2 {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  border-left: 1px solid #ddd;
+  grid-row: span 2;
+}
+
+.overlayCell {
+  grid-column: 2;
+  grid-row: 2;
+  background: rgba(255, 0, 0, 0.7);
+  z-index: 1;
+}

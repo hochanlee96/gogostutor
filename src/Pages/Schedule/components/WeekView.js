@@ -1,34 +1,92 @@
 import React, { useState } from "react";
 
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+
 import classes from "./WeekView.module.css";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const hours = Array.from({ length: 50 }, (_, n) => {
-  const mod = n % 2;
-  const i = (n - mod) / 2;
+// const hours = Array.from({ length: 48 }, (_, n) => {
+//   const mod = n % 2;
+//   const i = (n - mod) / 2;
 
-  return mod
-    ? ""
-    : i === 0
-    ? ""
-    : i === 24
-    ? `${12} am`
-    : i === 12
-    ? `${12} pm`
-    : i > 11
-    ? `${i - 12} pm`
-    : `${i} am`;
-});
+//   return mod
+//     ? ""
+//     : i === 0
+//     ? ""
+//     : i === 24
+//     ? `${12} am`
+//     : i === 12
+//     ? `${12} pm`
+//     : i > 11
+//     ? `${i - 11} pm`
+//     : `${i} am`;
+// });
+// console.log("hours: ", hours);
+const hours = [
+  "",
+  "1 am",
+  "",
+  "2 am",
+  "",
+  "3 am",
+  "",
+  "4 am",
+  "",
+  "5 am",
+  "",
+  "6 am",
+  "",
+  "7 am",
+  "",
+  "8 am",
+  "",
+  "9 am",
+  "",
+  "10 am",
+  "",
+  "11 am",
+  "",
+  "12 pm",
+  "",
+  "1 pm",
+  "",
+  "2 pm",
+  "",
+  "3 pm",
+  "",
+  "4 pm",
+  "",
+  "5 pm",
+  "",
+  "6 pm",
+  "",
+  "7 pm",
+  "",
+  "8 pm",
+  "",
+  "9 pm",
+  "",
+  "10 pm",
+  "",
+  "11 pm",
+  "",
+  "12 am",
+];
+
+const emptySlots = Array.from({ length: 48 * 7 }, (_, i) => i);
 
 const WeekView = ({
   focusedDay,
   setFocusedDay,
   availabilityList,
   setAvailabilityList,
+  sessionSlotList,
+  mergedSessionSlotList,
 }) => {
   const [currentDay, setCurrentDay] = useState(new Date());
   //   const [focusedDay, setFocusedDay] = useState(new Date());
   const [selectedList, setSelectedList] = useState([]);
+  console.log("a list: ", availabilityList);
 
   const formatWeekString = (today) => {
     const startDay = new Date(today);
@@ -78,19 +136,35 @@ const WeekView = ({
     <div className={classes.Container}>
       <div className={classes.WeekInfoBox}>
         <div>{formatWeekString(focusedDay)}</div>
-        <button onClick={() => moveWeek("prev")}>prev</button>
-        <button
-          onClick={() => {
-            setFocusedDay(currentDay);
-          }}
-        >
-          today
-        </button>
-        <button onClick={() => moveWeek("next")}>next</button>
+        <div className={classes.moveButtonBox}>
+          <button
+            onClick={() => moveWeek("prev")}
+            className={classes.moveButton}
+          >
+            <FaChevronLeft />
+          </button>
+          <button
+            className={`${classes.moveButton} ${classes.moveButtonToday}`}
+            onClick={() => {
+              setFocusedDay(currentDay);
+            }}
+          >
+            today
+          </button>
+          <button
+            onClick={() => moveWeek("next")}
+            className={classes.moveButton}
+          >
+            <FaChevronRight />
+          </button>
+        </div>
       </div>
       <div className={classes.headerTimetable}>
         {/* Row 0: Empty corner cell */}
-        <div className={` ${classes.emptyCell} `}></div>
+        <div
+          className={` ${classes.emptyCell} `}
+          style={{ gridRow: 1, gridColumn: 1 }}
+        ></div>
 
         {/* Row 0: Day headers */}
         {days.map((day, index) => {
@@ -100,7 +174,11 @@ const WeekView = ({
             currentDate.getDate() - currentDate.getDay() + index
           );
           return (
-            <div key={day} className={`${classes.dateCell} ${classes.header}`}>
+            <div
+              key={day}
+              className={`${classes.dateCell} ${classes.header}`}
+              style={{ gridRow: 1, gridColumn: index + 2 }}
+            >
               <div className={classes.dateHeader}>
                 <div>{currentDate.getDate()}</div>
                 <div>{day}</div>
@@ -113,78 +191,86 @@ const WeekView = ({
         <div className={classes.timetable}>
           {/* Hour headers and timetable cells */}
           {hours.map((hour, index) => {
-            const mod = index % 2;
-
             return (
               <React.Fragment key={`row-${index}`}>
                 {/* Hour row header */}
-                <div className={`${classes.hourCell} ${classes.hourHeader}`}>
+                <div
+                  className={`${classes.hourCell} ${classes.hourHeader}`}
+                  style={{ gridColumn: 1, gridRow: index + 1 }}
+                >
                   <div className={classes.hourText}>{hour}</div>
                 </div>
-
-                {/* Cells for each day */}
-                {days.map((day) => {
-                  // const items = [{ day: "Tue", startHour: 5, duration: 4 }];
-                  // const nullList = [
-                  //   { day: "Tue", startHour: 6 },
-                  //   { day: "Tue", startHour: 7 },
-                  //   { day: "Tue", startHour: 8 },
-                  // ];
-                  // const nullItem = nullList.find(
-                  //   (item) => item.day === day && item.startHour === index
-                  // );
-                  let item = null;
-                  console.log("al", typeof availabilityList);
-                  if (availabilityList && availabilityList.length > 0) {
-                    console.log("checking availability");
-                    item = availabilityList.find(
-                      (i) => i.day === day && i.timeslot === index
-                    );
-                    if (item) {
-                      console.log("item!", item);
-                    }
-                  }
-
-                  return item ? (
-                    <div
-                      key={`item-${hour}-${day}`}
-                      className={`${classes.cell} ${classes.available} ${
-                        selectedList.find((id) => id === item._id) &&
-                        item.status === "open"
-                          ? classes.active
-                          : item.status === "taken"
-                          ? classes.taken
-                          : null
-                      }`}
-                      // style={{ gridRow: `span ${item.duration}` }}
-
-                      onClick={() => {
-                        setSelectedList((prev) => {
-                          console.log("clicked", item._id);
-                          const exists = prev.find((id) => id === item._id);
-                          if (exists) {
-                            return prev.filter((id) => id !== item._id);
-                          } else {
-                            return [...prev, item._id];
-                          }
-                        });
-                      }}
-                    >
-                      {item.label}
-                    </div>
-                  ) : (
-                    // : nullItem ? null
-                    <div
-                      key={`empty-${hour}-${day}`}
-                      className={`${classes.cell} ${
-                        !mod ? "" : classes.borderTop
-                      }`}
-                    >
-                      {/* Content goes here */}
-                    </div>
-                  );
-                })}
               </React.Fragment>
+            );
+          })}
+          {emptySlots.map((slot, index) => {
+            const day = index % 7;
+            const column = day + 2;
+            const row = (index - day) / 7 + 1;
+            const odd = row % 2;
+            return (
+              <div
+                key={`empty-${index}`}
+                style={{
+                  gridColumn: column,
+                  gridRow: row,
+                  border: "1px solid #ddd",
+                  zIndex: "0",
+                }}
+              ></div>
+            );
+          })}
+          {availabilityList.map((slot, index) => {
+            return slot.status === "taken" ? (
+              <div
+                key={`slot-${index}`}
+                style={{
+                  gridRow: slot.row,
+                  gridColumn: slot.column,
+                  zIndex: "2",
+                }}
+                className={classes.timeslotTaken}
+              ></div>
+            ) : (
+              <div
+                key={`slot-${index}`}
+                style={{
+                  gridRow: slot.row,
+                  gridColumn: slot.column,
+                  zIndex: "2",
+                }}
+                className={classes.timeslot}
+              ></div>
+            );
+          })}
+          {/* <div
+            style={{
+              gridRow: "23 / span 4",
+              gridColumn: 4,
+              backgroundColor: "green",
+              zIndex: "1",
+            }}
+          ></div> */}
+          {mergedSessionSlotList.map((slot, index) => {
+            return (
+              <div
+                key={`${slot.groupId}-${index}`}
+                className={classes.sessionslot}
+                style={{
+                  gridRow: `${slot.startingRow} / span ${slot.count}`,
+                  gridColumn: slot.column,
+                  zIndex: "1",
+                }}
+              >
+                <div
+                  className={`${
+                    slot.status === "open"
+                      ? classes.sessionslotIndex
+                      : classes.sessionslotIndexTaken
+                  }`}
+                ></div>
+                <div className={classes.sessionslotText}>{slot.title}</div>
+              </div>
             );
           })}
         </div>

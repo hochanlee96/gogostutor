@@ -20,6 +20,7 @@ import Settings from "./Pages/Settings/containers/AccountSettings";
 // import Test from "../Tutor/Test/pages/Test";
 import VerifyEmail from "./Pages/Verify/containers/VerifyEmail";
 import PaymentTest from "./Pages/PaymentTest/containers/PaymentTest";
+import Test from "./Pages/Test/Test";
 import {
   CheckoutTest,
   ReturnTest,
@@ -47,6 +48,7 @@ const TutorRoutes = ({ isSignedIn }) => {
         <Route exact path="/checkout-test" element={<CheckoutTest />} />
         <Route exact path="/checkout-return-test" element={<ReturnTest />} />
         <Route exact path="/payout-test" element={<PayoutTest />} />
+        <Route exact path="/test" element={<Test />} />
 
         <Route path="/*" element={<Navigate replace to="/" />} />
       </Routes>

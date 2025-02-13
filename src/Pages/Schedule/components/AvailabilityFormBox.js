@@ -7,9 +7,10 @@ const defaultStartTime = new Date(
   new Date().setHours(new Date().getHours() + 1)
 );
 const defaultEndTime = new Date(new Date().setHours(new Date().getHours() + 2));
-const AvailabilityFormBox = () => {
+const AvailabilityFormBox = ({ subjectList }) => {
   const auth = useContext(AuthContext);
   const [isAdding, setIsAdding] = useState(false);
+  const [selectedSubjectList, setSelectedSubjectList] = useState([]);
   const [formData, setFormData] = useState({
     startTime: {
       year: defaultStartTime.getFullYear(),
@@ -46,6 +47,17 @@ const AvailabilityFormBox = () => {
     }
   };
 
+  const subjectSelectHandler = (e) => {
+    console.log(e.target.value);
+    console.log(subjectList);
+    const subject = subjectList.find((s) => s.subject._id === e.target.value);
+    setSelectedSubjectList((prev) => {
+      return prev.find((s) => s.subject._id === e.target.value)
+        ? prev
+        : [...prev, subject];
+    });
+  };
+
   const validator = (data) => {
     const startTime = new Date(
       data.startTime.year,
@@ -64,14 +76,19 @@ const AvailabilityFormBox = () => {
     return endTime - startTime > 3599999;
   };
 
-  validator(formData);
-
   const addAvailabilityHandler = async (e) => {
     e.preventDefault();
-    const valid = validator(formData);
+    let valid = validator(formData);
+    const subjectList = [];
+    selectedSubjectList.forEach((s) => {
+      subjectList.push(s.subject._id);
+    });
+    if (subjectList.length === 0) {
+      valid = false;
+    }
     if (valid) {
       // Add new availability to the backend here
-      const timeData = {
+      const body = {
         startTime: new Date(
           formData.startTime.year,
           formData.startTime.month - 1,
@@ -86,12 +103,13 @@ const AvailabilityFormBox = () => {
           formData.endTime.hour,
           formData.endTime.minute
         ).toISOString(),
+        subjectList: subjectList,
       };
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL + `/tutors/${auth.id}/availabilities`,
         {
           method: "POST",
-          body: JSON.stringify(timeData),
+          body: JSON.stringify(body),
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + auth.accessToken,
@@ -177,6 +195,33 @@ const AvailabilityFormBox = () => {
           value={formData.endTime.minute}
         />
       </div>
+      <select onChange={subjectSelectHandler}>
+        <option>Select a subject</option>
+        {subjectList.map((subject) => {
+          return (
+            <option key={subject.subject._id} value={subject.subject._id}>
+              {subject.subject.title}
+            </option>
+          );
+        })}
+      </select>
+      {selectedSubjectList.map((item, index) => {
+        return (
+          <div key={item.subject._id}>
+            <div>{item.subject.title}</div>
+            <button
+              onClick={() => {
+                setSelectedSubjectList((prev) => {
+                  return prev.filter((s) => s.subject._id !== item.subject._id);
+                });
+              }}
+            >
+              remove
+            </button>
+          </div>
+        );
+      })}
+
       <button>Submit</button>
     </form>
   );

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
+import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 
 import { AuthContext } from "../../../shared/context/auth-context";
 import { API_GetTutorSessions, API_DeleteTutorSessions } from "../../../API";
@@ -9,6 +10,13 @@ import "./Calendar.css";
 import moment from "moment";
 import classes from "./Calendar.module.css";
 import { Session } from "./Session.js";
+
+const isSameWeek = (day, focusedDay) => {
+  const weekStart = startOfWeek(focusedDay, { weekStartsOn: 0 }); // Sunday start
+  const weekEnd = endOfWeek(focusedDay, { weekStartsOn: 0 });
+
+  return isWithinInterval(day, { start: weekStart, end: weekEnd });
+};
 
 const CalendarView = ({ focusedDay, setFocusedDay }) => {
   // const [value, onChange] = useState(new Date(new Date().setHours(0, 0, 0, 0)));
@@ -73,6 +81,12 @@ const CalendarView = ({ focusedDay, setFocusedDay }) => {
       <Calendar
         onChange={setFocusedDay}
         value={focusedDay}
+        locale="en-US"
+        tileClassName={({ date }) => {
+          if (isSameWeek(date, focusedDay)) {
+            return classes.currentWeek;
+          }
+        }}
         tileContent={({ date, view }) => {
           if (
             sessionList &&
@@ -94,7 +108,7 @@ const CalendarView = ({ focusedDay, setFocusedDay }) => {
           }
         }}
       />
-      <div>Selected date: {focusedDay.toString()}</div>
+      {/* <div>Selected date: {focusedDay.toString()}</div>
       <div>
         {currentDaySessions ? (
           <div>
@@ -116,7 +130,7 @@ const CalendarView = ({ focusedDay, setFocusedDay }) => {
             })}
           </div>
         ) : null}
-      </div>
+      </div> */}
     </div>
   );
 };
