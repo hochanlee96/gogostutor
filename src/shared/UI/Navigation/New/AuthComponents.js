@@ -8,6 +8,9 @@ import classes from "./AuthComponents.module.css";
 import { AuthContext } from "../../../context/auth-context";
 import { ProfileContext } from "../../../context/profile-context";
 
+import { FaExclamation, FaBell, FaComment } from "react-icons/fa";
+import emptyUserImage from "../../../../shared/assets/icons/user.png";
+
 const AuthComponents = ({ isLoggedIn, verified }) => {
   const [newMessage, setNewMessage] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -40,8 +43,9 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
               onClick={() => {
                 navigate("/verify-email");
               }}
+              className={classes.VerifyMessage}
             >
-              Verify your email!
+              <FaExclamation size="20px" />
             </div>
           </li>
         )}
@@ -50,18 +54,36 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
             className={classes.UtilityButton}
             onClick={() => {
               setNewMessage(false);
+              // navigate("/messages");
+            }}
+          >
+            <FaBell size="20px" />
+          </div>
+        </li>
+        <li>
+          <div
+            className={classes.UtilityButton}
+            onClick={() => {
+              setNewMessage(false);
               navigate("/messages");
             }}
           >
-            {newMessage && location.pathname !== "/messages" ? "New " : ""}
-            messaages
+            {/* {newMessage && location.pathname !== "/messages" ? "New " : ""}
+            messaages */}
+            <FaComment size="20px" />
           </div>
         </li>
         <li>
           <div onClick={() => setModalOpen(true)}>
-            {profileData && profileData.firstName
-              ? profileData.firstName
-              : "user"}
+            {profileData && profileData.firstName ? (
+              <img
+                className={classes.UserIcon}
+                src={emptyUserImage}
+                alt="profile_Image"
+              />
+            ) : (
+              "user"
+            )}
           </div>
           {modalOpen ? (
             <ActionsModal setIsOpen={setModalOpen} email={profileData.email} />

@@ -1,10 +1,11 @@
+import React from "react";
 import { Route, Navigate, Routes } from "react-router-dom";
 
 // import Navigation from "../Tutor/Navigation/Navigation";
-import Navigation from "./shared/UI/Navigation/Test/NavigationTest";
-import ScrollToTop from "./shared/UI/Navigation/ScrollToTop";
+import Navigation from "./shared/UI/Navigation/New/Navigation";
+import ScrollToTop from "./shared/UI/Navigation/New/ScrollToTop";
 // import Footer from "./shared/UI/Navigation/Footer";
-import Footer from "./shared/UI/Navigation/Test/Footer";
+import Footer from "./shared/UI/Navigation/New/Footer";
 
 // import Home from "../Tutor/Home/pages/Home";
 import Home from "./Pages/Home/Test/pages/HomeTest";
@@ -26,6 +27,8 @@ import {
   ReturnTest,
 } from "./Pages/PaymentTest/containers/CheckoutTest";
 import PayoutTest from "./Pages/PaymentTest/containers/PayoutTest";
+
+import classes from "./Routes.module.css";
 
 const TutorRoutes = ({ isSignedIn }) => {
   let routes;

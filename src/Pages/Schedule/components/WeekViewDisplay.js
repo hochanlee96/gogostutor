@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
-import classes from "./WeekView.module.css";
+import classes from "./WeekViewDisplay.module.css";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // const hours = Array.from({ length: 48 }, (_, n) => {
@@ -86,7 +86,6 @@ const WeekView = ({
   const [currentDay, setCurrentDay] = useState(new Date());
   //   const [focusedDay, setFocusedDay] = useState(new Date());
   const [selectedList, setSelectedList] = useState([]);
-  console.log("a list: ", availabilityList);
 
   const formatWeekString = (today) => {
     const startDay = new Date(today);
@@ -135,7 +134,7 @@ const WeekView = ({
   return (
     <div className={classes.Container}>
       <div className={classes.WeekInfoBox}>
-        <div>{formatWeekString(focusedDay)}</div>
+        <div className={classes.DateString}>{formatWeekString(focusedDay)}</div>
         <div className={classes.moveButtonBox}>
           <button
             onClick={() => moveWeek("prev")}
@@ -146,10 +145,10 @@ const WeekView = ({
           <button
             className={`${classes.moveButton} ${classes.moveButtonToday}`}
             onClick={() => {
-              setFocusedDay(currentDay);
+              setFocusedDay(new Date());
             }}
           >
-            today
+            Today
           </button>
           <button
             onClick={() => moveWeek("next")}

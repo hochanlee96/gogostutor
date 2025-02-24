@@ -4,13 +4,48 @@ import Sidebar from "../../../shared/component/Sidebar/Sidebar.js";
 
 import { EditSession } from "../components/Session.js";
 import CalendarView from "../components/Calendar.js";
-import WeekView from "../components/WeekView.js";
+import WeekViewDisplay from "../components/WeekViewDisplay.js";
+import WeekViewEdit from "../components/WeekViewEdit.js";
 import AvailabilityFormBox from "../components/AvailabilityFormBox.js";
 import { AuthContext } from "../../../shared/context/auth-context.js";
 
 import classes from "./Schedule.module.css";
 
+import { AiFillFire } from "react-icons/ai";
 import { API_GetTutorSubjects, API_AddNewSession } from "../../../API";
+
+const generateTimeslotMap = (data) => {
+  const emptySlots = Array.from({ length: 48 * 7 }, (_, i) => i);
+  const timeslotMap = emptySlots.reduce((acc, _, index) => {
+    acc[index] = { status: "none" };
+    return acc;
+  }, {});
+  data.forEach((item) => {
+    const utcDate = new Date(item.startTime);
+
+    // Convert the UTC date to the local timezone
+    const localDate = new Date(
+      utcDate.toLocaleString("en-US", {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      })
+    );
+
+    // Get the hour and minute in local time
+    const localHour = localDate.getHours();
+    const localMinute = localDate.getMinutes();
+    const localDay = localDate.getDay();
+
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    // Calculate the slot number (each slot is 30 minutes)
+    const timeslot = localHour * 2 + Math.floor(localMinute / 30);
+
+    const currentIndex = timeslot * 7 + localDay;
+    timeslotMap[currentIndex]["status"] = "registered";
+    timeslotMap[currentIndex]["item"] = { ...item };
+  });
+  return timeslotMap;
+};
 
 const generateTimeSlots = (data) => {
   const slotList = [];
@@ -144,6 +179,7 @@ const mergeIntoClusters = (objects) => {
 
 const Schedule = () => {
   const [isAddingSession, setIsAddingSession] = useState(false);
+  const [isManagingTimeSlots, setManagingTimeSlots] = useState(false);
   const [subjectList, setSubjectList] = useState([]);
   const [isLoadingSubjectList, setIsLoadingSubjectList] = useState(true);
   const [focusedDay, setFocusedDay] = useState(new Date());
@@ -151,6 +187,7 @@ const Schedule = () => {
   const [sessionSlotList, setSessionSlotList] = useState([]);
   const [mergedSessionSlotList, setMergedSessionSlotList] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
+  const [timeslotMap, setTimeslotMap] = useState({});
   const auth = useContext(AuthContext);
 
   const fetchAvailability = useCallback(async () => {
@@ -168,7 +205,7 @@ const Schedule = () => {
       );
       // console.log(`startTime: ${startTime} endTime: ${endTime}`);
       const queryString = `startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
-      console.log(`queryString: ${queryString}`);
+      // console.log(`queryString: ${queryString}`);
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL +
           `/tutors/${auth.id}/availabilities?${queryString}`,
@@ -183,16 +220,18 @@ const Schedule = () => {
         }
       );
       const data = await response.json();
-      console.log("timeslot raw data: ", data.data);
+      // console.log("timeslot raw data: ", data);
       const array = generateTimeSlots(data.data);
       const sessionSlots = generateSessions(array);
       const merged = mergeIntoClusters(array);
-      console.log("session slots: ", sessionSlots);
-      console.log("session slots new: ", merged);
-      console.log("timeslot processed data", array);
+      const timeslotMap = generateTimeslotMap(array);
+      // console.log("session slots: ", sessionSlots);
+      // console.log("session slots new: ", merged);
+      // console.log("timeslot processed data", array);
       setAvailabilityList(array);
       setSessionSlotList(sessionSlots);
       setMergedSessionSlotList(merged);
+      setTimeslotMap(timeslotMap);
     } catch (error) {
       console.log(error);
     }
@@ -239,6 +278,7 @@ const Schedule = () => {
 
   useEffect(() => {
     if (auth.id && auth.accessToken && focusedDay) {
+      console.log("fetching timeslots...");
       fetchAvailability();
     }
   }, [auth.id, auth.accessToken, focusedDay, fetchAvailability]);
@@ -252,24 +292,41 @@ const Schedule = () => {
       >
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       </div>
-
       <div
-        className={`${classes.WeekViewContainer} ${
-          collapsed ? classes.WeekViewContainerCollapsed : ""
+        className={`${classes.MainContainer} ${
+          collapsed ? classes.MainContainerCollapsed : ""
         }`}
       >
-        <AvailabilityFormBox subjectList={subjectList} />
-        <WeekView
-          focusedDay={focusedDay}
-          setFocusedDay={setFocusedDay}
-          availabilityList={availabilityList}
-          setAvailabilityList={setAvailabilityList}
-          sessionSlotList={sessionSlotList}
-          mergedSessionSlotList={mergedSessionSlotList}
-        />
-      </div>
-      <div className={classes.MonthViewContainer}>
-        {/* <h3>Set availability for next month</h3>
+        <div
+          className={`${classes.WeekViewContainer} ${
+            collapsed ? classes.WeekViewContainerCollapsed : ""
+          }`}
+        >
+          {isManagingTimeSlots ? (
+            <WeekViewEdit
+              focusedDay={focusedDay}
+              setFocusedDay={setFocusedDay}
+              availabilityList={availabilityList}
+              setAvailabilityList={setAvailabilityList}
+              sessionSlotList={sessionSlotList}
+              mergedSessionSlotList={mergedSessionSlotList}
+              timeslotMap={timeslotMap}
+              setManagingTimeSlots={setManagingTimeSlots}
+              subjectList={subjectList}
+            />
+          ) : (
+            <WeekViewDisplay
+              focusedDay={focusedDay}
+              setFocusedDay={setFocusedDay}
+              availabilityList={availabilityList}
+              setAvailabilityList={setAvailabilityList}
+              sessionSlotList={sessionSlotList}
+              mergedSessionSlotList={mergedSessionSlotList}
+            />
+          )}
+        </div>
+        <div className={classes.MonthViewContainer}>
+          {/* <h3>Set availability for next month</h3>
         {isLoadingSubjectList ? (
           <div>Loading...</div>
         ) : subjectList && subjectList.length > 0 ? (
@@ -293,7 +350,60 @@ const Schedule = () => {
         ) : (
           <div>You should apply for a subject to teach first!</div>
         )} */}
-        <CalendarView focusedDay={focusedDay} setFocusedDay={setFocusedDay} />
+          <CalendarView focusedDay={focusedDay} setFocusedDay={setFocusedDay} />
+          <AvailabilityFormBox subjectList={subjectList} />
+          {!isManagingTimeSlots ? (
+            <div className={classes.ManageButtonBox}>
+              <div className={classes.ManageButtonTextBox}>
+                <div className={classes.ManageButtonTitle}>
+                  Reach out to over 200 Students
+                </div>
+                <div>
+                  <AiFillFire /> {`200 + students taking lesson at the moment`}
+                </div>
+              </div>
+              <button
+                className={classes.ManageButton}
+                onClick={() => {
+                  setManagingTimeSlots(true);
+                }}
+              >
+                Manage time slot
+              </button>
+            </div>
+          ) : (
+            <div className={classes.colorInfoBox}>
+              <div>
+                <div
+                  className={classes.colorSquare}
+                  style={{ backgroundColor: "#0045a9" }}
+                ></div>
+                <p className={classes.colorInfoText}>Registered</p>
+              </div>
+              <div>
+                <div
+                  className={classes.colorSquare}
+                  style={{ backgroundColor: "rgb(249, 87, 70)" }}
+                ></div>
+                <p className={classes.colorInfoText}>Unregister</p>
+              </div>
+              <div>
+                <div
+                  className={classes.colorSquare}
+                  style={{ backgroundColor: "rgb(255, 176, 23)" }}
+                ></div>
+                <p className={classes.colorInfoText}>Selected</p>
+              </div>
+              <div>
+                <div
+                  className={classes.colorSquare}
+                  style={{ backgroundColor: "black" }}
+                ></div>
+                <p className={classes.colorInfoText}>Fixed</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

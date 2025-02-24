@@ -2,7 +2,8 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 645px;
+  /* width: 645px; */
+
   height: 100%;
   display: flex;
   flex-direction: row;

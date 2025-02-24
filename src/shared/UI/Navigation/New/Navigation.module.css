@@ -1,0 +1,95 @@
+.MainHeader {
+  width: 100vw;
+  height: auto;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: white;
+  border-width: 1px;
+  border-bottom-style: solid;
+  z-index: 2;
+  box-sizing: border-box;
+  border-color: #e5e2e2;
+  margin-bottom: 20px;
+}
+
+.HeaderRows {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 10%;
+  width: 70%;
+  height: 60px;
+  margin-left: 20%;
+
+  padding-top: 10px;
+}
+
+.LogoBox {
+  width: 15%;
+  width: auto;
+  height: auto;
+  color: rgb(0, 69, 169);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.LogoBox:hover {
+  cursor: pointer;
+}
+
+.searchContainer {
+  position: relative;
+  width: 40%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background: #f7f8fa;
+  border-radius: 8px;
+  padding: 10px 15px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  font-size: 16px; /* Adjust size */
+  color: #999; /* Default color */
+  transition: color 0.3s ease-in-out;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 8px 8px 35px; /* Extra padding to make space for the icon */
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #333;
+}
+
+.searchInput::placeholder {
+  color: #bbb;
+}
+
+.searchContainer:hover .search-icon {
+  color: #0056b3; /* Changes color on hover */
+}
+
+.AuthComponents {
+  width: 15%;
+}
+
+.AuthComponents div:hover,
+.Authcomponents li:hover {
+  cursor: pointer;
+}
+
+.BottomRow {
+  width: 100%;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

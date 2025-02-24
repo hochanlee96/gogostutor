@@ -26,18 +26,72 @@
   padding: 5px 10px;
 } */
 
-.WeekViewContainer {
-  width: 60vw;
-  height: 100vh;
+.MainContainer {
+  width: 80vw;
+  display: flex;
   transition: width 0.3s ease-in-out;
   overflow: hidden;
 }
-
-.WeekViewContainerCollapsed {
-  width: 70vw;
+.MainContainerCollapsed {
+  width: 90vw;
 }
+
+.WeekViewContainer {
+  width: 56vw;
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+}
+.WeekViewContainerCollapsed {
+  width: 66vw;
+}
+
 .MonthViewContainer {
-  width: 20vw;
+  width: 24vw;
   height: 100vh;
   padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.ManageButtonBox {
+  background-color: rgb(245, 247, 249);
+  padding: 20px;
+}
+
+.ManageButtonTextBox {
+  margin-bottom: 20px;
+}
+
+.ManageButtonTitle {
+  font-size: 1.2rem;
+  color: black;
+  font-weight: 700;
+}
+
+.ManageButton {
+  background-color: #0045a9;
+  color: white;
+  width: 200px;
+  height: 60px;
+  font-size: 20px;
+  border-radius: 4px;
+}
+
+.colorInfoBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.colorSquare {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 5px;
+}
+
+.colorInfoText {
+  font-size: 16px;
+  color: black;
+  font-weight: 500;
 }
