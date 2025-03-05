@@ -1,0 +1,76 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+}
+
+.SidebarContainer {
+  width: 20vw;
+  height: 100vh;
+  padding-right: 50px;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.SidebarCollapsed {
+  width: 10vw;
+}
+
+.MainContainer {
+  width: 80vw;
+  display: flex;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+}
+.MainContainerCollapsed {
+  width: 90vw;
+}
+
+.SessionViewContainer {
+  width: 56vw;
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.SessionViewContainerCollapsed {
+  width: 66vw;
+}
+
+.MainHeader {
+  display: flex;
+  width: 100%;
+}
+
+.MainHeaderComponent {
+  width: 50%;
+  height: 50px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  color: #9ea4aa;
+  /* border-bottom: 2px solid #9ea4aa; */
+  border-bottom: 2px solid rgba(158, 164, 170, 0.3);
+}
+
+.MainHeaderComponent:hover {
+  color: #0045a9;
+  border-bottom: 2px solid #0045a9;
+  cursor: pointer;
+}
+
+.MainHeaderComponentActive {
+  color: #0045a9;
+  border-bottom: 2px solid #0045a9;
+  cursor: pointer;
+}
+
+.SideViewContainer {
+  width: 24vw;
+  height: 100vh;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}

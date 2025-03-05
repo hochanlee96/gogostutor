@@ -79,6 +79,25 @@ export const API_FacebookLogin = async (body) => {
     return error;
   }
 };
+export const API_AppleLogin = async (body) => {
+  try {
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/tutors/login/social-login/apple",
+      {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const API_Logout = async () => {
   try {
@@ -102,9 +121,10 @@ export const API_Logout = async () => {
 export const API_CheckEmailExists = async (email) => {
   try {
     const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + `/tutors/email-exists?email=${email}`,
+      process.env.REACT_APP_BACKEND_URL + `/tutors/email-exists`,
       {
-        method: "GET",
+        method: "POST",
+        body: JSON.stringify({ email: email }),
         headers: {
           "Content-Type": "application/json",
         },

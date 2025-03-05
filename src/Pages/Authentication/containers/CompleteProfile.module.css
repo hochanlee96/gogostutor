@@ -1,0 +1,168 @@
+.container {
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Progress Bar */
+.progressContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d3d3d3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.active {
+  background-color: #1f3a93;
+}
+
+.line {
+  width: 50px;
+  height: 3px;
+  background-color: #d3d3d3;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.filled {
+  background-color: #1f3a93;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.nameFields {
+  display: flex;
+  gap: 10px;
+}
+
+.nameFields input {
+  flex: 1;
+}
+
+/* Buttons */
+.buttonContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  background-color: #1f3a93;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.ErrorMessage {
+  display: block;
+  /* width: 85%; */
+  /* margin-left: auto;
+  margin-right: auto; */
+  height: 26px;
+  font-size: 14px;
+  padding-left: 10px;
+  color: red;
+  margin-bottom: 10px;
+}
+.SuccessMessage {
+  display: block;
+  /* width: 85%; */
+  /* margin-left: auto;
+  margin-right: auto; */
+  height: 26px;
+  font-size: 14px;
+  padding-left: 10px;
+  color: green;
+  margin-bottom: 3px;
+}
+.NeutralMessage {
+  display: block;
+  /* width: 85%; */
+  /* margin-left: auto;
+  margin-right: auto; */
+  height: 26px;
+  font-size: 14px;
+  padding-left: 10px;
+  color: gray;
+  margin-bottom: 3px;
+}
+
+.verifyButtonBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* margin-top: 10px; */
+}
+
+.verifyButton {
+  background-color: #d3d3d3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.verifyButtonActive {
+  background-color: #1f3a93;
+}
+.verifyButtonActive:hover {
+  background-color: rgba(31, 58, 147, 0.3);
+}

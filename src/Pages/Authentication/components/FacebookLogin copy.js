@@ -35,9 +35,8 @@ const FacebookLoginButton = (props) => {
         // const profileData = data.profileData;
         if (data.status === 200) {
           auth.login(authData.accessToken);
-          authData.profileCompleted
-            ? navigate("/dashboard")
-            : navigate("/complete-profile");
+          // profile.setProfileData(profileData);
+          navigate("/dashboard");
         }
       } catch (err) {
         console.error("Error in Facebook Login", err);

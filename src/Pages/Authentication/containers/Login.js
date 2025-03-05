@@ -10,11 +10,14 @@ import { API_Login } from "../../../API";
 
 import classes from "./Auth.module.css";
 import Logo from "../../../shared/assets/icons/A-List_logo_rmbg.svg";
+import GogosLogo from "../../../shared/assets/icons/GogosEdu_icon_text_logo.svg";
 
 // const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
 const Login = () => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [remember, setRemember] = useState(true);
+  const [validated, setValidated] = useState(true);
   const auth = useContext(AuthContext);
   const profile = useContext(ProfileContext);
   const navigate = useNavigate();
@@ -38,7 +41,9 @@ const Login = () => {
       const authData = data.authData;
       if (data.status === 200) {
         auth.login(authData.accessToken);
-        navigate("/dashboard");
+        authData.profileCompleted
+          ? navigate("/dashboard")
+          : navigate("/complete-profile");
       } else if (data.status === 403) {
         setPasswordInput("");
         alert(data.message);
@@ -54,16 +59,16 @@ const Login = () => {
     <div className={classes.Container}>
       <div className={classes.LoginBox}>
         <div className={classes.Title}>
-          <img src={Logo} alt="/" className={classes.Logo} />
-          <h3 style={{ marginBottom: 0 }}>Tutor Sign In</h3>
+          <img src={GogosLogo} alt="/" className={classes.Logo} />
         </div>
         <form className={classes.FormBox} onSubmit={onSubmitHandler}>
-          <Input
+          {/* <Input
             title="Email"
             name="email"
             value={emailInput}
             onChange={inputChangeHandler}
             type="email"
+            placeholder="Email"
           />
           <Input
             title="Password"
@@ -71,24 +76,59 @@ const Login = () => {
             value={passwordInput}
             onChange={inputChangeHandler}
             type="password"
+            placeholder="Password"
+          /> */}
+          <input
+            title="Email"
+            name="email"
+            value={emailInput}
+            onChange={inputChangeHandler}
+            type="email"
+            placeholder="Email"
+            className={classes.Input}
           />
-          <button className={classes.Button} onClick={null}>
+          <input
+            title="Password"
+            name="password"
+            value={passwordInput}
+            onChange={inputChangeHandler}
+            type="password"
+            placeholder="Password"
+            className={classes.Input}
+          />
+          <div className={classes.extraInfo}>
+            <div className={classes.rememberBox}>
+              <input
+                type="checkbox"
+                checked={remember}
+                onChange={() => {
+                  setRemember((prev) => !prev);
+                }}
+              />
+              <div>Remember me</div>
+            </div>
+            <div className={classes.forgotPassword}>Forgot password?</div>
+          </div>
+          <button
+            className={`${classes.LoginButton} ${
+              validated ? classes.LoginButtonValid : ""
+            }`}
+            onClick={null}
+          >
             Log In
           </button>
-          <hr />
-        </form>
-        <SocialLoginBox />
-
-        <div className={classes.RedirectLine}>
-          <p className={classes.RedirectMessage}>New to A-List?</p>
           <button
-            className={classes.RedirectLink}
+            className={`${classes.SignupButton}`}
             onClick={() => {
-              navigate("/signup");
+              navigate("/complete-profile");
             }}
           >
-            Sign up here
+            Create account
           </button>
+        </form>
+        <div className={classes.SocialLoginContainer}>
+          <div>login with</div>
+          <SocialLoginBox />
         </div>
       </div>
     </div>

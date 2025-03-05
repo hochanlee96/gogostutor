@@ -1,0 +1,42 @@
+.CourseInfoBox {
+  width: 20vw;
+  height: auto;
+  margin-top: 50px;
+  padding: 20px;
+  border: 2px solid rgba(158, 164, 170, 0.3);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.CourseListBox {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.CourseItem {
+  display: flex;
+  border-bottom: 1px solid rgba(158, 164, 170, 0.3);
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.CourseTag {
+  width: 10px;
+  background-color: #95c0ff;
+}
+
+.CourseTag:hover {
+  cursor: pointer;
+}
+
+.CourseContent {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}

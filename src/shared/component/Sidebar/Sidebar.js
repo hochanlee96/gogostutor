@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaCalendarAlt,
@@ -15,6 +16,7 @@ import classes from "./Sidebar.module.css"; // Importing CSS module
 import GogosLogo from "../../assets/icons/GogosEdu_icon_text_logo.svg";
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
+  const navigate = useNavigate();
   return (
     <div className={`${classes.sidebar} ${collapsed ? classes.collapsed : ""}`}>
       {!collapsed && (
@@ -36,11 +38,19 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           <FaHome className={classes.icon} />
           {!collapsed && <span>Home</span>}
         </li>
-        <li>
+        <li
+          onClick={() => {
+            navigate("/schedule");
+          }}
+        >
           <FaCalendarAlt className={classes.icon} />
           {!collapsed && <span>Calender</span>}
         </li>
-        <li>
+        <li
+          onClick={() => {
+            navigate("/classroom");
+          }}
+        >
           <FaChalkboardTeacher className={classes.icon} />
           {!collapsed && <span>Classroom</span>}
         </li>

@@ -1,8 +1,9 @@
 .SocialLoginBox {
   display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  width: 90%;
+  /* flex-direction: column; */
+  /* row-gap: 10px; */
+  width: 15%;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
 }
@@ -11,27 +12,35 @@
   margin-left: 10%;
   margin-right: 10%;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   gap: 20px;
-  border-color: rgb(235, 229, 220);
+  /* border-color: rgb(235, 229, 220);
   border-style: solid;
   border-width: 1px;
   border-radius: 10px;
-  background-color: white;
+  background-color: white; */
   font-size: 13px;
   padding-left: 10px;
 }
 
-/* .SocialLoginItem svg {
-    width: 30px;
-    height: 30px;
-  } */
-
-.SocialLoginItem:hover {
-  background-color: rgb(218, 216, 216);
+.button {
+  background-color: #f5f7f9;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 
-.SocialLogo {
-  height: 20px;
-  width: auto;
+.button:hover {
+  transform: scale(1.1);
+}
+
+.icon {
+  width: 37.5px;
+  height: 37.5px;
 }

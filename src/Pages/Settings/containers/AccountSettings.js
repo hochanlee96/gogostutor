@@ -37,9 +37,9 @@ const AccountSettings = () => {
     <div className={classes.Container}>
       <div className={classes.TabContent}>
         <div className={classes.profileBox}>
-          {profile && profile.profileData && profile.profileData.imageURL ? (
+          {profile && profile.userData && profile.userData.imageURL ? (
             <img
-              src={profile.profileData.imageURL}
+              src={profile.userData.imageURL}
               alt="Profile"
               className={classes.profileImage}
             />
@@ -52,9 +52,10 @@ const AccountSettings = () => {
           )}
           <div className={classes.profileInfo}>
             <h3 className={classes.profileName}>
-              {profile.profileData.firstName
-                ? profile.profileData.firstName
-                : auth.email.split("@")[0]}{" "}
+              {profile && profile.userData && profile.userData.firstName
+                ? profile.userData.firstName
+                : // : auth.email.split("@")[0]}{" "}
+                  ""}
               <span className={classes.profileRole}>Tutor</span>
             </h3>
             {/* <button className={classes.switchButton}>Switch Account</button> */}

@@ -19,6 +19,23 @@ const getTimeString = (index) => {
   return `${hours}:${minutes === 0 ? "00" : "30"} ${period}`;
 };
 
+const countSelected = (delta) => {
+  let count = 0;
+  for (let startTime in delta) {
+    count += delta[startTime].selected.length;
+  }
+  return count;
+};
+
+const checkEdited = (delta) => {
+  let count = 0;
+  for (let statTime in delta) {
+    count += delta[statTime].selected.length;
+    count += delta[statTime].unregistered.length;
+  }
+  return count;
+};
+
 const formatWeekString = (today) => {
   const startDay = new Date(today);
   startDay.setDate(startDay.getDate() - startDay.getDay());
@@ -47,25 +64,57 @@ const formatWeekString = (today) => {
   }
 };
 
-const getStartDateString = (focusedDay) => {
-  return new Date(
-    new Date(focusedDay).setDate(focusedDay.getDate() - focusedDay.getDay())
-  );
+// const getStartDateString = (focusedDay) => {
+//   return new Date(
+//     new Date(focusedDay).setDate(focusedDay.getDate() - focusedDay.getDay())
+//   );
+// };
+
+const generateEditTable = (timeslots, cumulativeDelta, startOfWeek) => {
+  const resultTable = Array.from({ length: 48 * 7 }, (_, i) => {
+    return { status: "none" };
+  });
+  for (let timeslot of timeslots) {
+    const index = timeslot.gridIndex;
+    let status = "registered";
+    if (timeslot.status === "taken") {
+      status = "taken";
+    }
+    resultTable[index] = { status: status, item: timeslot };
+  }
+
+  if (cumulativeDelta && cumulativeDelta[startOfWeek]) {
+    const delta = cumulativeDelta[startOfWeek];
+    delta.selected.forEach((index) => {
+      resultTable[index] = { status: "select" };
+    });
+    delta.unregistered.forEach((item) => {
+      resultTable[item.index] = {
+        ...resultTable[item.index],
+        status: "unregister",
+      };
+    });
+  }
+
+  return resultTable;
 };
 
 const WeekView = ({
   focusedDay,
   setFocusedDay,
-  availabilityList,
-  setAvailabilityList,
-  sessionSlotList,
-  mergedSessionSlotList,
+
   timeslotMap,
   setManagingTimeSlots,
   subjectList,
+  processedTimeslots,
+  startOfWeek,
 }) => {
-  //   const [focusedDay, setFocusedDay] = useState(new Date());
-
+  const [cumulativeDelta, setCumulativeDelta] = useState({
+    [startOfWeek]: { selected: [], unregistered: [] },
+  });
+  const [editTable, setEditTable] = useState(
+    generateEditTable(processedTimeslots, null, startOfWeek) || []
+  );
   const [delta, setDelta] = useState({ selected: [], unregistered: [] });
 
   const [tempTimeslotMap, setTempTimeslotMap] = useState({
@@ -74,6 +123,12 @@ const WeekView = ({
   const [edited, setEdited] = useState(false);
   const [selectedSubjectList, setSelectedSubjectList] = useState([]);
   const auth = useContext(AuthContext);
+
+  useEffect(() => {
+    setEditTable(
+      generateEditTable(processedTimeslots, cumulativeDelta, startOfWeek)
+    );
+  }, [processedTimeslots, cumulativeDelta, startOfWeek]);
 
   const moveWeek = (direction) => {
     if (direction === "prev") {
@@ -90,57 +145,98 @@ const WeekView = ({
   };
 
   useEffect(() => {
-    if (delta.selected.length + delta.unregistered.length > 0) {
+    if (checkEdited(cumulativeDelta) > 0) {
       setEdited(true);
     } else {
       setEdited(false);
     }
-  }, [delta]);
+  }, [cumulativeDelta]);
 
   const handleSlotClick = (index) => {
-    if (tempTimeslotMap[index].status === "none") {
-      setDelta((prev) => {
-        const newSelected = [...prev.selected];
-        newSelected.push(index);
-        return { ...prev, selected: [...newSelected] };
+    if (editTable[index].status === "none") {
+      setCumulativeDelta((prev) => {
+        if (prev[startOfWeek]) {
+          const newDelta = { ...prev[startOfWeek] };
+          newDelta.selected.push(index);
+          return { ...prev, [startOfWeek]: newDelta };
+        } else {
+          return {
+            ...prev,
+            [startOfWeek]: { selected: [index], unregistered: [] },
+          };
+        }
       });
-      setTempTimeslotMap((prev) => {
-        const newObj = { ...tempTimeslotMap[index] };
+      setEditTable((prev) => {
+        const newObj = { ...prev[index] };
         newObj.status = "select";
-        return { ...prev, [index]: { ...newObj } };
+        const result = [...prev];
+        result[index] = newObj;
+        return result;
       });
-    } else if (tempTimeslotMap[index].status === "select") {
-      setDelta((prev) => {
-        const newSelected = prev.selected.filter((item) => item !== index);
-        return { ...prev, selected: [...newSelected] };
-      });
-      setTempTimeslotMap((prev) => {
-        const newObj = { ...tempTimeslotMap[index] };
-        newObj.status = "none";
-        return { ...prev, [index]: { ...newObj } };
-      });
-    } else if (tempTimeslotMap[index].status === "registered") {
-      setDelta((prev) => {
-        const newUnregistered = [...prev.unregistered];
-        newUnregistered.push(index);
-        return { ...prev, unregistered: [...newUnregistered] };
-      });
-      setTempTimeslotMap((prev) => {
-        const newObj = { ...tempTimeslotMap[index] };
-        newObj.status = "unregister";
-        return { ...prev, [index]: { ...newObj } };
-      });
-    } else if (tempTimeslotMap[index].status === "unregister") {
-      setDelta((prev) => {
-        const newUnregistered = prev.unregistered.filter(
+    } else if (editTable[index].status === "select") {
+      setCumulativeDelta((prev) => {
+        const newSelected = prev[startOfWeek].selected.filter(
           (item) => item !== index
         );
-        return { ...prev, unregistered: [...newUnregistered] };
+        return {
+          ...prev,
+          [startOfWeek]: {
+            selected: [...newSelected],
+            unregistered: [...prev[startOfWeek].unregistered],
+          },
+        };
       });
-      setTempTimeslotMap((prev) => {
-        const newObj = { ...tempTimeslotMap[index] };
+      setEditTable((prev) => {
+        const newObj = { ...prev[index] };
+        newObj.status = "none";
+        const result = [...prev];
+        result[index] = newObj;
+        return result;
+      });
+    } else if (editTable[index].status === "registered") {
+      const idToDelete = editTable[index].item._id;
+      setCumulativeDelta((prev) => {
+        if (prev[startOfWeek]) {
+          const newDelta = { ...prev[startOfWeek] };
+          newDelta.unregistered.push({ index: index, id: idToDelete });
+          return { ...prev, [startOfWeek]: newDelta };
+        } else {
+          return {
+            ...prev,
+            [startOfWeek]: {
+              selected: [],
+              unregistered: [{ index: index, id: idToDelete }],
+            },
+          };
+        }
+      });
+      setEditTable((prev) => {
+        const newObj = { ...prev[index] };
+        console.log("new obj!: ", newObj);
+        newObj.status = "unregister";
+        const result = [...prev];
+        result[index] = newObj;
+        return result;
+      });
+    } else if (editTable[index].status === "unregister") {
+      setCumulativeDelta((prev) => {
+        const newUnregistered = prev[startOfWeek].unregistered.filter(
+          (item) => item.index !== index
+        );
+        return {
+          ...prev,
+          [startOfWeek]: {
+            selected: [...prev[startOfWeek].selected],
+            unregistered: [...newUnregistered],
+          },
+        };
+      });
+      setEditTable((prev) => {
+        const newObj = { ...prev[index] };
         newObj.status = "registered";
-        return { ...prev, [index]: { ...newObj } };
+        const result = [...prev];
+        result[index] = newObj;
+        return result;
       });
     }
   };
@@ -159,43 +255,49 @@ const WeekView = ({
   const saveChangesHander = useCallback(async () => {
     try {
       if (edited) {
-        const startOfWeek = new Date(
-          focusedDay.getFullYear(),
-          focusedDay.getMonth(),
-          focusedDay.getDate() - focusedDay.getDay(),
-          0,
-          0,
-          0
-        );
+        // const startOfWeek = new Date(
+        //   focusedDay.getFullYear(),
+        //   focusedDay.getMonth(),
+        //   focusedDay.getDate() - focusedDay.getDay(),
+        //   0,
+        //   0,
+        //   0
+        // );
         const changedData = { add: [], remove: [], subjectList: [] };
         selectedSubjectList.forEach((s) => {
           changedData.subjectList.push(s.subject._id);
-          if (delta.selected.length > 0) {
-          }
         });
-        delta.selected.forEach((index) => {
-          const day = index % 7;
-          const timeOffset = ((index - day) / 7) * 30;
-          const startTime = new Date(
-            startOfWeek.getFullYear(),
-            startOfWeek.getMonth(),
-            startOfWeek.getDate() + day,
-            0,
-            timeOffset,
-            0
-          ).toISOString();
-          changedData.add.push(startTime);
-        });
-        delta.unregistered.forEach((index) => {
-          const idToDelete = timeslotMap[index].item._id;
-          changedData.remove.push(idToDelete);
-        });
-        if (delta.selected.length > 0 && selectedSubjectList.length === 0) {
+        ///
+        for (let startTime in cumulativeDelta) {
+          const delta = cumulativeDelta[startTime];
+          const startOfWeek = new Date(startTime);
+          delta.selected.forEach((index) => {
+            const day = index % 7;
+            const timeOffset = ((index - day) / 7) * 30;
+            const startTime = new Date(
+              startOfWeek.getFullYear(),
+              startOfWeek.getMonth(),
+              startOfWeek.getDate() + day,
+              0,
+              timeOffset,
+              0
+            ).toISOString();
+            changedData.add.push(startTime);
+          });
+          delta.unregistered.forEach((item) => {
+            const idToDelete = item.id;
+            changedData.remove.push(idToDelete);
+          });
+        }
+
+        if (
+          countSelected(cumulativeDelta) > 0 &&
+          selectedSubjectList.length === 0
+        ) {
           alert("Please select subjects before adding timeslots!");
         } else {
           const response = await fetch(
-            process.env.REACT_APP_BACKEND_URL +
-              `/tutors/${auth.id}/availabilities`,
+            process.env.REACT_APP_BACKEND_URL + `/tutors/${auth.id}/timeslots`,
             {
               method: "PUT",
               body: JSON.stringify(changedData),
@@ -216,7 +318,7 @@ const WeekView = ({
     } catch (e) {
       console.log("Error saving changes", e);
     }
-  }, [edited, focusedDay, delta, timeslotMap, auth, selectedSubjectList]);
+  }, [edited, cumulativeDelta, auth, selectedSubjectList]);
 
   return (
     <div className={classes.Container}>
@@ -249,7 +351,7 @@ const WeekView = ({
           </div>
         </div>
         <div className={classes.subjectToggleButtonBox}>
-          {delta.selected.length > 0 ? (
+          {countSelected(cumulativeDelta) > 0 ? (
             <div className={classes.subjectBox}>
               <select onChange={subjectSelectHandler}>
                 <option value={"select"}>Select subjects</option>
@@ -332,7 +434,38 @@ const WeekView = ({
       </div>
       <div className={classes.tableContainer}>
         <div className={classes.timetable}>
-          {Object.keys(tempTimeslotMap).map((_, index) => {
+          {editTable.map((_, index) => {
+            const day = index % 7;
+            const column = day + 1;
+            const row = (index - day) / 7 + 1;
+            const status = editTable[index].status;
+
+            return (
+              <div
+                key={`empty-${index}`}
+                className={`${
+                  status === "none"
+                    ? classes.cell
+                    : status === "registered"
+                    ? classes.registeredCell
+                    : status === "select"
+                    ? classes.selectedCell
+                    : status === "unregister"
+                    ? classes.unregisterCell
+                    : classes.fixedCell
+                }`}
+                style={{ gridRow: row, gridColumn: column }}
+                onClick={() => {
+                  if (status !== "fixed") {
+                    handleSlotClick(index);
+                  }
+                }}
+              >
+                {getTimeString(index)}
+              </div>
+            );
+          })}
+          {/* {Object.keys(tempTimeslotMap).map((_, index) => {
             const day = index % 7;
             const column = day + 1;
             const row = (index - day) / 7 + 1;
@@ -362,7 +495,7 @@ const WeekView = ({
                 {getTimeString(index)}
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
     </div>

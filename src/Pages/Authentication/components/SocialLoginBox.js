@@ -1,8 +1,8 @@
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import CustomGoogleLogin from "./GoogleLogin";
 import CustomFacebookLogin from "./FacebookLogin";
-
-import AppleLogo from "../../../shared/assets/icons/apple-logo.png";
+import CustomAppleLogin from "./AppleLogin";
+import CustomWechatLogin from "./WechatLogin";
 
 import classes from "./SocialLoginBox.module.css";
 const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
@@ -19,8 +19,10 @@ const SocialLoginBox = () => {
         <CustomFacebookLogin />
       </div>
       <div className={classes.SocialLoginItem}>
-        <img className={classes.SocialLogo} src={AppleLogo} alt="/" />
-        Login with Apple
+        <CustomAppleLogin />
+      </div>
+      <div className={classes.SocialLoginItem}>
+        <CustomWechatLogin />
       </div>
     </div>
   );

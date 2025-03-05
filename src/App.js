@@ -17,11 +17,13 @@ let logoutTimer;
 function App() {
   const [socket, setSocket] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [profileCompleted, setProfileCompleted] = useState(false);
 
   const [accessToken, setAccessToken] = useState(null);
   const [id, setId] = useState(null);
   const [expiration, setExpiration] = useState(null);
   const [checkedLoginStatus, setCheckedLoginStatus] = useState(false);
+
   const [loading, setLoading] = useState(true);
 
   const updateAuthData = useCallback(
@@ -90,6 +92,8 @@ function App() {
         if (data.status === 200) {
           // setProfileData({ ...data.profileData });
           setUserData({ ...data.data });
+
+          setProfileCompleted(data.profileCompleted);
         } else if (data.status === 404) {
           logout();
         }
@@ -220,7 +224,10 @@ function App() {
   if (loading) {
     routes = <div>Loading...</div>;
   } else {
-    routes = <Routes isSignedIn={!!accessToken} />;
+    console.log("profile completed? ", profileCompleted);
+    routes = (
+      <Routes isSignedIn={!!accessToken} profileCompleted={profileCompleted} />
+    );
   }
   return (
     <AuthContext.Provider
