@@ -22,6 +22,14 @@ const ProfileStep = ({ inputChangeHandler, signupForm }) => {
           className={classes.input}
         />
       </div>
+      <label>Date of Birth</label>
+      <input
+        type="date"
+        name="dateOfBirth"
+        value={signupForm.dateOfBirth.value}
+        onChange={inputChangeHandler}
+        className={classes.input}
+      />
     </div>
   );
 };

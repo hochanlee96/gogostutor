@@ -1,234 +1,213 @@
-import { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import validator from "validator";
+import classes from "./CompleteProfile.module.css";
 
-import { AuthContext } from "../../../shared/context/auth-context";
-import { ProfileContext } from "../../../shared/context/profile-context";
+import { AuthContext } from "../../../shared/context/auth-context.js";
 
-import { API_CheckEmailExists, API_Signup } from "../../../API";
-import Input from "../../../shared/UI/components/FormElements/Input";
-import SocialLoginBox from "../components/SocialLoginBox";
-
-import Logo from "../../../shared/assets/icons/A-List_logo_rmbg.svg";
-// import GoogleLogo from "../../shared/icons/google-logo.png";
-
-import classes from "./Auth.module.css";
+import SignupStep from "../components/SignupStep.js";
+import ProfileStep from "../components/ProfileStep.js";
 
 const Signup = () => {
-  const [emailInput, setEmailInput] = useState("");
-  const [emailValidity, setEmailValidity] = useState("unchecked");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [passwordValidity, setPasswordValidity] = useState("unchecked");
-  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
-  const [confirmPasswordValidity, setConfirmPasswordValidity] =
-    useState("unchecked");
-  const [touched, setTouched] = useState({
-    email: false,
-    password: false,
-    confirmPassword: false,
+  const [step, setStep] = useState(1);
+  const [signupForm, setSignupForm] = useState({
+    email: { value: "", state: "none", touched: false },
+    password: { value: "", state: "none", touched: false },
+    confirmPassword: { value: "", state: "none", touched: false },
+    firstName: { value: "", state: "none", touched: false },
+    lastName: { value: "", state: "none", touched: false },
+    dateOfBirth: { value: "", state: "none", touched: false },
+    isStudent: false,
   });
   const auth = useContext(AuthContext);
-  const profile = useContext(ProfileContext);
   const navigate = useNavigate();
+
+  const nextStep = () => {
+    if (step < 3) setStep(step + 1);
+  };
+
+  const prevStep = () => {
+    if (step > 1) setStep(step - 1);
+  };
+
   const inputChangeHandler = (event) => {
     if (event.target.name === "email") {
-      setEmailInput(event.target.value);
+      setSignupForm((prev) => {
+        return {
+          ...prev,
+          email: { value: event.target.value, touched: true },
+        };
+      });
     } else if (event.target.name === "password") {
-      setPasswordInput(event.target.value);
+      setSignupForm((prev) => {
+        return {
+          ...prev,
+          password: { value: event.target.value, touched: true },
+        };
+      });
     } else if (event.target.name === "confirmPassword") {
-      setConfirmPasswordInput(event.target.value);
+      setSignupForm((prev) => {
+        return {
+          ...prev,
+          confirmPassword: { value: event.target.value, touched: true },
+        };
+      });
+    } else if (event.target.name === "firstName") {
+      setSignupForm((prev) => {
+        return {
+          ...prev,
+          firstName: { value: event.target.value, state: "valid" },
+        };
+      });
+    } else if (event.target.name === "lastName") {
+      setSignupForm((prev) => {
+        return {
+          ...prev,
+          lastName: { value: event.target.value, state: "valid" },
+        };
+      });
+    } else if (event.target.name === "dateOfBirth") {
+      setSignupForm((prev) => {
+        return {
+          ...prev,
+          dateOfBirth: { value: event.target.value, state: "valid" },
+        };
+      });
     }
   };
 
-  const passwordValidateHandler = useCallback(() => {
-    const isLongEnough = validator.isLength(passwordInput, { min: 8 });
-
-    // Check if password contains at least one uppercase letter
-    const hasUppercase = /[A-Z]/.test(passwordInput);
-
-    if (isLongEnough && hasUppercase) {
-      setPasswordValidity("valid");
-    } else {
-      setPasswordValidity("invalid");
-    }
-  }, [passwordInput]);
-
-  useEffect(() => {
-    passwordValidateHandler();
-  }, [passwordValidateHandler]);
-
-  const confirmPasswordValidateHandler = useCallback(() => {
-    if (passwordValidity === "valid") {
-      if (passwordInput === confirmPasswordInput) {
-        setConfirmPasswordValidity("valid");
-      } else {
-        setConfirmPasswordValidity("invalid");
-      }
-    } else {
-      setConfirmPasswordValidity("passwordInvalid");
-    }
-  }, [confirmPasswordInput, passwordInput, passwordValidity]);
-
-  useEffect(() => {
-    confirmPasswordValidateHandler();
-  }, [confirmPasswordValidateHandler]);
-
-  const emailValidateHandler = async () => {
+  const submitHandler = async () => {
     try {
-      const isEmail = validator.isEmail(emailInput);
-      console.log("isEmail? ", isEmail);
-      if (isEmail) {
-        const response = await API_CheckEmailExists(emailInput);
-        const data = await response.json();
-        console.log(data.message);
-        if (data.status === 200) {
-          setEmailValidity("valid");
-        } else if (data.status === 403) {
-          setEmailValidity("invalid");
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/tutors/signup",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: signupForm.email.value,
+            password: signupForm.password.value,
+            firstName: signupForm.firstName.value,
+            lastName: signupForm.lastName.value,
+            dateOfBirth: signupForm.dateOfBirth.value,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      } else {
-        setEmailValidity("wrong format");
+      );
+      const data = await response.json();
+      const authData = data.authData;
+      if (data.status === 200) {
+        auth.login(authData.accessToken);
+        navigate("/dashboard");
+      } else if (data.status === 403) {
+        alert(data.message);
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const signupRequestHandler = async () => {
-    try {
-      if (
-        emailValidity === "valid" &&
-        passwordValidity === "valid" &&
-        confirmPasswordValidity === "valid"
-      ) {
-        const response = await API_Signup({
-          email: emailInput,
-          password: passwordInput,
-        });
-        const data = await response.json();
-        const authData = data.authData;
-        const profileData = data.profileData;
-        if (data.status === 200) {
-          auth.login(authData);
-          profile.setProfileData(profileData);
-          navigate("/dashboard");
-        } else if (data.status === 403) {
-          alert(data.message);
-        }
-      } else {
-        alert(
-          "Please fill in all the required fields and check the validity of your input."
+  const formValid = useCallback(
+    (step) => {
+      if (step === 1) {
+        return (
+          signupForm.email.state === "valid" &&
+          signupForm.password.state === "valid" &&
+          signupForm.confirmPassword.state === "valid"
+        );
+      } else if (step === 2) {
+        return (
+          signupForm.firstName.state === "valid" &&
+          signupForm.lastName.state === "valid" &&
+          signupForm.dateOfBirth.state === "valid"
+        );
+      } else if (step === 3) {
+        return (
+          signupForm.email.state === "valid" &&
+          signupForm.password.state === "valid" &&
+          signupForm.confirmPassword.state === "valid" &&
+          signupForm.firstName.state === "valid" &&
+          signupForm.lastName.state === "valid" &&
+          signupForm.dateOfBirth.state === "valid"
         );
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    },
+    [
+      signupForm.email.state,
+      signupForm.password.state,
+      signupForm.confirmPassword.state,
+      signupForm.firstName.state,
+      signupForm.lastName.state,
+      signupForm.dateOfBirth.state,
+    ]
+  );
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    signupRequestHandler();
-  };
   return (
-    <div className={classes.Container}>
-      <div className={classes.LoginBox}>
-        <div className={classes.Title}>
-          <img src={Logo} alt="/" className={classes.Logo} />
-          <h3 style={{ marginBottom: 0 }}>Tutor Sign up</h3>
-        </div>
-        <form className={classes.FormBox} onSubmit={onSubmitHandler}>
-          <Input
-            title="Email"
-            name="email"
-            value={emailInput}
-            onChange={inputChangeHandler}
-            onBlur={() => {
-              emailValidateHandler();
-              setTouched((prev) => {
-                return { ...prev, email: true };
-              });
-            }}
-            type="email"
-          />
-          {emailValidity === "invalid" ? (
-            <div className={classes.ErrorMessage}>
-              A user with this email already exists.
-            </div>
-          ) : emailValidity === "valid" ? (
-            <div className={classes.SuccessMessage}>
-              This email is available
-            </div>
-          ) : emailValidity === "wrong format" ? (
-            <div className={classes.ErrorMessage}>
-              Please provide a proper email format
-            </div>
-          ) : null}
-          <Input
-            title="Password"
-            name="password"
-            value={passwordInput}
-            onChange={inputChangeHandler}
-            type="password"
-            onBlur={() =>
-              setTouched((prev) => {
-                return { ...prev, password: true };
-              })
-            }
-          />
-          {passwordValidity === "valid" ? (
-            <div className={classes.SuccessMessage}>
-              This is a strong password.
-            </div>
-          ) : touched["password"] ? (
-            passwordValidity === "invalid" ? (
-              <div className={classes.ErrorMessage}>
-                Your password must contain at least one upper case letter and 8
-                characters.
-              </div>
-            ) : null
-          ) : null}
-          <Input
-            title="Confirm Password"
-            name="confirmPassword"
-            value={confirmPasswordInput}
-            onChange={inputChangeHandler}
-            type="password"
-            onBlur={() =>
-              setTouched((prev) => {
-                return { ...prev, confirmPassword: true };
-              })
-            }
-          />
+    <div className={classes.container}>
+      {/* Logo */}
+      <h1 className={classes.logo}>Gogos Edu</h1>
 
-          {confirmPasswordValidity === "valid" ? (
-            <div className={classes.SuccessMessage}>
-              Your password is confirmed.
-            </div>
-          ) : touched["confirmPassword"] ? (
-            confirmPasswordValidity === "invalid" ? (
-              <div className={classes.ErrorMessage}>
-                Your password does not match.
-              </div>
-            ) : null
-          ) : null}
-          <button className={classes.Button} onClick={null}>
-            Sign up
-          </button>
-          <hr />
-        </form>
-        <SocialLoginBox />
-
-        <div className={classes.RedirectLine}>
-          <p className={classes.RedirectMessage}>Already a member?</p>
-          <button
-            className={classes.RedirectLink}
-            onClick={() => {
-              navigate("/login");
-            }}
+      {/* Step Progress Bar */}
+      <div className={classes.progressContainer}>
+        <div className={classes.step}>
+          <div
+            className={`${classes.circle} ${step >= 1 ? classes.active : ""}`}
           >
-            Log in here
-          </button>
+            1
+          </div>
         </div>
+        <div
+          className={`${classes.line} ${step >= 2 ? classes.filled : ""}`}
+        ></div>
+        <div className={classes.step}>
+          <div
+            className={`${classes.circle} ${step >= 2 ? classes.active : ""}`}
+          >
+            2
+          </div>
+        </div>
+        <div
+          className={`${classes.line} ${step >= 3 ? classes.filled : ""}`}
+        ></div>
+        <div className={classes.step}>
+          <div
+            className={`${classes.circle} ${step >= 3 ? classes.active : ""}`}
+          >
+            3
+          </div>
+        </div>
+      </div>
+
+      {/* Form Content */}
+      {step === 1 && (
+        <SignupStep
+          signupForm={signupForm}
+          setSignupForm={setSignupForm}
+          inputChangeHandler={inputChangeHandler}
+        />
+      )}
+      {step === 2 && (
+        <ProfileStep
+          inputChangeHandler={inputChangeHandler}
+          signupForm={signupForm}
+        />
+      )}
+
+      {/* Navigation Buttons */}
+      <div className={classes.buttonContainer}>
+        {step > 1 && (
+          <button className={classes.button} onClick={prevStep}>
+            Back
+          </button>
+        )}
+        <button
+          className={`${classes.button}  ${
+            !formValid(step) ? classes.disabled : ""
+          }`}
+          onClick={step < 3 ? nextStep : submitHandler}
+          disabled={!formValid(step)}
+        >
+          {step === 3 ? "Submit" : "Next"}
+        </button>
       </div>
     </div>
   );

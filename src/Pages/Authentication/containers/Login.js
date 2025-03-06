@@ -37,7 +37,6 @@ const Login = () => {
         password: passwordInput,
       });
       const data = await response.json();
-      console.log("data: ", data);
       const authData = data.authData;
       if (data.status === 200) {
         auth.login(authData.accessToken);

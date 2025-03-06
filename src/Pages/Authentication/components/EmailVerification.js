@@ -64,9 +64,9 @@ const EmailVerification = ({ email, signupForm, setSignupForm }) => {
           className={`${classes.verifyButton} ${
             signupForm.email.state === "available"
               ? classes.verifyButtonActive
-              : ""
+              : classes.disabled
           }`}
-          // disabled={signupForm.email.state !== "available"}
+          disabled={signupForm.email.state !== "available"}
           onClick={() => {
             setSentEmail("sending");
             sendVerificationEmail();

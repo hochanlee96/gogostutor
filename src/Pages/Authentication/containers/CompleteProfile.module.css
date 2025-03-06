@@ -74,6 +74,13 @@
   font-size: 14px;
 }
 
+.input[type="date"] {
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+}
+
 .nameFields {
   display: flex;
   gap: 10px;
@@ -156,7 +163,7 @@
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: opacity 0.3s ease-in-out;
 }
 

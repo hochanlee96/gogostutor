@@ -1,5 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import classes from "./CompleteProfile.module.css";
+
+import { AuthContext } from "../../../shared/context/auth-context";
 
 import SignupStep from "../components/SignupStep.js";
 import ProfileStep from "../components/ProfileStep.js";
@@ -15,6 +18,8 @@ const CompleteProfile = () => {
     dateOfBirth: { value: "", state: "none", touched: false },
     isStudent: false,
   });
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const nextStep = () => {
     if (step < 3) setStep(step + 1);
@@ -29,37 +34,75 @@ const CompleteProfile = () => {
       setSignupForm((prev) => {
         return {
           ...prev,
-          email: { value: event.target.value, state: "touched" },
+          email: { value: event.target.value, touched: true },
         };
       });
     } else if (event.target.name === "password") {
       setSignupForm((prev) => {
         return {
           ...prev,
-          password: { value: event.target.value, state: "touched" },
+          password: { value: event.target.value, touched: true },
         };
       });
     } else if (event.target.name === "confirmPassword") {
       setSignupForm((prev) => {
         return {
           ...prev,
-          confirmPassword: { value: event.target.value, state: "touched" },
+          confirmPassword: { value: event.target.value, touched: true },
         };
       });
     } else if (event.target.name === "firstName") {
       setSignupForm((prev) => {
         return {
           ...prev,
-          firstName: { value: event.target.value, state: "touched" },
+          firstName: { value: event.target.value, state: "valid" },
         };
       });
     } else if (event.target.name === "lastName") {
       setSignupForm((prev) => {
         return {
           ...prev,
-          lastName: { value: event.target.value, state: "touched" },
+          lastName: { value: event.target.value, state: "valid" },
         };
       });
+    } else if (event.target.name === "dateOfBirth") {
+      setSignupForm((prev) => {
+        return {
+          ...prev,
+          dateOfBirth: { value: event.target.value, state: "valid" },
+        };
+      });
+    }
+  };
+
+  const submitHandler = async () => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/tutors/signup",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: signupForm.email.value,
+            password: signupForm.password.value,
+            firstName: signupForm.firstName.value,
+            lastName: signupForm.lastName.value,
+            dateOfBirth: signupForm.dateOfBirth.value,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      const authData = data.authData;
+      if (data.status === 200) {
+        auth.login(authData.accessToken);
+        navigate("/dashboard");
+      } else if (data.status === 403) {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -71,14 +114,30 @@ const CompleteProfile = () => {
           signupForm.password.state === "valid" &&
           signupForm.confirmPassword.state === "valid"
         );
-      } else {
-        return true;
+      } else if (step === 2) {
+        return (
+          signupForm.firstName.state === "valid" &&
+          signupForm.lastName.state === "valid" &&
+          signupForm.dateOfBirth.state === "valid"
+        );
+      } else if (step === 3) {
+        return (
+          signupForm.email.state === "valid" &&
+          signupForm.password.state === "valid" &&
+          signupForm.confirmPassword.state === "valid" &&
+          signupForm.firstName.state === "valid" &&
+          signupForm.lastName.state === "valid" &&
+          signupForm.dateOfBirth.state === "valid"
+        );
       }
     },
     [
       signupForm.email.state,
       signupForm.password.state,
       signupForm.confirmPassword.state,
+      signupForm.firstName.state,
+      signupForm.lastName.state,
+      signupForm.dateOfBirth.state,
     ]
   );
 
@@ -142,12 +201,12 @@ const CompleteProfile = () => {
         )}
         <button
           className={`${classes.button}  ${
-            step === 3 || !formValid(step) ? classes.disabled : ""
+            !formValid(step) ? classes.disabled : ""
           }`}
-          onClick={nextStep}
-          disabled={step === 3}
+          onClick={step < 3 ? nextStep : submitHandler}
+          disabled={!formValid(step)}
         >
-          {step === 3 ? "Finish" : "Next"}
+          {step === 3 ? "Submit" : "Next"}
         </button>
       </div>
     </div>
