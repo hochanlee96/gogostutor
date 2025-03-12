@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SocialLoginBox from "../components/SocialLoginBox";
 import Input from "../../../shared/UI/components/FormElements/Input";
 import { AuthContext } from "../../../shared/context/auth-context";
-import { ProfileContext } from "../../../shared/context/profile-context";
+import { UserContext } from "../../../shared/context/user-context";
 
 import { API_Login } from "../../../API";
 
@@ -19,7 +19,7 @@ const Login = () => {
   const [remember, setRemember] = useState(true);
   const [validated, setValidated] = useState(true);
   const auth = useContext(AuthContext);
-  const profile = useContext(ProfileContext);
+  const user = useContext(UserContext);
   const navigate = useNavigate();
 
   const inputChangeHandler = (event) => {
@@ -40,6 +40,7 @@ const Login = () => {
       const authData = data.authData;
       if (data.status === 200) {
         auth.login(authData.accessToken);
+        console.log("authData: ", authData);
         authData.profileCompleted
           ? navigate("/dashboard")
           : navigate("/complete-profile");
@@ -119,7 +120,7 @@ const Login = () => {
           <button
             className={`${classes.SignupButton}`}
             onClick={() => {
-              navigate("/complete-profile");
+              navigate("/signup");
             }}
           >
             Create account

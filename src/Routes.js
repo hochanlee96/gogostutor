@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Navigate, Routes, Outlet } from "react-router-dom";
 
 // import Navigation from "../Tutor/Navigation/Navigation";
 import Navigation from "./shared/UI/Navigation/New/Navigation";
 import ScrollToTop from "./shared/UI/Navigation/New/ScrollToTop";
+import Sidebar from "./shared/component/Sidebar/Sidebar";
 // import Footer from "./shared/UI/Navigation/Footer";
 import Footer from "./shared/UI/Navigation/New/Footer";
 
@@ -12,7 +13,7 @@ import Home from "./Pages/Home/Test/pages/HomeTest";
 import Login from "./Pages/Authentication/containers/Login";
 import Signup from "./Pages/Authentication/containers/Signup";
 import CompleteProfile from "./Pages/Authentication/containers/CompleteProfile";
-import Dashboard from "./Pages/Dashboard/containers/Dashboard";
+import Dashboard from "./Pages/Dashboard/New/containers/Dashboard";
 import Profile from "./Pages/Profile/containers/Profile";
 import MySubjects from "./Pages/Subject/containers/MySubjects";
 import Schedule from "./Pages/Schedule/containers/Schedule";
@@ -50,7 +51,29 @@ const FooterLayout = () => {
   );
 };
 
+const SidebarLayout = ({ collapsed, setCollapsed }) => {
+  return (
+    <div style={{ display: "flex", width: "100vw" }}>
+      <div
+        className={`${classes.SidebarContainer} ${
+          collapsed ? classes.SidebarContainerCollapsed : ""
+        }`}
+      >
+        <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      </div>
+      <div
+        className={`${classes.MainContainer} ${
+          collapsed ? classes.MainContainerCollapsed : ""
+        }`}
+      >
+        <Outlet />
+      </div>
+    </div>
+  );
+};
+
 const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   let routes;
   if (isSignedIn) {
     routes = (
@@ -61,7 +84,16 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
         )}
         <Route element={<NavigationLayout />}>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route
+            element={
+              <SidebarLayout
+                collapsed={sidebarCollapsed}
+                setCollapsed={setSidebarCollapsed}
+              />
+            }
+          >
+            <Route exact path="/dashboard" element={<Dashboard />} />
+          </Route>
           <Route exact path="/profile" element={<Profile />} />
 
           <Route exact path="/my-subjects" element={<MySubjects />} />
@@ -89,7 +121,7 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
     routes = (
       <Routes>
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/signup" element={<CompleteProfile />} />
+        <Route exact path="/signup" element={<Signup />} />
         <Route element={<NavigationLayout />}>
           <Route
             exact

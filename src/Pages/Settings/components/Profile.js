@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 import { AuthContext } from "../../../shared/context/auth-context";
-import { ProfileContext } from "../../../shared/context/profile-context";
+import { UserContext } from "../../../shared/context/user-context";
 
 import {
   API_GetProfileImageFromCloudinary,
@@ -13,7 +13,7 @@ import emptyUserImage from "../../../shared/assets/icons/user.png";
 
 const TutorProfile = () => {
   const auth = useContext(AuthContext);
-  const profile = useContext(ProfileContext);
+  const user = useContext(UserContext);
   const [profileImage, setProfileImage] = useState(null);
   const [profileForm, setProfileForm] = useState({
     firstName: "",
@@ -23,17 +23,23 @@ const TutorProfile = () => {
     education: "",
   });
 
+  useEffect(() => {
+    if (user && user.data && user.data.profile) {
+      setProfileForm({
+        firstName: user.data.profile.firstName,
+        lastName: user.data.profile.lastName,
+        about: user.data.profile.about,
+        experience: user.data.profile.experience,
+        education: user.data.profile.education,
+      });
+    }
+  }, [user]);
+
   const inputChangeHandler = (event) => {
     setProfileForm((prev) => {
       return { ...prev, [event.target.name]: event.target.value };
     });
   };
-
-  useEffect(() => {
-    if (profile && profile.profileData) {
-      setProfileForm(profile.profileData);
-    }
-  }, [profile]);
 
   const getProfileImage = useCallback(async (imageURL) => {
     const image = await API_GetProfileImageFromCloudinary(imageURL);
@@ -68,7 +74,7 @@ const TutorProfile = () => {
         );
         const data = await response.json();
         if (data.status === 200) {
-          profile.getProfileData();
+          user.getProfileData();
 
           //delete previous profile image if successfully uploaded
         } else {
@@ -84,11 +90,11 @@ const TutorProfile = () => {
     }
   };
 
-  useEffect(() => {
-    if (profile && profile.profileData && profile.profileData.imageURL) {
-      getProfileImage(profile.profileData.imageURL);
-    }
-  }, [profile, getProfileImage]);
+  // useEffect(() => {
+  //   if (profile && profile.profileData && profile.profileData.imageURL) {
+  //     getProfileImage(profile.profileData.imageURL);
+  //   }
+  // }, [profile, getProfileImage]);
 
   return (
     <div className={classes.container}>
@@ -145,8 +151,14 @@ const TutorProfile = () => {
       <div className={classes.section}>
         <label className={classes.label}>Email</label>
         <div className={classes.inlineInput}>
-          <input name="email" type="email" className={classes.input} disabled />
-          <button className={classes.button}>Update</button>
+          <input
+            name="email"
+            type="email"
+            value={user && user.data ? user.data.email : ""}
+            className={classes.input}
+            disabled
+          />
+          {/* <button className={classes.button}>Update</button> */}
         </div>
       </div>
 

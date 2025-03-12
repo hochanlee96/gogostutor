@@ -3,7 +3,7 @@ import { useState, useContext, useEffect, useCallback } from "react";
 import Button from "../../../shared/UI/components/FormElements/Button";
 
 import { AuthContext } from "../../../shared/context/auth-context";
-import { ProfileContext } from "../../../shared/context/profile-context";
+import { UserContext } from "../../../shared/context/user-context";
 
 import { API_UpdateProfileData } from "../../../API";
 
@@ -11,7 +11,7 @@ import classes from "./Profile.module.css";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
-  const profile = useContext(ProfileContext);
+  const user = useContext(UserContext);
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [profileForm, setProfileForm] = useState({
@@ -30,10 +30,10 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (profile && profile.userData && profile.userData.profile) {
-      setProfileForm({ ...profile.userData.profile });
+    if (user && user.data && user.data.profile) {
+      setProfileForm({ ...user.data.profile });
     }
-  }, [profile]);
+  }, [user]);
 
   const updateProfileData = useCallback(async () => {
     try {
@@ -46,7 +46,7 @@ const Profile = () => {
 
       if (data.status === 200) {
         alert(data.message);
-        profile.setProfileData(data.profileData);
+        user.setProfileData(data.profileData);
         setTempProfileForm({
           firstName: "",
           lastName: "",
@@ -60,7 +60,7 @@ const Profile = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [auth, profile, tempProfileForm]);
+  }, [auth, user, tempProfileForm]);
 
   const editModeToggler = async () => {
     if (isEditMode) {

@@ -1,0 +1,21 @@
+.SidebarContainer {
+  width: 20vw;
+  height: 100vh;
+  padding-right: 50px;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.SidebarCollapsed {
+  width: 10vw;
+}
+
+.MainContainer {
+  width: 80vw;
+  display: flex;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+}
+.MainContainerCollapsed {
+  width: 90vw;
+}

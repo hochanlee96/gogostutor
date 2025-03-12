@@ -75,6 +75,8 @@ const Signup = () => {
     }
   };
 
+  console.log("dob: ", signupForm.dateOfBirth.value);
+
   const submitHandler = async () => {
     try {
       const response = await fetch(

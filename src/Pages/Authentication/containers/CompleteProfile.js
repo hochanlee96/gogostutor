@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import classes from "./CompleteProfile.module.css";
 
 import { AuthContext } from "../../../shared/context/auth-context";
+import { UserContext } from "../../../shared/context/user-context.js";
 
-import SignupStep from "../components/SignupStep.js";
 import ProfileStep from "../components/ProfileStep.js";
 
 const CompleteProfile = () => {
@@ -19,6 +19,7 @@ const CompleteProfile = () => {
     isStudent: false,
   });
   const auth = useContext(AuthContext);
+  const user = useContext(UserContext);
   const navigate = useNavigate();
 
   const nextStep = () => {
@@ -78,25 +79,25 @@ const CompleteProfile = () => {
   const submitHandler = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/tutors/signup",
+        process.env.REACT_APP_BACKEND_URL + `/tutors/${auth.id}/profile`,
         {
-          method: "POST",
+          method: "PATCH",
           body: JSON.stringify({
-            email: signupForm.email.value,
-            password: signupForm.password.value,
             firstName: signupForm.firstName.value,
             lastName: signupForm.lastName.value,
             dateOfBirth: signupForm.dateOfBirth.value,
           }),
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.accessToken,
           },
+          credentials: "include",
         }
       );
       const data = await response.json();
-      const authData = data.authData;
+
       if (data.status === 200) {
-        auth.login(authData.accessToken);
+        user.setUserData(data.profileData);
         navigate("/dashboard");
       } else if (data.status === 403) {
         alert(data.message);
@@ -108,13 +109,9 @@ const CompleteProfile = () => {
 
   const formValid = useCallback(
     (step) => {
-      if (step === 1) {
-        return (
-          signupForm.email.state === "valid" &&
-          signupForm.password.state === "valid" &&
-          signupForm.confirmPassword.state === "valid"
-        );
-      } else if (step === 2) {
+      if (step === 2) {
+        return true;
+      } else if (step === 1) {
         return (
           signupForm.firstName.state === "valid" &&
           signupForm.lastName.state === "valid" &&
@@ -122,9 +119,9 @@ const CompleteProfile = () => {
         );
       } else if (step === 3) {
         return (
-          signupForm.email.state === "valid" &&
-          signupForm.password.state === "valid" &&
-          signupForm.confirmPassword.state === "valid" &&
+          // signupForm.email.state === "valid" &&
+          // signupForm.password.state === "valid" &&
+          // signupForm.confirmPassword.state === "valid" &&
           signupForm.firstName.state === "valid" &&
           signupForm.lastName.state === "valid" &&
           signupForm.dateOfBirth.state === "valid"
@@ -132,9 +129,6 @@ const CompleteProfile = () => {
       }
     },
     [
-      signupForm.email.state,
-      signupForm.password.state,
-      signupForm.confirmPassword.state,
       signupForm.firstName.state,
       signupForm.lastName.state,
       signupForm.dateOfBirth.state,
@@ -178,14 +172,14 @@ const CompleteProfile = () => {
       </div>
 
       {/* Form Content */}
-      {step === 1 && (
+      {/* {step === 1 && (
         <SignupStep
           signupForm={signupForm}
           setSignupForm={setSignupForm}
           inputChangeHandler={inputChangeHandler}
         />
-      )}
-      {step === 2 && (
+      )} */}
+      {step === 1 && (
         <ProfileStep
           inputChangeHandler={inputChangeHandler}
           signupForm={signupForm}

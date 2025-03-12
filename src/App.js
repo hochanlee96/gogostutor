@@ -8,7 +8,7 @@ import api, { setupAxiosInterceptors } from "./customFetch";
 import Routes from "./Routes";
 
 import { AuthContext } from "./shared/context/auth-context";
-import { ProfileContext } from "./shared/context/profile-context";
+import { UserContext } from "./shared/context/user-context";
 
 import { API_GetProfileData, API_Logout } from "./API";
 
@@ -241,21 +241,15 @@ function App() {
         logout: logout,
       }}
     >
-      <ProfileContext.Provider
+      <UserContext.Provider
         value={{
-          // id: tutorId,
-          // email: profileData&& profileData.email ? profileData.email : null,
-          // verified: profileData && profileData.verified ? profileData.verified : false,
-          // approval: profileData && profileData.approval ? profileData.approval : false,
-          userData: userData,
+          data: userData,
           setUserData: setUserData,
           getUserData: getUserData,
-          // verifyUser: verifyUser,
-          // setApprovalStatus: setApprovalStatus,
         }}
       >
         <BrowserRouter>{routes}</BrowserRouter>
-      </ProfileContext.Provider>
+      </UserContext.Provider>
     </AuthContext.Provider>
   );
 }

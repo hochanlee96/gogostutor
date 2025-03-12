@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { SettingData } from "./SettingData.js";
 
 import { AuthContext } from "../../../shared/context/auth-context";
-import { ProfileContext } from "../../../shared/context/profile-context";
+import { UserContext } from "../../../shared/context/user-context.js";
 
 import Account from "../components/Account";
 import CalendarPref from "../components/CalendarPref";
@@ -18,7 +18,11 @@ import classes from "./AccountSettings.module.css";
 
 const AccountSettings = () => {
   const auth = useContext(AuthContext);
-  const profile = useContext(ProfileContext);
+  const user = useContext(UserContext);
+  const userData =
+    user && user.data
+      ? user.data
+      : { profile: { firstName: "", lastName: "" } };
 
   const settingData = [...SettingData];
   const contentMap = {
@@ -37,9 +41,9 @@ const AccountSettings = () => {
     <div className={classes.Container}>
       <div className={classes.TabContent}>
         <div className={classes.profileBox}>
-          {profile && profile.userData && profile.userData.imageURL ? (
+          {userData.imageURL ? (
             <img
-              src={profile.userData.imageURL}
+              src={userData.imageURL}
               alt="Profile"
               className={classes.profileImage}
             />
@@ -52,20 +56,15 @@ const AccountSettings = () => {
           )}
           <div className={classes.profileInfo}>
             <h3 className={classes.profileName}>
-              {profile && profile.userData && profile.userData.firstName
-                ? profile.userData.firstName
-                : // : auth.email.split("@")[0]}{" "}
-                  ""}
-              <span className={classes.profileRole}>Tutor</span>
+              {userData.profile.firstName}
+
+              {/* <span className={classes.profileRole}>Tutor</span> */}
             </h3>
-            {/* <button className={classes.switchButton}>Switch Account</button> */}
           </div>
         </div>
         <div className={classes.SettingBox}>
           {settingData
             ? settingData.map((data) => {
-                console.log("showing: ", showing);
-                console.log("current rendered: ", data.title);
                 return (
                   <div
                     key={data.title}

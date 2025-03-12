@@ -6,7 +6,7 @@ import ActionsModal from "./ActionsModal";
 import classes from "./AuthComponents.module.css";
 
 import { AuthContext } from "../../../context/auth-context";
-import { ProfileContext } from "../../../context/profile-context";
+import { UserContext } from "../../../context/user-context";
 
 import { FaExclamation, FaBell, FaComment } from "react-icons/fa";
 import emptyUserImage from "../../../../shared/assets/icons/user.png";
@@ -15,11 +15,10 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
   const [newMessage, setNewMessage] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const socket = useContext(AuthContext).socket;
-  const profile = useContext(ProfileContext);
-  const profileData =
-    profile.userData && profile.userData.profile
-      ? profile.userData.profile
-      : null;
+  const user = useContext(UserContext);
+  const userData = user.data
+    ? user.data
+    : { firstName: "user", lastName: "user" };
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -75,18 +74,14 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
         </li>
         <li>
           <div onClick={() => setModalOpen(true)}>
-            {profileData && profileData.firstName ? (
-              <img
-                className={classes.UserIcon}
-                src={emptyUserImage}
-                alt="profile_Image"
-              />
-            ) : (
-              "user"
-            )}
+            <img
+              className={classes.UserIcon}
+              src={emptyUserImage}
+              alt="profile_Image"
+            />
           </div>
           {modalOpen ? (
-            <ActionsModal setIsOpen={setModalOpen} email={profileData.email} />
+            <ActionsModal setIsOpen={setModalOpen} email={userData.email} />
           ) : null}
         </li>
         {/* <li>
