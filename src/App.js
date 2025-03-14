@@ -17,6 +17,7 @@ let logoutTimer;
 function App() {
   const [socket, setSocket] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [profileCompleted, setProfileCompleted] = useState(false);
 
   const [accessToken, setAccessToken] = useState(null);
@@ -92,6 +93,7 @@ function App() {
         if (data.status === 200) {
           // setProfileData({ ...data.profileData });
           setUserData({ ...data.data });
+          setProfile({ ...data.profileData });
 
           setProfileCompleted(data.profileCompleted);
         } else if (data.status === 404) {
@@ -244,6 +246,7 @@ function App() {
       <UserContext.Provider
         value={{
           data: userData,
+          profile: profile,
           setUserData: setUserData,
           getUserData: getUserData,
         }}

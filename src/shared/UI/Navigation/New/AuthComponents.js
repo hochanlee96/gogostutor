@@ -11,14 +11,15 @@ import { UserContext } from "../../../context/user-context";
 import { FaExclamation, FaBell, FaComment } from "react-icons/fa";
 import emptyUserImage from "../../../../shared/assets/icons/user.png";
 
-const AuthComponents = ({ isLoggedIn, verified }) => {
+const AuthComponents = ({ isLoggedIn }) => {
   const [newMessage, setNewMessage] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const socket = useContext(AuthContext).socket;
   const user = useContext(UserContext);
-  const userData = user.data
-    ? user.data
-    : { firstName: "user", lastName: "user" };
+  const profile =
+    user && user.profile
+      ? user.profile
+      : { firstName: "user", lastName: "user" };
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -36,18 +37,6 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
   if (isLoggedIn) {
     contents = (
       <ul className={classes.NavLinks}>
-        {verified ? null : (
-          <li>
-            <div
-              onClick={() => {
-                navigate("/verify-email");
-              }}
-              className={classes.VerifyMessage}
-            >
-              <FaExclamation size="20px" />
-            </div>
-          </li>
-        )}
         <li>
           <div
             className={classes.UtilityButton}
@@ -81,7 +70,7 @@ const AuthComponents = ({ isLoggedIn, verified }) => {
             />
           </div>
           {modalOpen ? (
-            <ActionsModal setIsOpen={setModalOpen} email={userData.email} />
+            <ActionsModal setIsOpen={setModalOpen} email={profile.email} />
           ) : null}
         </li>
         {/* <li>

@@ -1,0 +1,11 @@
+.Container {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.eventsBox {
+  background-color: #f5f7f9;
+  height: 80%;
+}

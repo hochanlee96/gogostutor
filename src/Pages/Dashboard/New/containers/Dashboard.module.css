@@ -1,0 +1,26 @@
+.Container {
+  width: 100%;
+  display: flex;
+  margin-right: 20%;
+}
+
+.MainContainer {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.SideContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  row-gap: 20px;
+}
+
+.notificationBox {
+  height: 500px;
+  border: 1px solid #e8ebed;
+  padding: 20px;
+}

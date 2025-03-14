@@ -4,17 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../shared/context/auth-context";
 import { UserContext } from "../../../../shared/context/user-context";
 
-import { API_ApplyForApproval } from "../../../../API";
-
 import classes from "./Dashboard.module.css";
 
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import TutorRatingImg from "../../../../shared/assets/icons/reputation.png";
-import CollegeImg from "../../../../shared/assets/icons/school.png";
-import CalendarImg from "../../../../shared/assets/icons/calendar.png";
-import ChecklistImg from "../../../../shared/assets/icons/checklist.png";
+import DashboardData from "../components/DashboardData";
+import BuildProfile from "../components/BuildProfile";
+import BuildCourse from "../components/BuildCourse";
+import News from "../components/News";
+import Events from "../components/Events";
 
-import emptyUserImage from "../../../../shared/assets/icons/user.png";
+import Calendar from "../components/Calendar";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +37,21 @@ const Dashboard = () => {
     );
   }
 
-  return <div>dashboard</div>;
+  return (
+    <div className={classes.Container}>
+      <div className={classes.MainContainer}>
+        <DashboardData userData={userData} />
+        <BuildProfile />
+        <BuildCourse />
+        <News />
+        <Events />
+      </div>
+      <div className={classes.SideContainer}>
+        <Calendar />
+        <div className={classes.notificationBox}>Notification Box</div>
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;

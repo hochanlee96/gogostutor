@@ -41,10 +41,7 @@ const Navigation = () => {
           />
         </div>
         <div className={classes.AuthComponents}>
-          <AuthComponents
-            isLoggedIn={auth ? auth.isLoggedIn : false}
-            verified={auth ? auth.verified : false}
-          />
+          <AuthComponents isLoggedIn={auth ? auth.isLoggedIn : false} />
         </div>
 
         {/* <div className={classes.BottomRow}>

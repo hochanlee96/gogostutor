@@ -19,9 +19,9 @@ import classes from "./AccountSettings.module.css";
 const AccountSettings = () => {
   const auth = useContext(AuthContext);
   const user = useContext(UserContext);
-  const userData =
-    user && user.data
-      ? user.data
+  const profile =
+    user && user.profile
+      ? user.profile
       : { profile: { firstName: "", lastName: "" } };
 
   const settingData = [...SettingData];
@@ -41,9 +41,9 @@ const AccountSettings = () => {
     <div className={classes.Container}>
       <div className={classes.TabContent}>
         <div className={classes.profileBox}>
-          {userData.imageURL ? (
+          {profile.imageURL ? (
             <img
-              src={userData.imageURL}
+              src={profile.imageURL}
               alt="Profile"
               className={classes.profileImage}
             />
@@ -56,7 +56,7 @@ const AccountSettings = () => {
           )}
           <div className={classes.profileInfo}>
             <h3 className={classes.profileName}>
-              {userData.profile.firstName}
+              {profile.firstName}
 
               {/* <span className={classes.profileRole}>Tutor</span> */}
             </h3>
