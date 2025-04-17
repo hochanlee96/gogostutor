@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import classes from "./BuildProfile.module.css";
 import { FaFire } from "react-icons/fa";
 
 const BuildProfile = () => {
+  const navigate = useNavigate();
   return (
     <div className={classes.Container}>
       <div>
@@ -16,7 +18,14 @@ const BuildProfile = () => {
           200+ students taking lessons at the moment
         </div>
       </div>
-      <button className={classes.buildButton}>Build Profile</button>
+      <button
+        className={classes.buildButton}
+        onClick={() => {
+          navigate("/profile");
+        }}
+      >
+        Build Profile
+      </button>
     </div>
   );
 };

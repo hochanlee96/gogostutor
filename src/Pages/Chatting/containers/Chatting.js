@@ -119,12 +119,12 @@ const Chatting = () => {
       socket.emit("join-room", auth.id);
 
       if (state && state.studentId) {
-        if (state.studentData && state.studentData.iamgeURL) {
-          const image = await API_GetProfileImageFromCloudinary(
-            state.studentData.iamgeURL
-          );
-          setCurrentStudentImage(image);
-        }
+        // if (state.studentData && state.studentData.iamgeURL) {
+        //   const image = await API_GetProfileImageFromCloudinary(
+        //     state.studentData.iamgeURL
+        //   );
+        //   setCurrentStudentImage(image);
+        // }
         let studentRoom = roomList.find(
           (room) => room.studentId === state.studentId
         );
@@ -140,7 +140,7 @@ const Chatting = () => {
     if (auth) {
       initializeMessageRoom(auth.id, auth.accessToken);
     }
-  }, [getChatMessages, state, auth]);
+  }, [getChatMessages, state, auth, socket]);
 
   // useEffect(() => {
   //   if (auth && auth.accessToken) {

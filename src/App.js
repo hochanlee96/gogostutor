@@ -73,6 +73,38 @@ function App() {
     }
   }, [updateAuthData]);
 
+  const updateProfileData = useCallback(
+    async (body) => {
+      try {
+        const response = await fetch(
+          process.env.REACT_APP_BACKEND_URL + `/tutors/${id}/profile`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + accessToken,
+            },
+            body: JSON.stringify(body),
+            credentials: "include",
+          }
+        );
+        const data = await response.json();
+
+        if (data.status === 200) {
+          // setProfileData({ ...data.profileData });
+          setUserData({ ...data.data });
+          setProfile({ ...data.profileData });
+
+          setProfileCompleted(data.profileCompleted);
+        } else if (data.status === 404) {
+          logout();
+        }
+      } catch (err) {
+        logout();
+      }
+    },
+    [logout, accessToken, id]
+  );
   const getUserData = useCallback(
     async (tutorId, accessToken) => {
       try {
@@ -94,7 +126,6 @@ function App() {
           // setProfileData({ ...data.profileData });
           setUserData({ ...data.data });
           setProfile({ ...data.profileData });
-
           setProfileCompleted(data.profileCompleted);
         } else if (data.status === 404) {
           logout();
@@ -131,37 +162,6 @@ function App() {
     },
     [updateAuthData, getUserData]
   );
-
-  const verifyUser = useCallback(() => {
-    setUserData((prev) => {
-      return { ...prev, verified: true };
-    });
-    // localStorage.setItem(
-    //   "userData",
-    //   JSON.stringify({
-    //     ...authData,
-    //     verified: true,
-    //   })
-    // );
-  }, []);
-
-  const setApprovalStatus = useCallback((status) => {
-    setUserData((prev) => {
-      return { ...prev, approval: status };
-    });
-    // localStorage.setItem(
-    //   "userData",
-    //   JSON.stringify({
-    //     ...authData,
-    //     approval: status,
-    //   })
-    // );
-  }, []);
-
-  // const addProfileData = useCallback((profileData) => {
-  //   setProfileData(profileData);
-  //   // localStorage.setItem("profileData", JSON.stringify(profileData));
-  // }, []);
 
   const verifyRefreshToken = useCallback(async () => {
     try {
@@ -216,17 +216,10 @@ function App() {
     };
   }, [verifyRefreshToken, socket, checkedLoginStatus]);
 
-  // useEffect(() => {
-  //   // Example: Fetch accessToken from localStorage (or any initial state)
-  //   console.log("setup interceptors");
-  //   // Configure Axios interceptors
-  //   setupAxiosInterceptors(() => accessToken, setAccessToken);
-  // }, [accessToken]);
   let routes;
   if (loading) {
     routes = <div>Loading...</div>;
   } else {
-    console.log("profile completed? ", profileCompleted);
     routes = (
       <Routes isSignedIn={!!accessToken} profileCompleted={profileCompleted} />
     );
@@ -249,6 +242,7 @@ function App() {
           profile: profile,
           setUserData: setUserData,
           getUserData: getUserData,
+          updateProfileData: updateProfileData,
         }}
       >
         <BrowserRouter>{routes}</BrowserRouter>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../../shared/context/auth-context";
-import { ProfileContext } from "../../../shared/context/profile-context";
+import { UserContext } from "../../../shared/context/user-context";
 
 import {
   API_ApplyForApproval,
@@ -23,12 +23,11 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const auth = useContext(AuthContext);
 
-  const profile = useContext(ProfileContext);
-  const userData = profile.userData;
+  const user = useContext(UserContext);
+  const userData = user.data;
   const tutorStatus =
     userData && userData.approval ? userData.approval : "pending";
   // const [profileImage, setProfileImage] = useState(null);
-  console.log("pprofile", profile);
 
   const navigate = useNavigate();
 
@@ -131,15 +130,20 @@ const Dashboard = () => {
       ) : (
         <div className={classes.ContentsBox}>
           <div className={classes.LeftContent}>
-            {profile.imageURL ? (
+            {/* {user.profile.imageURL ? (
               <img
                 className={classes.UserIcon}
-                src={profile.imageURL}
+                src={user.profile.imageURL}
                 alt="/"
               />
             ) : (
               <img className={classes.UserIcon} src={emptyUserImage} alt="/" />
-            )}
+            )} */}
+            <img
+              className={classes.UserIcon}
+              src={user.profile.imageURL || emptyUserImage}
+              alt="/"
+            />
 
             {userData && userData.profile && userData.profile.firstName ? (
               <h3>

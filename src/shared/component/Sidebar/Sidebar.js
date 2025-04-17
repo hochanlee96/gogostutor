@@ -1,5 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   FaHome,
   FaCalendarAlt,
@@ -12,11 +13,15 @@ import {
   FaChevronLeft,
 } from "react-icons/fa";
 
+import { MdSpaceDashboard } from "react-icons/md";
+
 import classes from "./Sidebar.module.css"; // Importing CSS module
 import GogosLogo from "../../assets/icons/GogosEdu_icon_text_logo.svg";
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
+  const pathname = useLocation().pathname;
+
   return (
     <div className={`${classes.sidebar} ${collapsed ? classes.collapsed : ""}`}>
       {!collapsed && (
@@ -34,11 +39,17 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       </button>
 
       <ul className={classes.menu}>
-        <li>
-          <FaHome className={classes.icon} />
-          {!collapsed && <span>Home</span>}
+        <li
+          className={`${pathname === "/dashboard" ? classes.menuActive : ""}`}
+          onClick={() => {
+            navigate("/dashboard");
+          }}
+        >
+          <MdSpaceDashboard className={classes.icon} />
+          {!collapsed && <span>Dashboard</span>}
         </li>
         <li
+          className={`${pathname === "/schedule" ? classes.menuActive : ""}`}
           onClick={() => {
             navigate("/schedule");
           }}
@@ -47,6 +58,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           {!collapsed && <span>Calender</span>}
         </li>
         <li
+          className={`${pathname === "/classroom" ? classes.menuActive : ""}`}
           onClick={() => {
             navigate("/classroom");
           }}
@@ -54,11 +66,17 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           <FaChalkboardTeacher className={classes.icon} />
           {!collapsed && <span>Classroom</span>}
         </li>
-        <li>
+        <li
+          className={`${pathname === "/messages" ? classes.menuActive : ""}`}
+          onClick={() => {}}
+        >
           <FaComment className={classes.icon} />
           {!collapsed && <span>Message</span>}
         </li>
-        <li>
+        <li
+          className={`${pathname === "/payment" ? classes.menuActive : ""}`}
+          onClick={() => {}}
+        >
           <FaMoneyBill className={classes.icon} />
           {!collapsed && <span>Payment</span>}
         </li>
@@ -69,7 +87,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           <FaBell className={classes.icon} />
           {!collapsed && <span>Notification</span>}
         </li>
-        <li>
+        <li
+          onClick={() => {
+            navigate("/account-settings");
+          }}
+        >
           <FaCog className={classes.icon} />
           {!collapsed && <span>Setting</span>}
         </li>

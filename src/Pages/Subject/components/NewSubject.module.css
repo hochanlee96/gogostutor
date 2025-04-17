@@ -1,0 +1,60 @@
+.button {
+  padding: 10px;
+  background-color: #0045a9;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  font-size: 12px;
+  /* font-weight: 500; */
+  border-radius: 4px;
+}
+
+.selectedSubjectBox {
+  background-color: rgb(225, 227, 229);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scrollableWrapper {
+  position: relative;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.scrollHint {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 0.8rem;
+  color: #888;
+  pointer-events: none;
+  z-index: 1;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+.Subject {
+  cursor: pointer;
+  background-color: rgb(245, 247, 249);
+  margin-top: 5px;
+  border-radius: 5px;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.Subject:hover {
+  background-color: rgb(225, 227, 229);
+}

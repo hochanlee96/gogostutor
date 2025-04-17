@@ -1,0 +1,91 @@
+.Container {
+  border: 1px solid #e8ebed;
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  padding: 20px;
+}
+.PictureBox {
+  background-color: #f5f7f9;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding: 20px;
+}
+
+.ImageWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.UserIcon {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.UserIcon:hover {
+  opacity: 50%;
+  transition: opacity 0.3s ease;
+}
+
+/* Icon hidden by default */
+.EditIcon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background-color: white;
+  border-radius: 50%;
+  padding: 4px;
+}
+
+/* Show icon on hover */
+.ImageWrapper:hover .EditIcon {
+  opacity: 1;
+}
+
+.UploadButton {
+  color: #0045a9;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.UploadButton:hover {
+  /* opacity: 0.7; */
+
+  text-decoration: underline;
+}
+
+.DataContainer {
+  background-color: #f5f7f9;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  row-gap: 10px;
+}
+
+.DataContainerTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.editButton {
+  font-size: 15px;
+  color: #0045a9;
+}
+.editButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.DataInput {
+  width: 100%;
+  border-style: none;
+  min-height: 60px;
+  padding: 16px 20px;
+}
+
+.DataInput:disabled {
+  background-color: white;
+}

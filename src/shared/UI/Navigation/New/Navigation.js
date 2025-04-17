@@ -16,7 +16,12 @@ const Navigation = () => {
   return (
     <header className={classes.MainHeader}>
       <div className={classes.HeaderRows}>
-        <div className={classes.LogoBox}>
+        <div
+          className={classes.LogoBox}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           {/* <img
               className={classes.Logo}
               src={LogoImage}

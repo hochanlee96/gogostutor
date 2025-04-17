@@ -14,7 +14,7 @@ import Login from "./Pages/Authentication/containers/Login";
 import Signup from "./Pages/Authentication/containers/Signup";
 import CompleteProfile from "./Pages/Authentication/containers/CompleteProfile";
 import Dashboard from "./Pages/Dashboard/New/containers/Dashboard";
-import Profile from "./Pages/Profile/containers/Profile";
+import Profile from "./Pages/Profile/New/containers/Profile";
 import MySubjects from "./Pages/Subject/containers/MySubjects";
 import Schedule from "./Pages/Schedule/containers/Schedule";
 import Classroom from "./Pages/Classroom/containers/Classroom";
@@ -93,17 +93,17 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
             }
           >
             <Route exact path="/dashboard" element={<Dashboard />} />
+            <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/my-subjects" element={<MySubjects />} />
+            <Route exact path="/messages" element={<Chatting />} />
           </Route>
-          <Route exact path="/profile" element={<Profile />} />
 
-          <Route exact path="/my-subjects" element={<MySubjects />} />
           <Route exact path="/schedule" element={<Schedule />} />
 
           <Route exact path="/classroom" element={<Classroom />} />
 
           <Route exact path="/learn/:sessionId" element={<Learn />} />
           <Route exact path="/account-settings" element={<Settings />} />
-          <Route exact path="/messages" element={<Chatting />} />
 
           <Route exact path="/verify-email" element={<VerifyEmail />} />
           <Route exact path="/payment-test" element={<PaymentTest />} />

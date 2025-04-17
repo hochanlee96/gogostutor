@@ -6,13 +6,13 @@
   overflow: hidden;
 }
 
-.SidebarCollapsed {
+.SidebarContainerCollapsed {
   width: 10vw;
 }
 
 .MainContainer {
   width: 80vw;
-  display: flex;
+  /* display: flex; */
   transition: width 0.3s ease-in-out;
   overflow: hidden;
 }

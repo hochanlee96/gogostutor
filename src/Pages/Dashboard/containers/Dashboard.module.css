@@ -1,5 +1,5 @@
 .Container {
-  width: 100vw;
+  width: 100%;
   height: auto;
 }
 
@@ -9,8 +9,8 @@
   flex-wrap: wrap;
   gap: 30px;
 
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
 
   width: 70%;
 }

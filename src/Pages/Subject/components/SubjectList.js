@@ -5,19 +5,20 @@ import { API_GetTutorSubjects, API_ModifyTutorSubjects } from "../../../API";
 
 import SubjectCard from "./SubjectCard";
 
-const SubjectList = ({ setCurrentMode }) => {
-  const [subjectList, setSubjectList] = useState(null);
+const SubjectList = ({ setCurrentMode, subjectList = [], loadedSubjects }) => {
+  // const [subjectList, setSubjectList] = useState(null);
   const auth = useContext(AuthContext);
+  const [editingCourse, setEditingCourse] = useState("");
 
-  const getTutorSubjects = useCallback(async () => {
-    try {
-      const response = await API_GetTutorSubjects(auth.id, auth.accessToken);
-      const data = await response.json();
-      setSubjectList(data.subjectList);
-    } catch (err) {
-      console.log(err);
-    }
-  }, [auth]);
+  // const getTutorSubjects = useCallback(async () => {
+  //   try {
+  //     const response = await API_GetTutorSubjects(auth.id, auth.accessToken);
+  //     const data = await response.json();
+  //     setSubjectList(data.subjectList);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, [auth]);
 
   const deregisterTutorSubject = useCallback(
     async (subjectId) => {
@@ -38,24 +39,20 @@ const SubjectList = ({ setCurrentMode }) => {
     [auth]
   );
 
-  useEffect(() => {
-    getTutorSubjects();
-  }, [getTutorSubjects]);
+  // useEffect(() => {
+  //   getTutorSubjects();
+  // }, [getTutorSubjects]);
 
   let subjectListCards = null;
   if (subjectList) {
-    subjectListCards = subjectList.map((current) => {
-      const currentSubject = current.subject;
+    subjectListCards = subjectList.map((subject) => {
       return (
         <SubjectCard
-          key={current._id}
-          subjectId={currentSubject._id}
-          title={currentSubject.title}
-          category={currentSubject.category}
-          field={currentSubject.field}
-          grade={currentSubject.grade}
-          status={current.status}
-          deleteSubject={deregisterTutorSubject}
+          key={subject._id}
+          courseId={subject._id}
+          subject={subject}
+          editingCourse={editingCourse}
+          setEditingCourse={setEditingCourse}
         />
       );
     });
@@ -63,15 +60,27 @@ const SubjectList = ({ setCurrentMode }) => {
 
   return (
     <div>
-      <h1>The list of subjects you can teach</h1>
-      <div>{subjectListCards}</div>
-      <button
-        onClick={() => {
-          setCurrentMode("newSubject");
-        }}
-      >
-        Apply for a new subject
-      </button>
+      {loadedSubjects ? (
+        subjectList.length > 0 ? (
+          <div
+            style={{
+              marginTop: "30px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              rowGap: "30px",
+            }}
+          >
+            {subjectListCards}
+          </div>
+        ) : (
+          <div>
+            <div>No subject</div>
+          </div>
+        )
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };

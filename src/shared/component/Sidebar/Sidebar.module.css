@@ -70,6 +70,11 @@
   color: #007bff;
 }
 
+.menuActive {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
 .divider {
   height: 1px;
   background: #ddd;

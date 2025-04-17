@@ -9,6 +9,8 @@ import { AuthContext } from "../../../context/auth-context";
 import { UserContext } from "../../../context/user-context";
 
 import { FaExclamation, FaBell, FaComment } from "react-icons/fa";
+import { MdSpaceDashboard } from "react-icons/md";
+
 import emptyUserImage from "../../../../shared/assets/icons/user.png";
 
 const AuthComponents = ({ isLoggedIn }) => {
@@ -62,12 +64,27 @@ const AuthComponents = ({ isLoggedIn }) => {
           </div>
         </li>
         <li>
+          <div
+            className={classes.UtilityButton}
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+          >
+            <MdSpaceDashboard size="20px" />
+          </div>
+        </li>
+        <li>
           <div onClick={() => setModalOpen(true)}>
-            <img
+            {profile && profile.imageURL ? (
+              <img className={classes.UserIcon} src={profile.imageURL} alt="" />
+            ) : (
+              <img className={classes.UserIcon} src={emptyUserImage} alt="" />
+            )}
+            {/* <img
               className={classes.UserIcon}
-              src={emptyUserImage}
+              src={profile.imageURL || emptyUserImage}
               alt="profile_Image"
-            />
+            /> */}
           </div>
           {modalOpen ? (
             <ActionsModal setIsOpen={setModalOpen} email={profile.email} />
@@ -81,10 +98,10 @@ const AuthComponents = ({ isLoggedIn }) => {
   } else {
     contents = (
       <ul className={classes.AuthButtons}>
-        <li>
+        <li style={{ fontSize: "20px" }}>
           <NavLink to="/login">Log in</NavLink>
         </li>
-        <li className={classes.JoinUs}>
+        <li className={classes.JoinUs} style={{ fontSize: "20px" }}>
           <NavLink to="/signup">Join Us</NavLink>
         </li>
       </ul>

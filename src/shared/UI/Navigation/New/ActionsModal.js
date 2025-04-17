@@ -14,7 +14,15 @@ const ActionsModal = ({ setIsOpen, email }) => {
       <div className={classes.darkBG} onClick={() => setIsOpen(false)} />
       <div className={classes.modal}>
         <div className={classes.ActionsBox}>
-          <div className={classes.ActionButton}>Subscribe</div>
+          <div
+            className={classes.ActionButton}
+            onClick={() => {
+              navigate("/dashboard");
+              setIsOpen(false);
+            }}
+          >
+            Dashboard
+          </div>
           <div
             className={classes.ActionButton}
             onClick={() => {

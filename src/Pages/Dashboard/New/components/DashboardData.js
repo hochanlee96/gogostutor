@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../../shared/context/user-context";
 import classes from "./DashboardData.module.css";
 import EmptyUserImage from "../../../../shared/assets/icons/user.png";
 
 import { LiaEdit } from "react-icons/lia";
 
 const DashboardData = ({ userData }) => {
+  const user = useContext(UserContext);
+  const navigate = useNavigate();
   return (
     <div className={classes.Container}>
       <div className={classes.ProfileBox}>
-        <img className={classes.UserIcon} src={EmptyUserImage} alt="/" />
+        <img
+          className={classes.UserIcon}
+          src={
+            user && user.profile && user.profile.imageURL
+              ? user.profile.imageURL
+              : EmptyUserImage
+          }
+          alt="/"
+        />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <div style={{ fontSize: "22px", fontWeight: "700" }}>
@@ -20,7 +32,12 @@ const DashboardData = ({ userData }) => {
               email
             </div>
           </div>
-          <LiaEdit size="17px" />
+          <LiaEdit
+            onClick={() => {
+              navigate("/profile");
+            }}
+            size="17px"
+          />
         </div>
       </div>
       <div className={classes.DataBox}>

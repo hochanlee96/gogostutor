@@ -1,11 +1,11 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 
-import Button from "../../../shared/UI/components/FormElements/Button";
+import Button from "../../../../shared/UI/components/FormElements/Button";
 
-import { AuthContext } from "../../../shared/context/auth-context";
-import { UserContext } from "../../../shared/context/user-context";
+import { AuthContext } from "../../../../shared/context/auth-context";
+import { UserContext } from "../../../../shared/context/user-context";
 
-import { API_UpdateProfileData } from "../../../API";
+import { API_UpdateProfileData } from "../../../../API";
 
 import classes from "./Profile.module.css";
 

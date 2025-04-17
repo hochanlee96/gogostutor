@@ -9,7 +9,6 @@ import { UserContext } from "../../../shared/context/user-context";
 import { API_Login } from "../../../API";
 
 import classes from "./Auth.module.css";
-import Logo from "../../../shared/assets/icons/A-List_logo_rmbg.svg";
 import GogosLogo from "../../../shared/assets/icons/GogosEdu_icon_text_logo.svg";
 
 // const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
@@ -40,7 +39,6 @@ const Login = () => {
       const authData = data.authData;
       if (data.status === 200) {
         auth.login(authData.accessToken);
-        console.log("authData: ", authData);
         authData.profileCompleted
           ? navigate("/dashboard")
           : navigate("/complete-profile");
