@@ -34,7 +34,7 @@ const Classroom = () => {
       if (data.status === 200) {
         setSessionList(data.sessionList);
         // setSubjectList(data.subjectList);
-        console.log(data.totalSubjects);
+
         setSubjectList(data.totalSubjects);
       } else {
         alert("An error has occured");

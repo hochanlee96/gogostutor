@@ -19,7 +19,7 @@ const SessionListComponent = ({ sessionList, activeBar }) => {
                 </div>
                 <div>{session.startTime}</div>
                 <div>{session.endTime}</div>
-                <div>{session.studentId._id}</div>
+                <div>{session.studentId ? session.studentId._id : ""}</div>
               </div>
               <div className={classes.sessionButtons}>
                 <div

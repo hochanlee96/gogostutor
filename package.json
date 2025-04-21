@@ -29,6 +29,7 @@
     "react-apple-login": "^1.1.6",
     "react-calendar": "^5.0.0",
     "react-dom": "^18.3.1",
+    "react-error-boundary": "^5.0.0",
     "react-facebook-login": "^4.1.1",
     "react-icons": "^5.3.0",
     "react-router-dom": "^6.26.2",

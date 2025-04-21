@@ -8,6 +8,9 @@ import Sidebar from "./shared/component/Sidebar/Sidebar";
 // import Footer from "./shared/UI/Navigation/Footer";
 import Footer from "./shared/UI/Navigation/New/Footer";
 
+import Error from "./Pages/Error/containers/Error";
+import AppWithErrorBoundary from "./ErrorBoundary";
+
 // import Home from "../Tutor/Home/pages/Home";
 import Home from "./Pages/Home/Test/pages/HomeTest";
 import Login from "./Pages/Authentication/containers/Login";
@@ -40,6 +43,14 @@ const NavigationLayout = () => {
       <Navigation />
       <Outlet />
     </div>
+  );
+};
+
+const ErrorBoundaryLayout = () => {
+  return (
+    <AppWithErrorBoundary>
+      <Outlet />
+    </AppWithErrorBoundary>
   );
 };
 const FooterLayout = () => {
@@ -78,58 +89,69 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
   if (isSignedIn) {
     routes = (
       <Routes>
-        {/* <Route element={<FooterLayout />}> */}
-        {profileCompleted ? null : (
-          <Route exact path="/complete-profile" element={<CompleteProfile />} />
-        )}
-        <Route element={<NavigationLayout />}>
-          <Route exact path="/" element={<Home />} />
-          <Route
-            element={
-              <SidebarLayout
-                collapsed={sidebarCollapsed}
-                setCollapsed={setSidebarCollapsed}
-              />
-            }
-          >
-            <Route exact path="/dashboard" element={<Dashboard />} />
-            <Route exact path="/profile" element={<Profile />} />
-            <Route exact path="/my-subjects" element={<MySubjects />} />
-            <Route exact path="/messages" element={<Chatting />} />
+        <Route element={<ErrorBoundaryLayout />}>
+          {profileCompleted ? null : (
+            <Route
+              exact
+              path="/complete-profile"
+              element={<CompleteProfile />}
+            />
+          )}
+          <Route element={<NavigationLayout />}>
+            <Route exact path="/" element={<Home />} />
+            <Route
+              element={
+                <SidebarLayout
+                  collapsed={sidebarCollapsed}
+                  setCollapsed={setSidebarCollapsed}
+                />
+              }
+            >
+              <Route exact path="/dashboard" element={<Dashboard />} />
+              <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/my-subjects" element={<MySubjects />} />
+              <Route exact path="/messages" element={<Chatting />} />
+            </Route>
+
+            <Route exact path="/schedule" element={<Schedule />} />
+
+            <Route exact path="/classroom" element={<Classroom />} />
+
+            <Route exact path="/learn/:sessionId" element={<Learn />} />
+            <Route exact path="/account-settings" element={<Settings />} />
+
+            <Route exact path="/verify-email" element={<VerifyEmail />} />
+            <Route exact path="/payment-test" element={<PaymentTest />} />
+            <Route exact path="/checkout-test" element={<CheckoutTest />} />
+            <Route
+              exact
+              path="/checkout-return-test"
+              element={<ReturnTest />}
+            />
+            <Route exact path="/payout-test" element={<PayoutTest />} />
+            <Route exact path="/test" element={<Test />} />
+            <Route exact path="/error" element={<Error />} />
+            <Route path="/*" element={<Navigate replace to="/" />} />
           </Route>
-
-          <Route exact path="/schedule" element={<Schedule />} />
-
-          <Route exact path="/classroom" element={<Classroom />} />
-
-          <Route exact path="/learn/:sessionId" element={<Learn />} />
-          <Route exact path="/account-settings" element={<Settings />} />
-
-          <Route exact path="/verify-email" element={<VerifyEmail />} />
-          <Route exact path="/payment-test" element={<PaymentTest />} />
-          <Route exact path="/checkout-test" element={<CheckoutTest />} />
-          <Route exact path="/checkout-return-test" element={<ReturnTest />} />
-          <Route exact path="/payout-test" element={<PayoutTest />} />
-          <Route exact path="/test" element={<Test />} />
-
-          <Route path="/*" element={<Navigate replace to="/" />} />
         </Route>
-        {/* </Route> */}
       </Routes>
     );
   } else {
     routes = (
       <Routes>
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/signup" element={<Signup />} />
-        <Route element={<NavigationLayout />}>
-          <Route
-            exact
-            path="/email-verification-redirect"
-            element={<EmailVerifiedRedirect />}
-          />
-          <Route exact path="/" element={<Home />} />
-          <Route path="/*" element={<Navigate replace to="/" />} />
+        <Route element={<ErrorBoundaryLayout />}>
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route element={<NavigationLayout />}>
+            <Route
+              exact
+              path="/email-verification-redirect"
+              element={<EmailVerifiedRedirect />}
+            />
+            <Route exact path="/error" element={<Error />} />
+            <Route exact path="/" element={<Home />} />
+            <Route path="/*" element={<Navigate replace to="/" />} />
+          </Route>
         </Route>
       </Routes>
     );
