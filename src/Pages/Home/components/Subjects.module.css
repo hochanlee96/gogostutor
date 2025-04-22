@@ -1,0 +1,51 @@
+.wrapper {
+  background-color: #f9fafb;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.wrapperBox {
+  margin-left: 10rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 2.5rem;
+}
+
+.group {
+  margin-bottom: 2rem;
+}
+
+.groupTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  gap: 1.5rem 2.5rem; /* 🔄 row and column spacing */
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px; /* slightly wider to improve balance */
+  text-align: center;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.icon {
+  width: 64px; /* 🔄 slightly bigger for alignment */
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}

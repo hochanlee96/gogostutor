@@ -1,5 +1,30 @@
-.Container {
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("../../../fonts/Red_Hat_Display/RedHatDisplay-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("../../../fonts/Red_Hat_Display/RedHatDisplay-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+.container {
+  font-family: "Red Hat Display", sans-serif;
+}
+.studyWrapper {
+  width: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 }

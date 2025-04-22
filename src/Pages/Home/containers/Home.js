@@ -1,18 +1,30 @@
-import MainContent from "./MainContent";
-import SampleTutors from "./SampleTutors";
-import Subjects from "./Subjects";
-import Instruction from "./Instruction";
+import Title from "../components/Title";
+import Hear from "../components/Hear";
+import SampleTutors from "../components/SampleTutors";
+import AI from "../components/AI";
+import Subjects from "../components/Subjects";
+import How from "../components/How";
+import Credits from "../components/Credits";
+import Experience from "../components/Experience";
+import StudyImage from "../assets/study.png";
+import Conclusion from "../components/Conclusion";
 
 import classes from "./Home.module.css";
-
 const Home = () => {
   return (
-    <div className={classes.Container}>
-      <h1>This is the Tutors' homepage</h1>
-      <MainContent />
+    <div className={classes.container}>
+      <Title />
+      <Hear />
       <SampleTutors />
+      <AI />
       <Subjects />
-      <Instruction />
+      <How />
+      <Credits />
+      <Experience />
+      <div className={classes.studyWrapper}>
+        <img src={StudyImage} alt="Study Session" className={classes.image} />
+      </div>
+      <Conclusion />
     </div>
   );
 };

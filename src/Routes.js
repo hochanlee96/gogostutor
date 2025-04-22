@@ -6,13 +6,15 @@ import Navigation from "./shared/UI/Navigation/New/Navigation";
 import ScrollToTop from "./shared/UI/Navigation/New/ScrollToTop";
 import Sidebar from "./shared/component/Sidebar/Sidebar";
 // import Footer from "./shared/UI/Navigation/Footer";
-import Footer from "./shared/UI/Navigation/New/Footer";
+import Footer from "./shared/component/Footer/Footer";
+// import FooterOld from "./shared/UI/Navigation/New/Footer";
 
 import Error from "./Pages/Error/containers/Error";
 import AppWithErrorBoundary from "./ErrorBoundary";
 
 // import Home from "../Tutor/Home/pages/Home";
-import Home from "./Pages/Home/Test/pages/HomeTest";
+import Home from "./Pages/Home/containers/Home";
+// import Home from "./Pages/Home/Test/pages/HomeTest";
 import Login from "./Pages/Authentication/containers/Login";
 import Signup from "./Pages/Authentication/containers/Signup";
 import CompleteProfile from "./Pages/Authentication/containers/CompleteProfile";
@@ -143,14 +145,16 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route element={<NavigationLayout />}>
-            <Route
-              exact
-              path="/email-verification-redirect"
-              element={<EmailVerifiedRedirect />}
-            />
-            <Route exact path="/error" element={<Error />} />
-            <Route exact path="/" element={<Home />} />
-            <Route path="/*" element={<Navigate replace to="/" />} />
+            <Route element={<FooterLayout />}>
+              <Route
+                exact
+                path="/email-verification-redirect"
+                element={<EmailVerifiedRedirect />}
+              />
+              <Route exact path="/error" element={<Error />} />
+              <Route exact path="/" element={<Home />} />
+              <Route path="/*" element={<Navigate replace to="/" />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

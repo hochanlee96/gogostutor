@@ -1,0 +1,129 @@
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("../../../fonts/Red_Hat_Display/RedHatDisplay-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("../../../fonts/Red_Hat_Display/RedHatDisplay-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  padding: 4rem 2rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  z-index: 1;
+  position: relative;
+
+  font-family: "Red Hat Display", sans-serif;
+}
+
+.textBox {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.imageBox {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageBox img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.highlight {
+  color: #3b82f6;
+}
+
+.button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, #6366f1, #ec4899);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background: linear-gradient(to right, #4f46e5, #db2777);
+  transform: scale(1.05);
+}
+
+/* SVG Vector Overlays */
+.vector1,
+.vector2,
+.vector3,
+.vector4 {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.vector1 {
+  top: 10%;
+  right: 5%;
+  width: 69px;
+}
+
+.vector2 {
+  bottom: 5%;
+  left: 5%;
+  width: 148px;
+}
+
+.vector3 {
+  top: 30%;
+  right: 20%;
+  width: 148px;
+}
+
+.vector4 {
+  bottom: 25%;
+  left: 20%;
+  width: 68px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .imageBox {
+    margin-top: 2rem;
+  }
+
+  .vector1,
+  .vector2,
+  .vector3,
+  .vector4 {
+    display: none;
+  }
+}
