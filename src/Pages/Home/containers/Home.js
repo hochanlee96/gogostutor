@@ -18,8 +18,8 @@ const Home = () => {
       <SampleTutors />
       <AI />
       <Subjects />
-      <How />
-      <Credits />
+      {/* <How /> */}
+      {/* <Credits /> */}
       <Experience />
       <div className={classes.studyWrapper}>
         <img src={StudyImage} alt="Study Session" className={classes.image} />

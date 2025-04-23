@@ -14,6 +14,7 @@ import AppWithErrorBoundary from "./ErrorBoundary";
 
 // import Home from "../Tutor/Home/pages/Home";
 import Home from "./Pages/Home/containers/Home";
+// import Home from "./Pages/Home/New/containers/Home";
 // import Home from "./Pages/Home/Test/pages/HomeTest";
 import Login from "./Pages/Authentication/containers/Login";
 import Signup from "./Pages/Authentication/containers/Signup";
@@ -122,7 +123,6 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
             <Route exact path="/learn/:sessionId" element={<Learn />} />
             <Route exact path="/account-settings" element={<Settings />} />
 
-            <Route exact path="/verify-email" element={<VerifyEmail />} />
             <Route exact path="/payment-test" element={<PaymentTest />} />
             <Route exact path="/checkout-test" element={<CheckoutTest />} />
             <Route
@@ -131,6 +131,7 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
               element={<ReturnTest />}
             />
             <Route element={<FooterLayout />}>
+              <Route exact path="/verify-email" element={<VerifyEmail />} />
               <Route exact path="/payout-test" element={<PayoutTest />} />
               <Route exact path="/test" element={<Test />} />
               <Route exact path="/error" element={<Error />} />

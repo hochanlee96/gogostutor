@@ -75,7 +75,7 @@ const TutorCard = ({ fullname, rating, country, subjects, imageURL }) => {
             <img
               className={classes.fi}
               alt="United States"
-              src="http://purecatamphetamine.github.io/country-flag-icons/3x2/SE.svg"
+              src="https://purecatamphetamine.github.io/country-flag-icons/3x2/SE.svg"
             />
             <span className={classes.tutorCard__country}>{country}</span>
           </div>
