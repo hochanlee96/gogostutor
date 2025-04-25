@@ -1,0 +1,60 @@
+.stepsWrapper {
+  width: 100%;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  background: linear-gradient(to right, #ffffff, #f9f9ff);
+}
+
+.step {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 40px auto;
+  flex-wrap: wrap;
+}
+
+.reverse {
+  /* flex-direction: row-reverse; */
+}
+
+.image {
+  width: 48%;
+  max-width: 500px;
+  object-fit: contain;
+}
+
+.text {
+  width: 48%;
+  max-width: 500px;
+  text-align: left;
+}
+
+.stepNumber {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #555;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+.text p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.text strong {
+  font-weight: 600;
+}

@@ -1,0 +1,45 @@
+.shareWrapper {
+  background-color: #54a9f9;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+  box-sizing: border-box;
+}
+
+.headline {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.paragraph {
+  max-width: 900px;
+  margin: 0 auto 16px auto;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #e6f0ff;
+}
+
+.callToAction {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 40px 0 16px 0;
+}
+
+.button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: white;
+  color: #2563eb;
+  border-color: white;
+}

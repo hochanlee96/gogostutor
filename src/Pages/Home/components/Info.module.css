@@ -1,0 +1,30 @@
+.infoWrapper {
+  width: 100%;
+  padding: 60px 20px;
+  background: linear-gradient(to right, #ffffff, #f9f9ff);
+  box-sizing: border-box;
+}
+
+.section {
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+.text {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.text strong {
+  font-weight: 600;
+}

@@ -1,0 +1,48 @@
+.benefitsWrapper {
+  background-color: #54a9f9;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  text-align: center;
+  color: white;
+}
+
+.header {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.benefitCard {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+}
+
+.imagePlaceholder {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.text {
+  font-size: 1rem;
+  color: #e0e0e0;
+}

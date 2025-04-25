@@ -135,6 +135,7 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
               <Route exact path="/payout-test" element={<PayoutTest />} />
               <Route exact path="/test" element={<Test />} />
               <Route exact path="/error" element={<Error />} />
+              <Route exact path="/" element={<Home />} />
               <Route path="/*" element={<Navigate replace to="/" />} />
             </Route>
           </Route>
