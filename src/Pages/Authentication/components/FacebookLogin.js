@@ -13,7 +13,7 @@ import classes from "./SocialLoginBox.module.css";
 
 const { REACT_APP_FACEBOOK_APP_ID } = process.env;
 
-const FacebookLoginButton = (props) => {
+const FacebookLoginButton = ({ remember }) => {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
@@ -28,13 +28,15 @@ const FacebookLoginButton = (props) => {
           email: res.email,
           picture: res.picture.data.url,
           name: res.name,
+          remember: remember,
         });
         const data = await response.json();
-        console.log(data);
+
         const authData = data.authData;
         // const profileData = data.profileData;
         if (data.status === 200) {
           auth.login(authData.accessToken);
+          localStorage.setItem("login", Date.now());
           authData.profileCompleted
             ? navigate("/dashboard")
             : navigate("/complete-profile");

@@ -75,8 +75,6 @@ const Signup = () => {
     }
   };
 
-  console.log("dob: ", signupForm.dateOfBirth.value);
-
   const submitHandler = async () => {
     try {
       const response = await fetch(
@@ -99,6 +97,7 @@ const Signup = () => {
       const authData = data.authData;
       if (data.status === 200) {
         auth.login(authData.accessToken);
+        localStorage.setItem("login", Date.now());
         navigate("/dashboard");
       } else if (data.status === 403) {
         alert(data.message);
@@ -210,6 +209,14 @@ const Signup = () => {
         >
           {step === 3 ? "Submit" : "Next"}
         </button>
+      </div>
+      <div
+        className={classes.link}
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        Already a member?
       </div>
     </div>
   );

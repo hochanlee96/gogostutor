@@ -15,7 +15,7 @@ import GoogleLogo from "../../../shared/assets/icons/google-logo.png";
 
 const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({ remember }) => {
   const auth = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -25,13 +25,14 @@ const GoogleLoginButton = () => {
       const response = await API_GoogleLogin({
         ...res,
         credential: res.credential,
+        remember: remember,
       });
       const data = await response.json();
-      console.log(data);
       const authData = data.authData;
       // const profileData = data.profileData;
       if (data.status === 200) {
         auth.login(authData.accessToken);
+        localStorage.setItem("login", Date.now());
         authData.profileCompleted
           ? navigate("/dashboard")
           : navigate("/complete-profile");

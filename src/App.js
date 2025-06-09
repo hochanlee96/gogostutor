@@ -51,27 +51,39 @@ function App() {
     [socket, accessToken]
   );
 
+  const clearUserData = useCallback(() => {
+    setUserData(null);
+    setAccessToken(null);
+    updateAuthData(null);
+  }, [updateAuthData]);
+
+  useEffect(() => {
+    const handleStorage = (event) => {
+      if (event.key === "logout") {
+        // Clear tokens or state as needed
+        clearUserData();
+      } else if (event.key === "login") {
+        window.location.reload();
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [clearUserData]);
+
   const logout = useCallback(async () => {
     try {
       const response = await API_Logout();
       if (response.status === 200) {
-        // localStorage.removeItem("userData");
-
-        setUserData(null);
-        // localStorage.removeItem("profileData");
-
-        updateAuthData(null);
-        // setAccessToken(null);
-        // setTutorId(null);
-        // setExpiration(null);
+        clearUserData();
+        localStorage.setItem("logout", Date.now());
       } else {
-        alert("Logout Failed");
+        // alert("Logout Failed");
         setLoading(false);
       }
     } catch (err) {
       console.log(err);
     }
-  }, [updateAuthData]);
+  }, [clearUserData]);
 
   const updateProfileData = useCallback(
     async (body) => {
@@ -139,31 +151,14 @@ function App() {
 
   const login = useCallback(
     async (token) => {
-      // const tokenExpiryDate = new Date(
-      //   new Date().getTime() + 1000 * login_duration
-      // );
-      // setAuthData({ ...authData, tokenExpirationData: tokenExpiryDate });
-      // localStorage.setItem(
-      //   "userData",
-      //   JSON.stringify({
-      //     ...authData,
-      //     expiration: tokenExpiryDate.toISOString(),
-      //   })
-      // );
-
       updateAuthData(token);
-      // setAccessToken(authData.accessToken);
       const decoded = jwtDecode(token);
-
-      // setTutorId(decoded.id);
-      // setExpiration(decoded.exp);
-
       getUserData(decoded.id, token);
     },
     [updateAuthData, getUserData]
   );
 
-  const verifyRefreshToken = useCallback(async () => {
+  const refreshToken = useCallback(async () => {
     try {
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/tutors/refresh-token",
@@ -176,8 +171,9 @@ function App() {
         }
       );
       const data = await response.json(); // {userId, email, token: refreshtoken: expirationDate, message:}
-      const newAccessToken = data.accessToken;
+      let newAccessToken;
       if (data.message === "new tokens generated") {
+        newAccessToken = data.accessToken;
         login(newAccessToken);
       } else {
         logout();
@@ -192,18 +188,18 @@ function App() {
     if (accessToken && expiration) {
       const remainingTime = expiration - new Date().getTime();
 
-      logoutTimer = setTimeout(verifyRefreshToken, remainingTime); // instead of logout, send refresh token request
+      logoutTimer = setTimeout(refreshToken, remainingTime); // instead of logout, send refresh token request
     } else {
       clearTimeout(logoutTimer);
     }
-  }, [accessToken, expiration, logout, verifyRefreshToken]);
+  }, [accessToken, expiration, logout, refreshToken]);
 
   //auto login when page refresh
   useEffect(() => {
     //if new access token, get profile data,
     if (!checkedLoginStatus) {
       setLoading(true);
-      verifyRefreshToken();
+      refreshToken();
     }
     setCheckedLoginStatus(true);
     //else remain loggedout
@@ -214,7 +210,7 @@ function App() {
         console.log("Socket disconnected on cleanup");
       }
     };
-  }, [verifyRefreshToken, socket, checkedLoginStatus]);
+  }, [refreshToken, socket, checkedLoginStatus]);
   //test
   let routes;
   if (loading) {

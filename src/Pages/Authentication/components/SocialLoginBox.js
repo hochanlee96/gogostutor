@@ -7,22 +7,22 @@ import CustomWechatLogin from "./WechatLogin";
 import classes from "./SocialLoginBox.module.css";
 const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
 
-const SocialLoginBox = () => {
+const SocialLoginBox = ({ remember }) => {
   return (
     <div className={classes.SocialLoginBox}>
       <div className={classes.SocialLoginItem}>
         <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
-          <CustomGoogleLogin />
+          <CustomGoogleLogin remember={remember} />
         </GoogleOAuthProvider>
       </div>
       <div className={classes.SocialLoginItem}>
-        <CustomFacebookLogin />
+        <CustomFacebookLogin remember={remember} />
       </div>
       <div className={classes.SocialLoginItem}>
-        <CustomAppleLogin />
+        <CustomAppleLogin remember={remember} />
       </div>
       <div className={classes.SocialLoginItem}>
-        <CustomWechatLogin />
+        <CustomWechatLogin remember={remember} />
       </div>
     </div>
   );

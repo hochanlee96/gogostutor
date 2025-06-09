@@ -99,6 +99,7 @@ const SampleTutors = () => {
         {tutorData.map((data, index) => {
           return (
             <TutorCard
+              key={index}
               fullname={data.fullname}
               rating={data.rating}
               country={data.country}

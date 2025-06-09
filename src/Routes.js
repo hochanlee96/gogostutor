@@ -17,6 +17,8 @@ import Home from "./Pages/Home/containers/Home";
 // import Home from "./Pages/Home/New/containers/Home";
 // import Home from "./Pages/Home/Test/pages/HomeTest";
 import Login from "./Pages/Authentication/containers/Login";
+import ForgotPassword from "./Pages/Authentication/containers/ForgotPassword";
+import ResetPassword from "./Pages/Authentication/containers/ResetPassword";
 import Signup from "./Pages/Authentication/containers/Signup";
 import CompleteProfile from "./Pages/Authentication/containers/CompleteProfile";
 import Dashboard from "./Pages/Dashboard/New/containers/Dashboard";
@@ -147,6 +149,12 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
       <Routes>
         <Route element={<ErrorBoundaryLayout />}>
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            exact
+            path="/reset-password/:token"
+            element={<ResetPassword />}
+          />
           <Route exact path="/signup" element={<Signup />} />
           <Route element={<NavigationLayout />}>
             <Route element={<FooterLayout />}>

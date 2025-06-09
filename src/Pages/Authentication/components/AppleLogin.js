@@ -10,17 +10,18 @@ import classes from "./SocialLoginBox.module.css";
 
 const { REACT_APP_TUTOR_URL, REACT_APP_APPLE_LOGIN_CLIENT_ID } = process.env;
 
-const AppleLoginComponent = () => {
+const AppleLoginComponent = ({ remember }) => {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
   const appleResponse = async (res) => {
     try {
-      const response = await API_AppleLogin({ ...res });
+      const response = await API_AppleLogin({ ...res, remember: remember });
       const data = await response.json();
       const authData = data.authData;
       // const profileData = data.profileData;
       if (data.status === 200) {
         auth.login(authData.accessToken);
+        localStorage.setItem("login", Date.now());
         authData.profileCompleted
           ? navigate("/dashboard")
           : navigate("/complete-profile");

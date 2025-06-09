@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import validator from "validator";
 
 import SocialLoginBox from "../components/SocialLoginBox";
 import Input from "../../../shared/UI/components/FormElements/Input";
@@ -14,6 +15,7 @@ import GogosLogo from "../../../shared/assets/icons/GogosEdu_icon_text_logo.svg"
 // const { REACT_APP_GOOGLE_CLIENT_ID } = process.env;
 const Login = () => {
   const [emailInput, setEmailInput] = useState("");
+  const [emailValid, setEmailValid] = useState("untouched");
   const [passwordInput, setPasswordInput] = useState("");
   const [remember, setRemember] = useState(true);
   const [validated, setValidated] = useState(true);
@@ -34,11 +36,13 @@ const Login = () => {
       const response = await API_Login({
         email: emailInput,
         password: passwordInput,
+        remember: remember,
       });
       const data = await response.json();
       const authData = data.authData;
       if (data.status === 200) {
         auth.login(authData.accessToken);
+        localStorage.setItem("login", Date.now());
         authData.profileCompleted
           ? navigate("/dashboard")
           : navigate("/complete-profile");
@@ -53,11 +57,19 @@ const Login = () => {
     event.preventDefault();
     loginRequestHandler();
   };
+
   return (
     <div className={classes.Container}>
       <div className={classes.LoginBox}>
         <div className={classes.Title}>
-          <img src={GogosLogo} alt="/" className={classes.Logo} />
+          <img
+            src={GogosLogo}
+            alt="/"
+            className={classes.Logo}
+            onClick={() => {
+              navigate("/");
+            }}
+          />
         </div>
         <form className={classes.FormBox} onSubmit={onSubmitHandler}>
           {/* <Input
@@ -84,7 +96,14 @@ const Login = () => {
             type="email"
             placeholder="Email"
             className={classes.Input}
+            onBlur={() => {
+              const isEmail = validator.isEmail(emailInput);
+              setEmailValid(isEmail ? "valid" : "invalid");
+            }}
           />
+          {emailValid === "invalid" ? (
+            <p style={{ color: "red" }}>Email input is invalid</p>
+          ) : null}
           <input
             title="Password"
             name="password"
@@ -105,11 +124,20 @@ const Login = () => {
               />
               <div>Remember me</div>
             </div>
-            <div className={classes.forgotPassword}>Forgot password?</div>
+            <div
+              className={classes.forgotPassword}
+              onClick={() => {
+                navigate("/forgot-password");
+              }}
+            >
+              Forgot password?
+            </div>
           </div>
           <button
             className={`${classes.LoginButton} ${
-              validated ? classes.LoginButtonValid : ""
+              emailValid === "valid" || emailValid === "untouched"
+                ? classes.LoginButtonValid
+                : ""
             }`}
             onClick={null}
           >
@@ -126,7 +154,7 @@ const Login = () => {
         </form>
         <div className={classes.SocialLoginContainer}>
           <div>login with</div>
-          <SocialLoginBox />
+          <SocialLoginBox remember={remember} />
         </div>
       </div>
     </div>

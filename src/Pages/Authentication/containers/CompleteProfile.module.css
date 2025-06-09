@@ -174,3 +174,13 @@
 .verifyButtonActive:hover {
   background-color: rgba(31, 58, 147, 0.3);
 }
+
+.link {
+  color: #1f3a93;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.link:hover {
+  opacity: 0.8;
+}
