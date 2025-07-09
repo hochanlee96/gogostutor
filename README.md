@@ -1,8 +1,25 @@
-# Getting Started with Create React App
+# Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Environment setup
 
-## Available Scripts
+### Things you need
+
+1. Certificate for https settings
+2. .env file 
+
+### Certificate for https settings
+
+1. install mkcert via package downloader (ie homebrew)
+2. install mkcert by command 'mkcert -install'
+3. create a folder on top level of this repository using name .cert 
+4. run this command to create cert 'mkcert -key-file .cert/tutor.lvh.me.key -cert-file .cert/tutor.lvh.me.pem tutor.lvh.me localhost 127.0.0.1 ::1'
+5. verify by run the app
+
+### .env file
+
+1. please reach out to Hochan or Timothy 
+
+## Available commnands 
 
 In the project directory, you can run:
 
