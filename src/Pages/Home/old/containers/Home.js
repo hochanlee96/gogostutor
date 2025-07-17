@@ -18,7 +18,7 @@ import Apply from "../components/Apply";
 import FAQ from "../components/FAQ";
 import Share from "../components/Share";
 
-import { AuthContext } from "../../../shared/context/auth-context";
+import { AuthContext } from "../../../../shared/context/auth-context";
 
 import classes from "./Home.module.css";
 const Home = () => {

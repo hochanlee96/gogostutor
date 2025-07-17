@@ -13,7 +13,7 @@ import Error from "./Pages/Error/containers/Error";
 import AppWithErrorBoundary from "./ErrorBoundary";
 
 // import Home from "../Tutor/Home/pages/Home";
-import Home from "./Pages/Home/containers/Home";
+import Home from "./Pages/Home/old/containers/Home";
 // import Home from "./Pages/Home/New/containers/Home";
 // import Home from "./Pages/Home/Test/pages/HomeTest";
 import Login from "./Pages/Authentication/containers/Login";
