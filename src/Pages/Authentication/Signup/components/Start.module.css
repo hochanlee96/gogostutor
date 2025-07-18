@@ -1,0 +1,137 @@
+@media (min-width: 333px) {
+  .ContentContainer {
+    width: 472px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 42px;
+
+    animation: fadeIn 0.6s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .TextContainer {
+    width: 472px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .GetStartedText {
+    width: 472px;
+
+    position: relative;
+    font-size: 40px;
+    line-height: 120%;
+    color: var(--grayscale-inline_default);
+    text-align: center;
+  }
+
+  .GetStartedSubText {
+    width: 472px;
+    position: relative;
+
+    font-size: 24px;
+    line-height: 125%;
+    color: var(--grayscale-inline_default);
+    text-align: center;
+    display: inline-block;
+  }
+
+  .LoginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .SocialLoginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    align-self: stretch;
+  }
+
+  .SocialLoginText {
+    color: var(--grayscale-inline-placeholder, #9b9b9b);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 140%;
+    letter-spacing: -0.01em;
+  }
+  .orText {
+    color: var(--grayscale-inline-placeholder, #9b9b9b);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+    letter-spacing: -0.01em;
+  }
+
+  .SignUpButton {
+    height: 52px;
+    width: 400px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+
+    border-radius: 12px;
+    background: var(--brand-cta, #0068ff);
+    padding: 0px 24px;
+    border-width: 0;
+
+    color: var(--grayscale-inline-inverse, #fff);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 160%;
+    letter-spacing: -0.234px;
+  }
+
+  .SignUpButton:hover {
+    background-color: var(--brand-cta_hover);
+  }
+  .SignUpButton:active {
+    background-color: var(--brand-cta_press);
+  }
+
+  .SocialLoginButtons {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .SocialLoginButton {
+    display: flex;
+    width: 154px;
+    height: 45px;
+    padding: 0px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    border-radius: 12px;
+    background-color: transparent;
+    border-width: 0;
+  }
+
+  .SocialName {
+    color: var(--grayscale-inline-default, #222325);
+    font-family: "DM Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+    letter-spacing: -0.234px;
+  }
+}

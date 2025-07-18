@@ -1,0 +1,47 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.logo {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  width: 100px;
+}
+
+.textBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.mainText {
+  font-size: 24px;
+  line-height: 125%;
+  color: var(--brand-cta);
+}
+.subText {
+  font-size: 18px;
+  line-height: 125%;
+}
+
+.errorText {
+  font-size: 24px;
+  line-height: 125%;
+  color: var(--grayscale-inline_default);
+}
+
+.closeText {
+  font-size: 18px;
+  line-height: 125%;
+  color: var(--grayscale-inline_default);
+}

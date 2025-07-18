@@ -1,0 +1,36 @@
+.SocialLoginButtons {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.SocialName {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.234px;
+}
+
+.button {
+  width: 154px;
+  height: 45px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  border-radius: 32px;
+  border-width: 0;
+  background-color: transparent;
+  padding: 0px 18px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--grayscale-foreground_1);
+}
+
+.button:active {
+  border-radius: var(--grayscale-foreground_2_hover);
+  border-radius: 32px;
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 
-import Sidebar from "../../../shared/component/Sidebar/Sidebar.js";
+import Sidebar from "../../../shared/components/Sidebar/Sidebar.js";
 import SessionListComponent from "../components/SessionListComponent.js";
 import CourseBox from "../components/CourseBox.js";
 

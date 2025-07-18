@@ -4,9 +4,9 @@ import { Route, Navigate, Routes, Outlet } from "react-router-dom";
 // import Navigation from "../Tutor/Navigation/Navigation";
 import Navigation from "./shared/UI/Navigation/New/Navigation";
 import ScrollToTop from "./shared/UI/Navigation/New/ScrollToTop";
-import Sidebar from "./shared/component/Sidebar/Sidebar";
+import Sidebar from "./shared/components/Sidebar/Sidebar";
 // import Footer from "./shared/UI/Navigation/Footer";
-import Footer from "./shared/component/Footer/Footer";
+import Footer from "./shared/components/Footer/Footer";
 // import FooterOld from "./shared/UI/Navigation/New/Footer";
 
 import Error from "./Pages/Error/containers/Error";
@@ -16,11 +16,19 @@ import AppWithErrorBoundary from "./ErrorBoundary";
 import Home from "./Pages/Home/old/containers/Home";
 // import Home from "./Pages/Home/New/containers/Home";
 // import Home from "./Pages/Home/Test/pages/HomeTest";
-import Login from "./Pages/Authentication/containers/Login";
-import ForgotPassword from "./Pages/Authentication/containers/ForgotPassword";
-import ResetPassword from "./Pages/Authentication/containers/ResetPassword";
-import Signup from "./Pages/Authentication/containers/Signup";
-import CompleteProfile from "./Pages/Authentication/containers/CompleteProfile";
+
+//Remove old authentication components
+// import Login from "./Pages/Authentication/old/containers/Login";
+// import ForgotPassword from "./Pages/Authentication/old/containers/ForgotPassword";
+// import ResetPassword from "./Pages/Authentication/old/containers/ResetPassword";
+// import Signup from "./Pages/Authentication/old/containers/Signup";
+// import CompleteProfile from "./Pages/Authentication/old/containers/CompleteProfile";
+
+import Login from "./Pages/Authentication/Login/containers/Login";
+// import Signup from "./Pages/Authentication/Signup/containers/Signup";
+// import ForgotPassword from "./Pages/Authentication/old/containers/ForgotPassword";
+// import ResetPassword from "./Pages/Authentication/old/containers/ResetPassword";
+
 import Dashboard from "./Pages/Dashboard/New/containers/Dashboard";
 import Profile from "./Pages/Profile/New/containers/Profile";
 import MySubjects from "./Pages/Subject/containers/MySubjects";
@@ -95,13 +103,13 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
     routes = (
       <Routes>
         <Route element={<ErrorBoundaryLayout />}>
-          {profileCompleted ? null : (
+          {/* {profileCompleted ? null : (
             <Route
               exact
               path="/complete-profile"
               element={<CompleteProfile />}
             />
-          )}
+          )} */}
           <Route element={<NavigationLayout />}>
             <Route exact path="/" element={<Home />} />
             <Route
@@ -149,13 +157,13 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
       <Routes>
         <Route element={<ErrorBoundaryLayout />}>
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/forgot-password" element={<ForgotPassword />} />
-          <Route
+          {/* <Route exact path="/signup" element={<Signup />} /> */}
+          {/* <Route exact path="/forgot-password" element={<ForgotPassword />} /> */}
+          {/* <Route
             exact
             path="/reset-password/:token"
             element={<ResetPassword />}
-          />
-          <Route exact path="/signup" element={<Signup />} />
+          /> */}
           <Route element={<NavigationLayout />}>
             <Route element={<FooterLayout />}>
               <Route

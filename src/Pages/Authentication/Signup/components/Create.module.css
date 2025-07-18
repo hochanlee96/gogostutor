@@ -1,0 +1,331 @@
+.Container {
+  width: 100%;
+  height: 100vh;
+}
+
+.Description {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 14px;
+  line-height: 160%;
+  color: var(--grayscale-placeholder);
+  text-align: center;
+}
+
+.ContentBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.Index {
+  width: 44px;
+  position: relative;
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 140%;
+  font-weight: 600;
+  color: var(--brand-cta);
+  text-align: left;
+}
+
+.Content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.TextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.HeadingText {
+  width: 100%;
+  position: relative;
+
+  font-size: 22px;
+  line-height: 140%;
+  text-align: left;
+  color: var(--grayscale-inline_default);
+}
+
+.Strong {
+  color: var(--brand-cta);
+}
+
+.Subtext {
+  width: 100%;
+  position: relative;
+
+  font-size: 20px;
+  line-height: 160%;
+  color: var(--grayscale-inline_default);
+  text-align: left;
+  opacity: 0.7;
+}
+
+.FormBox {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.InputBox {
+  width: 400px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.InputLine {
+  width: 100%;
+  position: relative;
+}
+.Input {
+  width: 100%;
+  height: 44px;
+  position: relative;
+
+  border-radius: 12px;
+  border: 1px solid var(--grayscale-foreground_2_hover);
+  box-sizing: border-box;
+  padding: 0px 10px 0px 14px;
+
+  font-size: 18px;
+  color: var(--grayscale-placeholder);
+}
+
+.InputConfirmed {
+  border-radius: 12px;
+  border: 1.5px solid var(--brand-cta);
+  background-color: rgba(0, 104, 255, 0.1);
+  color: var(--brand-cta);
+}
+
+.InputIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 8px;
+  pointer-events: none;
+  fill: var(--brand-cta, #0068ff);
+}
+
+.VerifiedMessageBox {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  transform: translateX(90%) translateY(90%);
+
+  z-index: 1;
+  display: inline-block;
+
+  border-radius: 2px 12px 12px 12px;
+  border: 0.5px solid var(--success-success);
+  background-color: var(--success-success_light_2);
+  padding: 4px 8px;
+
+  color: var(--success-success_press);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.InputError {
+  border: 2px solid var(--danger-danger);
+}
+
+.ShowPasswordButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+
+  border-width: 0;
+  background-color: transparent;
+  padding-right: 10px;
+}
+
+.PasswordIcon {
+  fill: var(--grayscale-placeholder);
+}
+
+.ErrorMessageBox {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  transform: translateX(90%) translateY(90%);
+
+  z-index: 1;
+  display: inline-block;
+
+  border: 0.5px solid var(--danger-danger);
+  border-radius: 2px 12px 12px 12px;
+  background-color: var(--danger-danger_light_4);
+
+  padding: 4px 8px;
+  color: var(--danger-danger_border_2);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ButtonBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.Button {
+  width: auto;
+  height: 52px;
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  border-radius: 12px;
+  border: none;
+  background-color: var(--brand-cta);
+
+  box-sizing: border-box;
+  padding: 0px 24px;
+  font-size: 18px;
+  color: var(--grayscale-background_1);
+  fill: var(--grayscale-background_1);
+}
+.Button:hover {
+  background-color: var(--brand-cta_hover);
+}
+.Button:active {
+  background-color: var(--brand-cta_press);
+}
+.Button:disabled {
+  background-color: var(--grayscale-foreground_1);
+  color: var(--grayscale-inline_default);
+}
+
+.ButtonDark {
+  background-color: var(--grayscale-foreground_1);
+  color: var(--grayscale-inline_default);
+  fill: var(--grayscale-inline_default);
+}
+
+.ButtonDark:hover {
+  background-color: var(--grayscale-foreground_2_hover);
+}
+.ButtonDark:active {
+  background-color: var(--grayscale-foreground_3_press);
+}
+
+.ButtonArrow {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  object-fit: contain;
+}
+
+.Enter {
+  position: relative;
+  font-size: 14px;
+  line-height: 140%;
+  color: var(--grayscale_inline_default);
+}
+
+.NavButtons {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.NavButton {
+  height: 45px;
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+
+  border-radius: 32px;
+  border: none;
+  padding: 0px 24px;
+  box-sizing: border-box;
+
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  line-height: 160%;
+  font-weight: 500;
+
+  color: var(--grayscale-inline_default);
+  background-color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+.NavButton:disabled {
+  opacity: 0.2;
+}
+
+.NavButtonPrev {
+  color: #222325;
+}
+.NavButtonPrev:hover {
+  background-color: var(--grayscale-foreground_1);
+}
+.NavButtonPrev:active {
+  background-color: var(--grayscale-foreground_2_hover);
+}
+
+.NavButtonExit {
+  color: var(--danger-danger);
+}
+.NavButtonExit:hover {
+  background-color: var(--danger-danger_light_1);
+}
+.NavButtonExit:active {
+  background-color: var(--danger-danger_light_2);
+}
+
+.NavButtonNext {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  color: var(--brand-cta);
+}
+
+.NavButtonNext:hover {
+  background-color: var(--brand-cta_light_1);
+}
+.NavButtonNext:active {
+  background-color: var(--brand-cta_light_2);
+}
+
+.BlueArrow {
+  height: 16px;
+  width: 16px;
+  fill: var(--brand-cta);
+}

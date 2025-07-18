@@ -1,0 +1,179 @@
+@media (min-width: 992px) {
+  .Container {
+    width: 100vw;
+    height: 100vh;
+    min-height: 800px;
+
+    position: absolute;
+    z-index: 0;
+
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+
+    background-color: #18417e;
+  }
+
+  .LeftContainer {
+    flex-basis: 45%;
+    height: 100%;
+    transition: flex-basis 0.6s ease, opacity 0.6s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .HideLeft {
+    width: 0%;
+    flex-basis: 0%;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .GogosLogo {
+    width: 100.054px;
+    height: 19.04px;
+
+    position: fixed;
+    top: 33.48px;
+    left: 80px;
+    flex-shrink: 0;
+
+    border-width: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .Header {
+    width: 367px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    text-align: center;
+    font-size: 32px;
+    line-height: 140%;
+    padding: 150px 0px 40px 0px;
+    color: #fff;
+  }
+
+  .SubText {
+    margin-top: -16px;
+    padding-bottom: 10px;
+
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    line-height: 140%;
+  }
+
+  .RightContainer {
+    flex-basis: 55%;
+    height: 100%;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 42px;
+
+    border-radius: 24px 0px 0px 24px;
+    background: #fff;
+
+    transition: flex-basis 0.6s ease;
+  }
+
+  .FullWidth {
+    flex-basis: 100%;
+    border-radius: 0;
+  }
+
+  .headerContainer {
+    z-index: 1;
+  }
+
+  .PrevButton {
+    height: 45px;
+    width: 45px;
+
+    position: absolute;
+    right: 50%;
+    top: 40px;
+    transform: translateX(50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 32px;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .PrevButton:hover {
+    background-color: var(--grayscale-foreground_1);
+  }
+  .PrevButton:active {
+    background-color: var(--grayscale-foreground_2_hover);
+  }
+
+  .ChevronIcon {
+    width: 14px;
+    height: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    fill: var(--grayscale-inline_default);
+  }
+
+  .SigninButton {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    height: 45px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+
+    border-radius: 32px;
+    border-width: 0;
+    background-color: transparent;
+    padding: 0px 18px;
+  }
+
+  .SigninButton:hover {
+    background-color: var(--grayscale-foreground_1);
+  }
+  .SigninButton:active {
+    background-color: var(--grayscale-foreground_2_hover);
+  }
+
+  .SigninText {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--grayscale-inline_default);
+    text-align: left;
+  }
+
+  .ArrowIcon {
+    width: 12px;
+    height: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    fill: var(--grayscale-inline_default);
+  }
+}
