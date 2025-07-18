@@ -1,14 +1,14 @@
 import classes from "./Start.module.css";
 
 import SocialLoginBox from "../../SocialLogin/components/SocialLoginBox";
-const Start = ({ language, setContentStep }) => {
+const Start = ({ setContentStep }) => {
   return (
     <>
       <div className={classes.ContentContainer}>
         <div className={classes.TextContainer}>
-          <div className={classes.GetStartedText}>Get started</div>
+          <div className={classes.GetStartedText}>Beocme a tutor</div>
           <div className={classes.GetStartedSubText}>
-            Book tutors, track progress, and stay involved - all in one place.
+            Inspire students, grow your impact, and teach on your terms.
           </div>
         </div>
         <div className={classes.LoginContainer}>

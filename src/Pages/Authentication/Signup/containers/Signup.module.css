@@ -11,7 +11,7 @@
     flex: 1;
     overflow: hidden;
 
-    background-color: #18417e;
+    background-color: var(--danger-danger);
   }
 
   .LeftContainer {
@@ -32,7 +32,7 @@
     pointer-events: none;
   }
 
-  .GogosLogo {
+  .logoContainer {
     width: 100.054px;
     height: 19.04px;
 
@@ -40,35 +40,56 @@
     top: 33.48px;
     left: 80px;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 
     border-width: 0;
     background-color: transparent;
     cursor: pointer;
   }
 
-  .Header {
-    width: 367px;
+  .stepImageContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+  }
+  .stepBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .listWrapper {
+    width: 52px;
+    height: 52px;
 
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
 
-    text-align: center;
-    font-size: 32px;
-    line-height: 140%;
-    padding: 150px 0px 40px 0px;
-    color: #fff;
+    border-radius: 50%;
+    border: none;
+
+    background-color: var(--grayscale-background_1);
+    fill: var(--danger-danger);
   }
 
-  .SubText {
-    margin-top: -16px;
-    padding-bottom: 10px;
+  .stepText {
+    width: 256px;
+    position: relative;
+    display: inline-block;
 
-    text-align: center;
     font-size: 18px;
-    color: #fff;
+    letter-spacing: -0.01em;
     line-height: 140%;
+    color: var(--grayscale-background_1);
+    text-align: center;
   }
 
   .RightContainer {

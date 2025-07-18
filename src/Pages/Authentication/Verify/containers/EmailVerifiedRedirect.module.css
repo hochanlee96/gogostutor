@@ -9,11 +9,17 @@
   gap: 32px;
 }
 
-.logo {
+.logoContainer {
   position: absolute;
   top: 40px;
   left: 40px;
-  width: 100px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  user-select: none;
+  cursor: pointer;
 }
 
 .textBox {

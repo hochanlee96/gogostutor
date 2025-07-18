@@ -194,14 +194,17 @@ const Login = () => {
               </div>
             </div>
             <div className={classes.LoginOptionsContainer}>
-              <input
-                type="checkbox"
-                className={classes.checkBox}
-                checked={remember}
-                onChange={() => {
-                  setRemember((prev) => !prev);
-                }}
-              />
+              <label className={classes.customCheckbox}>
+                <input
+                  className={`${classes.checkbox} `}
+                  type="checkbox"
+                  checked={remember}
+                  onChange={() => {
+                    setRemember((prev) => !prev);
+                  }}
+                />
+                <span className={`${classes.checkmark}`}></span>
+              </label>
               <div className={classes.RememberMeText}>Remember me</div>
               <button
                 className={classes.ForgotPasswordButton}

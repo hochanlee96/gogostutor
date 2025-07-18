@@ -23,9 +23,11 @@ import Home from "./Pages/Home/old/containers/Home";
 // import ResetPassword from "./Pages/Authentication/old/containers/ResetPassword";
 // import Signup from "./Pages/Authentication/old/containers/Signup";
 // import CompleteProfile from "./Pages/Authentication/old/containers/CompleteProfile";
+// import EmailVerifiedRedirect from "./Pages/Verify/containers/EmailVerifiedRedirect";
 
 import Login from "./Pages/Authentication/Login/containers/Login";
-// import Signup from "./Pages/Authentication/Signup/containers/Signup";
+import Signup from "./Pages/Authentication/Signup/containers/Signup";
+import EmailVerifiedRedirect from "./Pages/Authentication/Verify/containers/EmailVerifiedRedirect";
 // import ForgotPassword from "./Pages/Authentication/old/containers/ForgotPassword";
 // import ResetPassword from "./Pages/Authentication/old/containers/ResetPassword";
 
@@ -39,7 +41,6 @@ import Learn from "./Pages/Learn/containers/Learn";
 import Settings from "./Pages/Settings/containers/AccountSettings";
 // import Test from "../Tutor/Test/pages/Test";
 import VerifyEmail from "./Pages/Verify/containers/VerifyEmail";
-import EmailVerifiedRedirect from "./Pages/Verify/containers/EmailVerifiedRedirect";
 import PaymentTest from "./Pages/PaymentTest/containers/PaymentTest";
 import Test from "./Pages/Test/Test";
 import {
@@ -157,7 +158,12 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
       <Routes>
         <Route element={<ErrorBoundaryLayout />}>
           <Route exact path="/login" element={<Login />} />
-          {/* <Route exact path="/signup" element={<Signup />} /> */}
+          <Route exact path="/signup" element={<Signup />} />
+          <Route
+            exact
+            path="/email-verification-redirect/:status"
+            element={<EmailVerifiedRedirect />}
+          />
           {/* <Route exact path="/forgot-password" element={<ForgotPassword />} /> */}
           {/* <Route
             exact
@@ -166,11 +172,6 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
           /> */}
           <Route element={<NavigationLayout />}>
             <Route element={<FooterLayout />}>
-              <Route
-                exact
-                path="/email-verification-redirect"
-                element={<EmailVerifiedRedirect />}
-              />
               <Route exact path="/error" element={<Error />} />
               <Route exact path="/" element={<Home />} />
               <Route path="/*" element={<Navigate replace to="/" />} />

@@ -1,0 +1,145 @@
+@media (min-width: 1300px) {
+  .MainContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .Index {
+    position: relative;
+    padding-top: 6px;
+    line-height: 2rem;
+    font-weight: 600;
+    color: var(--grayscale-placeholder);
+
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .ContentBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 32px;
+  }
+  .Question {
+    width: 100%;
+    position: relative;
+    font-size: 22px;
+    line-height: 2rem;
+    font-weight: 500;
+    color: var(--grayscale-inline_default);
+  }
+  .FormBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+  .NamesContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  .NameBox {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 10px;
+
+    border-bottom: 1.5px solid var(--danger-danger);
+    color: var(--danger-danger);
+  }
+
+  .NameBoxError {
+    border-bottom: 1.5px solid var(--danger-danger);
+    color: var(--danger-danger_border_2);
+  }
+
+  .NameText {
+    position: relative;
+    font-size: 14px;
+    line-height: 140%;
+    text-align: left;
+  }
+  .NameInput {
+    width: 100%;
+    border: none;
+    font-size: 32px;
+    color: var(--danger-danger);
+  }
+  .NameInput:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .NameInput::placeholder {
+    width: 100%;
+    position: relative;
+
+    font-size: 32px;
+    line-height: 125%;
+    color: var(--danger-danger_light_2);
+    text-align: left;
+    display: inline-block;
+    opacity: 0.3;
+  }
+  .NameInputError::placeholder {
+    color: var(--danger-danger);
+    opacity: 0.3;
+  }
+
+  .ButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+  .Button {
+    width: 73px;
+    height: 52px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 12px;
+    background-color: var(--danger-danger);
+    padding: 0px 24px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: var(--grayscale-background_1, #fff);
+  }
+  .Button:hover {
+    background-color: var(--danger-danger_hover);
+  }
+  .Button:active {
+    background-color: var(--danger-danger_press);
+  }
+  .Button:disabled {
+    background-color: var(--grayscale-foreground_1);
+    color: var(--grayscale-border_2_hover);
+  }
+  .PressText {
+    position: relative;
+    font-size: 14px;
+    line-height: 140%;
+    color: var(--grayscale-inline_default);
+  }
+  .ErrorText {
+    color: var(--danger-danger);
+  }
+}

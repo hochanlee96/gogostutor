@@ -8,8 +8,11 @@ import NavButtons from "../../Login/components/NavButtons";
 
 import { ReactComponent as ChevronUp } from "../../../../shared/assets/icons/chevron-up.svg";
 import { ReactComponent as ArrowRight } from "../../../../shared/assets/icons/arrow-right.svg";
-import Logo from "../../../../shared/assets/icons/gogos-edu-text-logo-white.svg";
-import PhoneMockup from "../../../../shared/assets/icons/phone-mockup.svg";
+import Logo from "../../../../shared/assets/icons/gogosedu-white-icon.svg";
+import LogoText from "../../../../shared/assets/icons/gogos-edu-text-logo-white.svg";
+import { ReactComponent as ListIcon } from "../../../../shared/assets/icons/list.svg";
+import StepImage from "../../../../shared/assets/images/tutor-steps.svg";
+import StepImageActive from "../../../../shared/assets/images/tutor-steps-active.svg";
 
 import Start from "../components/Start";
 import Email from "../components/Email";
@@ -18,7 +21,13 @@ import Create from "../components/Create";
 const Signup = () => {
   const [language] = useState("English");
   const [contentStep, setContentStep] = useState("Start");
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+  });
   const [verificationState, setVerificationState] = useState("unsent");
 
   const navigate = useNavigate();
@@ -90,14 +99,23 @@ const Signup = () => {
           contentStep === "Create" ? classes.HideLeft : ""
         }`}
       >
-        <button className={classes.GogosLogo}>
-          <img alt="logo" src={Logo} onClick={handleOnClickLogo} />
-        </button>
-        <p className={classes.Header}>
-          Sign up <br /> and start learning
-        </p>
-        <div className={classes.SubText}>Available on mobile</div>
-        <img alt="mockup" src={PhoneMockup} />
+        <div className={classes.logoContainer} onClick={handleOnClickLogo}>
+          <img alt="logo" src={Logo} />
+          <img alt="logo" src={LogoText} />
+        </div>
+        <div className={classes.stepImageContainer}>
+          <div className={classes.stepBox}>
+            <div className={classes.listWrapper}>
+              <ListIcon stye={{ fill: "inherit" }} />
+            </div>
+            {contentStep === "Start" ? (
+              <img alt="steps" src={StepImage} />
+            ) : (
+              <img alt="steps" src={StepImageActive} />
+            )}
+          </div>
+          <div className={classes.stepText}> Reimagining online tutoring</div>
+        </div>
       </div>
       <div
         className={`${classes.RightContainer} ${

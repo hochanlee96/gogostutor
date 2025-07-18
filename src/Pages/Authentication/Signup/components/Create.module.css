@@ -34,7 +34,7 @@
   font-size: 16px;
   line-height: 140%;
   font-weight: 600;
-  color: var(--brand-cta);
+  color: var(--grayscale-placeholder);
   text-align: left;
 }
 
@@ -203,7 +203,7 @@
 
   border-radius: 12px;
   border: none;
-  background-color: var(--brand-cta);
+  background-color: var(--danger-danger);
 
   box-sizing: border-box;
   padding: 0px 24px;
@@ -212,10 +212,10 @@
   fill: var(--grayscale-background_1);
 }
 .Button:hover {
-  background-color: var(--brand-cta_hover);
+  background-color: var(--danger-danger_hover);
 }
 .Button:active {
-  background-color: var(--brand-cta_press);
+  background-color: var(--danger-danger_press);
 }
 .Button:disabled {
   background-color: var(--grayscale-foreground_1);
@@ -314,18 +314,18 @@
   align-items: center;
   justify-content: flex-end;
   gap: 14px;
-  color: var(--brand-cta);
+  color: var(--danger-danger);
 }
 
 .NavButtonNext:hover {
-  background-color: var(--brand-cta_light_1);
+  background-color: var(--danger-danger_light_1);
 }
 .NavButtonNext:active {
-  background-color: var(--brand-cta_light_2);
+  background-color: var(--danger-danger_light_2);
 }
 
 .BlueArrow {
   height: 16px;
   width: 16px;
-  fill: var(--brand-cta);
+  fill: var(--danger-danger);
 }

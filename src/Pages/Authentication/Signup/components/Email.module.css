@@ -163,14 +163,14 @@
 
   /* Checked state background + checkmark */
   .checkbox:checked + .checkmark {
-    background-color: var(--brand-cta);
-    border-color: var(--brand-cta);
+    background-color: var(--danger-danger);
+    border-color: var(--danger-danger);
   }
 
   .checkbox:checked + .checkmark {
-    background-color: var(--brand-cta);
+    background-color: var(--danger-danger);
 
-    border: 1.4px solid var(--brand-cta);
+    border: 1.4px solid var(--danger-danger);
     background-image: url("../../../../shared/assets/icons/check-white.svg");
     color: white;
     background-repeat: no-repeat;
@@ -203,7 +203,7 @@
 
     border: none;
     border-radius: 12px;
-    background-color: var(--brand-cta);
+    background-color: var(--danger-danger);
     padding: 0px 24px;
     box-sizing: border-box;
     color: var(--grayscale-background_1, #fff);
@@ -215,10 +215,10 @@
     cursor: pointer;
   }
   .createButton:hover {
-    background-color: var(--color-dodgerblue);
+    background-color: var(--danger-danger_hover);
   }
   .createButton:active {
-    background-color: #0050c3;
+    background-color: var(--danger-danger_press);
   }
   .createButton:disabled {
     background-color: var(--grayscale-foreground_1);

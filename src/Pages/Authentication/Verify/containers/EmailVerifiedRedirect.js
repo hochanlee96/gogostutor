@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import LogoIcon from "../../../../shared/assets/icons/gogosedu-color-icon.svg";
 import GogosLogo from "../../../../shared/assets/icons/gogos-edu-text-logo-black.svg";
 import classes from "./EmailVerifiedRedirect.module.css";
 
@@ -22,14 +23,15 @@ const EmailVerifiedRedirect = () => {
   }, [count]);
   return (
     <div className={classes.container}>
-      <img
-        className={classes.logo}
-        src={GogosLogo}
-        alt="Gogos Edu"
+      <div
+        className={classes.logoContainer}
         onClick={() => {
           navigate("/");
         }}
-      />
+      >
+        <img alt="Gogos" src={LogoIcon} />
+        <img src={GogosLogo} alt="Gogos Edu" />
+      </div>
       <div className={`${classes.textBox}`}>
         {status === "success" ? (
           <>

@@ -31,7 +31,7 @@ const Email = ({
     try {
       setVerificationState("sending");
       const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + `/students/send-verification`,
+        process.env.REACT_APP_BACKEND_URL + `/tutors/send-verification`,
         {
           method: "POST",
           body: JSON.stringify({ email: emailInput }),
@@ -105,7 +105,7 @@ const Email = ({
         <div className={classes.TextContainer}>
           <div className={classes.titleText}>Sign up with email</div>
           <div className={classes.DescriptionText}>
-            Just a short 3-step setup — no long forms, no hassle.
+            Sign up, qualify, and start connecting with students.
           </div>
         </div>
         <form className={classes.signUpFormBody} onSubmit={onSubmitHandler}>
