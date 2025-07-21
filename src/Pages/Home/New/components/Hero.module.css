@@ -1,112 +1,123 @@
-.sectionContainer {
-  display: flex;
-  height: 742px;
-  padding: 50px 187px 0px 187px;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-  align-self: stretch;
+@media (min-width: 992px) {
+  .sectionContainer {
+    width: 100%;
+    display: flex;
+    height: 693px;
+    padding: 50px 80px;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    align-self: stretch;
+    overflow: hidden;
+  }
+
+  .container {
+    display: flex;
+    max-width: 1354px;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1 0 0;
+  }
+
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .textContainerTop {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .title {
+    width: 491px;
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Serif Display";
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: -1.68px;
+  }
+
+  .subText {
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    letter-spacing: -0.216px;
+  }
+
+  .containerBottom {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .button {
+    display: flex;
+    height: 52px;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    border-radius: 32px;
+  }
+
+  .tutorButton {
+    border-radius: 32px;
+    border-width: 0;
+    background: var(--danger-danger, #f95746);
+  }
+
+  .learnMoreButton {
+    border-radius: 32px;
+    border: 1.5px solid var(--Grayscale-inline_default, #222325);
+    background-color: var(--grayscale-background_1);
+  }
+
+  .buttonText {
+    color: var(--Grayscale-inline_inverse, #fff);
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+  }
+
+  .learnMoreText {
+    color: var(--Grayscale-inline_default, #222325);
+  }
+
+  .rightSideContainer {
+    display: flex;
+    width: 573px;
+    height: 438px;
+    align-items: center;
+  }
+
+  .imageGroup {
+    height: 792px;
+    flex-shrink: 0;
+  }
+
+  .imageColumn {
+    display: flex;
+    width: 179px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-.container {
-  display: flex;
-  max-width: 1354px;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1 0 0;
-}
-
-.textContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 32px;
-}
-
-.textContainerTop {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-}
-
-.title {
-  width: 491px;
-  color: var(--Grayscale-inline_default, #222325);
-  font-family: "DM Serif Display";
-  font-size: 56px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 120%;
-  letter-spacing: -1.68px;
-}
-
-.subText {
-  color: var(--Grayscale-inline_default, #222325);
-  font-family: "DM Sans";
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-  letter-spacing: -0.216px;
-}
-
-.containerBottom {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.button {
-  display: flex;
-  height: 52px;
-  padding: 0px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  border-radius: 32px;
-}
-
-.tutorButton {
-  border-radius: 32px;
-  border-width: 0;
-  background: var(--danger-danger, #f95746);
-}
-
-.learnMoreButton {
-  border-radius: 32px;
-  border: 1.5px solid var(--Grayscale-inline_default, #222325);
-  background-color: var(--grayscale-background_1);
-}
-
-.buttonText {
-  color: var(--Grayscale-inline_inverse, #fff);
-  font-family: "DM Sans";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 160%;
-}
-
-.learnMoreText {
-  color: var(--Grayscale-inline_default, #222325);
-}
-
-.rightSideContainer {
-  display: flex;
-  width: 573px;
-  height: 438px;
-  align-items: center;
-}
-
-.imageGroup {
-  height: 792px;
-  flex-shrink: 0;
-}
-
-.imageColumn {
-  display: flex;
-  width: 179px;
-  flex-direction: column;
-  align-items: flex-start;
+@media (min-width: 1300px) {
+  .sectionContainer {
+    height: 742px;
+    padding: 50px 187px 0px 187px;
+  }
 }
