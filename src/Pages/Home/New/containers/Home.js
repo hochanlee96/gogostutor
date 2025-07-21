@@ -3,6 +3,7 @@ import Banner from "../components/Banner";
 import Benefits from "../components/Benefits";
 import How from "../components/How";
 import SimpleSteps from "../components/SimpleSteps";
+import Resources from "../components/Resources";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <How />
       <SimpleSteps />
       <Benefits />
+      <Resources />
     </div>
   );
 };

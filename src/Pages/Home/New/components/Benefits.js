@@ -1,13 +1,13 @@
 import classes from "./Benefits.module.css";
 
-import WebIcon from "../../../../shared/assets/images/www-icon.svg";
-import ScheduleIcon from "../../../../shared/assets/images/schedule-icon.svg";
-import CapIcon from "../../../../shared/assets/images/cap-icon.svg";
-import GraphIcon from "../../../../shared/assets/images/graph-icon.svg";
-import ReceiptIcon from "../../../../shared/assets/images/receipt-icon.svg";
-import StarIcon from "../../../../shared/assets/images/star-icon.svg";
-import BankIcon from "../../../../shared/assets/images/bank-icon.svg";
-import LaunchIcon from "../../../../shared/assets/images/launch-icon.svg";
+import WebIcon from "../../../../shared/assets/icons/www-icon.svg";
+import ScheduleIcon from "../../../../shared/assets/icons/schedule-icon.svg";
+import CapIcon from "../../../../shared/assets/icons/cap-icon.svg";
+import GraphIcon from "../../../../shared/assets/icons/graph-icon.svg";
+import ReceiptIcon from "../../../../shared/assets/icons/receipt-icon.svg";
+import StarIcon from "../../../../shared/assets/icons/star-icon.svg";
+import BankIcon from "../../../../shared/assets/icons/bank-icon.svg";
+import LaunchIcon from "../../../../shared/assets/icons/launch-icon.svg";
 
 const Benefits = () => {
   return (
