@@ -1,7 +1,7 @@
 @media (min-width: 992px) {
   .sectionContainer {
     display: flex;
-    padding: 139px 187px 150px 187px;
+    padding: 139px 80px;
     align-items: center;
     gap: 75px;
     align-self: stretch;
@@ -43,6 +43,9 @@
 }
 
 @media (min-width: 1300px) {
+  .sectionContainer {
+    padding: 139px 187px 150px 187px;
+  }
   .textContainer {
     flex-direction: row;
     gap: 0px;

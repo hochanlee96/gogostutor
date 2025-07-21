@@ -1,39 +1,115 @@
-.sectionContainer {
-  display: flex;
-  padding: 139px 187px 200px 187px;
-  flex-direction: column;
-  align-items: center;
-  gap: 75px;
-  align-self: stretch;
-  background: #fff;
+@media (min-width: 992px) {
+  .sectionContainer {
+    display: flex;
+    padding: 139px 80px 200px 80px;
+    flex-direction: column;
+    align-items: center;
+    gap: 75px;
+    align-self: stretch;
+    background: #fff;
+  }
+
+  .introContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+  }
+
+  .introTitle {
+    align-self: stretch;
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Serif Display";
+    font-size: 46px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 55.2px */
+    letter-spacing: -1.38px;
+  }
+
+  .introBody {
+    width: 850px;
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 33.6px */
+    letter-spacing: 0.24px;
+  }
+
+  .stepsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 50px;
+    align-self: stretch;
+  }
+
+  .stepContainer {
+    display: flex;
+    align-items: center;
+    gap: 75px;
+    align-self: stretch;
+  }
+
+  .stepImage {
+    width: 405px;
+    height: 262px;
+    aspect-ratio: 405/262;
+    border-radius: 12px;
+    box-shadow: 0px 0px 0px 1px rgba(152, 161, 178, 0.1),
+      0px 2px 18px -3px rgba(17, 24, 38, 0.12),
+      0px 2px 6px 0px rgba(0, 0, 0, 0.03);
+  }
+
+  .stepTextContainer {
+    width: 352px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+  }
+
+  .stepTextTitle {
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 125%;
+    width: 404px;
+  }
+  .stepTextBody {
+    align-self: stretch;
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%; /* 25.6px */
+    letter-spacing: -0.48px;
+  }
 }
 
-.introContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  align-self: stretch;
-}
+@media (min-width: 1300px) {
+  .sectionContainer {
+    padding: 139px 187px 200px 187px;
+  }
+  .introBody {
+    width: 1013px;
+  }
+  .stepImage {
+    width: 574px;
+    height: 371px;
+  }
 
-.introTitle {
-  align-self: stretch;
-  color: var(--Grayscale-inline_default, #222325);
-  font-family: "DM Serif Display";
-  font-size: 46px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 120%; /* 55.2px */
-  letter-spacing: -1.38px;
-}
-
-.introBody {
-  width: 1013px;
-  color: var(--Grayscale-inline_default, #222325);
-  font-family: "DM Sans";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 33.6px */
-  letter-spacing: 0.24px;
+  .stepTextTitle {
+    font-size: 40px;
+  }
+  .stepTextBody {
+    font-size: 20px;
+  }
 }

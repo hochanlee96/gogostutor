@@ -33,10 +33,10 @@ const HeroSection = () => {
         </div>
         <div className={classes.rightSideContainer}>
           <div className={classes.imageGroup}>
-            <img src={TutorColumnOne} alt="Hero tutor image 1" />
-            <img src={TutorColumnTwo} alt="Hero tutor image 2" />
-            <img src={TutorColumnThree} alt="Hero tutor image 3" />
-            <img src={TutorColumnFour} alt="Hero tutor image 4" />
+            <img src={TutorColumnOne} alt="Hero tutor 1" />
+            <img src={TutorColumnTwo} alt="Hero tutor 2" />
+            <img src={TutorColumnThree} alt="Hero tutor 3" />
+            <img src={TutorColumnFour} alt="Hero tutor 4" />
           </div>
         </div>
       </div>
