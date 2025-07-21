@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./Footer.module.css";
-import logo from "../../assets/icons/gogosedu_black.png";
+import logo from "../../../assets/icons/gogosedu_black.png";
 
 const Footer = () => {
   const navigate = useNavigate();

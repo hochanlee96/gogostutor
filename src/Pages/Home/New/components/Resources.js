@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import { ReactComponent as ChevronDown } from "../../../../shared/assets/icons/chevron-down.svg";
 import { ReactComponent as ChevronRight } from "../../../../shared/assets/icons/chevron-right.svg";
 import { ReactComponent as ArrowRight } from "../../../../shared/assets/icons/arrow-right.svg";

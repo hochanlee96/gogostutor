@@ -4,7 +4,7 @@ import { Route, Navigate, Routes, Outlet } from "react-router-dom";
 import Navigation from "./Navigation";
 import ScrollToTop from "./shared/UI/Navigation/New/ScrollToTop";
 import Sidebar from "./shared/component/Sidebar/Sidebar";
-import Footer from "./shared/component/Footer/Footer";
+import Footer from "./shared/component/Footer/new/Footer";
 import Error from "./Pages/Error/containers/Error";
 import AppWithErrorBoundary from "./ErrorBoundary";
 import Home from "./Pages/Home/New/containers/Home";
