@@ -1,0 +1,99 @@
+@media (min-width: 992px) {
+  .sectionContainer {
+    display: flex;
+    padding: 100px 80px;
+    flex-direction: column;
+    align-items: center;
+    gap: 70px;
+    align-self: stretch;
+    background: #d5ea96;
+  }
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    align-self: stretch;
+    color: var(--Grayscale-inline_default, #222325);
+    text-align: center;
+    font-family: "DM Serif Display";
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: -1.38px;
+  }
+
+  .tileContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-self: stretch;
+  }
+
+  .tile {
+    display: flex;
+    height: 250px;
+    padding: 32px 24px 50px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    flex: 1 0 0;
+    border-radius: 24px;
+    background: var(--success-success_light_1, #f5ffd8);
+  }
+  .wideRow {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+  .tileTitle {
+    color: var(--success-success_press, #429d1b);
+    font-family: "DM Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: -0.216px;
+    align-self: stretch;
+  }
+  .tileBody {
+    color: var(--success-success_press, #429d1b);
+    font-family: "DM Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    align-self: stretch;
+  }
+}
+
+@media (min-width: 1300px) {
+  .tileContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .wideRow {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .tile {
+    height: 356px;
+  }
+  .tileTitle {
+    font-size: 24px;
+    line-height: 125%;
+  }
+  .tileBody {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
