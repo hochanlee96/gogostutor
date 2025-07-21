@@ -1,0 +1,40 @@
+.sectionContainer {
+  display: flex;
+  padding: 139px 187px 150px 187px;
+  flex-direction: column;
+  align-items: center;
+  gap: 75px;
+  align-self: stretch;
+  background: var(--warning-warning_light_2, #ffdf70);
+}
+
+.textContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  width: 336px;
+  flex-shrink: 0;
+  color: var(--Grayscale-inline_default, #222325);
+  font-family: "DM Serif Display";
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 55.2px */
+  letter-spacing: -1.38px;
+}
+
+.body {
+  width: 687px;
+  flex-shrink: 0;
+  color: var(--Grayscale-inline_default, #222325);
+  font-family: "DM Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 33.6px */
+  letter-spacing: 0.24px;
+}
