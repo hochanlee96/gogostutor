@@ -13,8 +13,7 @@ const SetPassword = ({
   setContentStep,
   setIndexStep,
   setVerificationState,
-  setSignupToken,
-  nullifyVerification,
+  initializeForm,
 }) => {
   const [passwordInput, setPasswordInput] = useState(form.password);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
@@ -148,11 +147,7 @@ const SetPassword = ({
         <button
           className={`${classes.NavButton} ${classes.NavButtonPrev}`}
           onClick={() => {
-            setForm((prev) => {
-              return { ...prev, email: "", password: "" };
-            });
             setVerificationState("unsent");
-            nullifyVerification();
             setContentStep("Email");
           }}
         >
@@ -162,10 +157,7 @@ const SetPassword = ({
         <button className={`${classes.NavButton} ${classes.NavButtonExit}`}>
           <div
             onClick={() => {
-              setForm((prev) => {
-                return { ...prev, email: "", password: "" };
-              });
-              nullifyVerification();
+              initializeForm();
               setContentStep("Start");
             }}
           >

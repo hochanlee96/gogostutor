@@ -10,6 +10,7 @@ const VerifyEmail = ({
   setVerificationState,
   setContentStep,
   nullifyVerification,
+  initializeForm,
 }) => {
   const [resent, setResent] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(emailResendTime);
@@ -101,7 +102,7 @@ const VerifyEmail = ({
           onClick={() => {
             nullifyVerification();
             setForm((prev) => {
-              return { ...prev, email: "", password: "" };
+              return { ...prev, password: "" };
             });
             setContentStep("Email");
           }}
@@ -113,9 +114,7 @@ const VerifyEmail = ({
           className={`${classes.NavButton} ${classes.NavButtonExit}`}
           onClick={() => {
             nullifyVerification();
-            setForm((prev) => {
-              return { ...prev, email: "", password: "" };
-            });
+            initializeForm();
             setContentStep("Start");
           }}
         >

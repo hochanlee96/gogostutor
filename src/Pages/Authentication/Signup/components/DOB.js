@@ -14,6 +14,7 @@ const Name = ({
   setContentStep,
   setIndexStep,
   createAccount,
+  initializeForm,
 }) => {
   const [placeholder, setPlaceholder] = useState(defaultPlaceholder);
   const [month, setMonth] = useState(defaultPlaceholder.month);
@@ -144,13 +145,27 @@ const Name = ({
           </form>
         </div>
       </div>
-      {/* <StepNavigator
-        onPrev={() => setStep("Role", false)}
-        prevDisabled={false}
-        onNext={handleSubmit}
-        nextDisabled={!!error}
-        onSave={handleSave}
-      /> */}
+      <div className={classes.NavButtons}>
+        <button
+          className={`${classes.NavButton} ${classes.NavButtonPrev}`}
+          onClick={() => {
+            setIndexStep((prev) => prev - 1);
+          }}
+        >
+          Previous
+        </button>
+
+        <button className={`${classes.NavButton} ${classes.NavButtonExit}`}>
+          <div
+            onClick={() => {
+              initializeForm();
+              setContentStep("Start");
+            }}
+          >
+            Exit sign up
+          </div>
+        </button>
+      </div>
     </>
   );
 };

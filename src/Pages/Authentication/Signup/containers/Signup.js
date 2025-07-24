@@ -18,17 +18,23 @@ import Start from "../components/Start";
 import Email from "../components/Email";
 import Create from "../components/Create";
 
+const initialForm = {
+  email: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  dateOfBirth: "",
+};
+
 const Signup = () => {
   const [language] = useState("English");
   const [contentStep, setContentStep] = useState("Start");
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-  });
+  const [form, setForm] = useState({ ...initialForm });
   const [verificationState, setVerificationState] = useState("unsent");
+
+  const initializeForm = () => {
+    setForm({ ...initialForm });
+  };
 
   const navigate = useNavigate();
   const handleOnClickLogo = () => {
@@ -87,6 +93,7 @@ const Signup = () => {
         setForm={setForm}
         verificationState={verificationState}
         setVerificationState={setVerificationState}
+        initializeForm={initialForm}
       />
     );
     headerContent = <LanguageSelector />;

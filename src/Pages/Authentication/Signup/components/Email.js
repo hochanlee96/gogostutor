@@ -9,11 +9,12 @@ import classes from "./Email.module.css";
 
 const Email = ({
   setContentStep,
+  form,
   setForm,
   verificationState,
   setVerificationState,
 }) => {
-  const [emailInput, setEmailInput] = useState("");
+  const [emailInput, setEmailInput] = useState(form.email);
   const [inputState, setInputState] = useState("");
   const [inputErrorMessage, setInputErrorMessage] = useState("");
   const [inputValid, setInputValid] = useState(false);

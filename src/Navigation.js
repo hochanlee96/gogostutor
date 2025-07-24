@@ -7,7 +7,7 @@ import LogoLetters from "./shared/assets/icons/gogos-letter-logo-black.svg";
 import Logo from "./shared/assets/icons/gogos-logo.svg";
 import classes from "./Navigation.module.css";
 
-const { REACT_APP_TUTOR_URL } = process.env;
+const { REACT_APP_STUDENT_URL } = process.env;
 
 const Navigation = ({ isSignedIn }) => {
   const auth = useContext(AuthContext);
@@ -50,10 +50,10 @@ const Navigation = ({ isSignedIn }) => {
       <div className={classes.actionsContainer}>
         <a
           className={`${classes.navButton} ${classes.tutorButton}`}
-          href={REACT_APP_TUTOR_URL}
+          href={REACT_APP_STUDENT_URL}
           tabIndex="0"
         >
-          Become a Tutor
+          Are you a student?
         </a>
         {!isSignedIn ? (
           <div

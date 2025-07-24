@@ -6,7 +6,13 @@ const defaultPlaceholder = {
   firstName: "Maria",
   lastName: "Curie",
 };
-const Name = ({ form, setForm, setContentStep, setIndexStep }) => {
+const Name = ({
+  form,
+  setForm,
+  setContentStep,
+  setIndexStep,
+  initializeForm,
+}) => {
   const [placeholder, setPlaceholder] = useState(defaultPlaceholder);
   const [firstName, setFirstName] = useState(form.firstName);
   const [lastName, setLastName] = useState(form.lastName);
@@ -21,13 +27,7 @@ const Name = ({ form, setForm, setContentStep, setIndexStep }) => {
     }
   };
   const handleExit = () => {
-    setForm({
-      email: "",
-      password: "",
-      firstName: "",
-      lastName: "",
-      dateOfBirth: "",
-    });
+    initializeForm();
     setContentStep("Start");
   };
   const handleSubmit = useCallback(
@@ -139,13 +139,27 @@ const Name = ({ form, setForm, setContentStep, setIndexStep }) => {
           </form>
         </div>
       </div>
-      {/* <StepNavigator
-        onPrev={() => setStep("Role", false)}
-        prevDisabled={false}
-        onNext={handleSubmit}
-        nextDisabled={!!error}
-        onSave={handleSave}
-      /> */}
+      <div className={classes.NavButtons}>
+        <button
+          className={`${classes.NavButton} ${classes.NavButtonPrev}`}
+          onClick={() => {
+            setIndexStep((prev) => prev - 1);
+          }}
+        >
+          Previous
+        </button>
+
+        <button className={`${classes.NavButton} ${classes.NavButtonExit}`}>
+          <div
+            onClick={() => {
+              initializeForm();
+              setContentStep("Start");
+            }}
+          >
+            Exit sign up
+          </div>
+        </button>
+      </div>
     </>
   );
 };

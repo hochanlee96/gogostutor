@@ -29,9 +29,9 @@ import Error from "./Pages/Error/containers/Error";
 
 import classes from "./Routes.module.css";
 
-const NavigationLayout = () => (
+const NavigationLayout = ({ isSignedIn }) => (
   <div>
-    <Navigation />
+    <Navigation isSignedIn={isSignedIn} />
     <Outlet />
   </div>
 );
@@ -84,7 +84,7 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
                 <Route path="/signup" element={<Signup />} />
               </>
             )}
-            <Route element={<NavigationLayout />}>
+            <Route element={<NavigationLayout isSignedIn={isSignedIn} />}>
               <Route element={<FooterLayout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/verify-email" element={<VerifyEmail />} />

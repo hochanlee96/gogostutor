@@ -24,6 +24,7 @@ const Password = ({
   setForm,
   verificationState,
   setVerificationState,
+  initializeForm,
 }) => {
   const [indexStep, setIndexStep] = useState(1);
   const [signupToken, setSignupToken] = useState("");
@@ -105,6 +106,7 @@ const Password = ({
       setContentStep={setContentStep}
       setIndexStep={setIndexStep}
       nullifyVerification={nullifyVerificationLink}
+      initializeForm={initializeForm}
     />
   );
   if (indexStep === 2) {
@@ -118,6 +120,7 @@ const Password = ({
         setIndexStep={setIndexStep}
         setSignupToken={setSignupToken}
         nullifyVerification={nullifyVerificationLink}
+        initializeForm={initializeForm}
       />
     );
   } else if (indexStep === 3) {
@@ -127,6 +130,7 @@ const Password = ({
         setForm={setForm}
         setContentStep={setContentStep}
         setIndexStep={setIndexStep}
+        initializeForm={initializeForm}
       />
     );
   } else if (indexStep === 4) {
@@ -137,6 +141,7 @@ const Password = ({
         setContentStep={setContentStep}
         setIndexStep={setIndexStep}
         createAccount={createAccount}
+        initializeForm={initializeForm}
       />
     );
   } else if (indexStep === 5) {

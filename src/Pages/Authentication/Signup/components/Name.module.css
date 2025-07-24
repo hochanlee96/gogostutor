@@ -142,4 +142,85 @@
   .ErrorText {
     color: var(--danger-danger);
   }
+
+  .NavButtons {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+  .NavButton {
+    height: 45px;
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    border-radius: 32px;
+    border: none;
+    padding: 0px 24px;
+    box-sizing: border-box;
+
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    line-height: 160%;
+    font-weight: 500;
+
+    color: var(--grayscale-inline_default);
+    background-color: white;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .NavButton:disabled {
+    opacity: 0.2;
+  }
+
+  .NavButtonPrev {
+    color: #222325;
+  }
+  .NavButtonPrev:hover {
+    background-color: var(--grayscale-foreground_1);
+  }
+  .NavButtonPrev:active {
+    background-color: var(--grayscale-foreground_2_hover);
+  }
+
+  .NavButtonExit {
+    color: var(--danger-danger);
+  }
+  .NavButtonExit:hover {
+    background-color: var(--danger-danger_light_1);
+  }
+  .NavButtonExit:active {
+    background-color: var(--danger-danger_light_2);
+  }
+
+  .NavButtonNext {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    color: var(--danger-danger);
+  }
+
+  .NavButtonNext:hover {
+    background-color: var(--danger-danger_light_1);
+  }
+  .NavButtonNext:active {
+    background-color: var(--danger-danger_light_2);
+  }
+
+  .BlueArrow {
+    height: 16px;
+    width: 16px;
+    fill: var(--danger-danger);
+  }
 }
