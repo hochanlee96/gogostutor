@@ -5,30 +5,6 @@
 
 /* Root Variables */
 :root {
-  /* Colors */
-  --color-white: #fff;
-  --color-whitesmoke: #f2f2f2;
-  --color-gray: #222325;
-  --color-tomato: #f95746;
-  --color-red: #ff2f00;
-  --color-orangered: #ff4d00;
-  --color-mistyrose: #ffe9e9;
-  --color-test: #370325;
-  --color-darkslateblue: #18417e;
-  --color-dimgray: #555962;
-  --color-darkgray: #9b9b9b;
-  --color-aliceblue: #eff6ff;
-  --color-lavender: #cbe0ff;
-  --color-royalblue: #0068ff;
-  --color-dodgerblue: #5097ff;
-  --color-gainsboro: #e3e3e7;
-  --color-silver: #c9c9cd;
-  --color-lightgray: #d1d1d1;
-  --color-khaki: #d5ea96;
-  --color-limegreen: #5ec432;
-  --color-forestgreen: #429d1b;
-  --color-lightgoldenrodyellow: #f5ffd8;
-
   /* Figma Color palette */
   /* Grayscale Colors*/
   --grayscale-background_1: #ffffff;

@@ -1,0 +1,131 @@
+@media(min-width: 992px) {
+  .inner {
+    display: flex;
+    padding: 75px 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    background: var(--Grayscale-background_1, #fff);
+  }
+
+  .leftSection {
+    display: flex;
+    width: 506px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 100px;
+  }
+
+  .logoAndSocials {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .gogosText {
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Sans";
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 140%;
+  }
+
+  .socials {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .socialLogos {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  .languageButton {
+    display: flex;
+    height: 45px;
+    padding: 0px 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .rightSection {
+    display: flex;
+    align-items: flex-start;
+    gap: 70px;
+  }
+
+  .aboutContainer {
+    display: flex;
+    width: 69px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .subContainer {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+  }
+
+  .rightSectionText {
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .joinContainer {
+    display: flex;
+    width: 139px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 21px;
+  }
+
+  .linksContainer {
+    display: flex;
+    width: 224px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+  }
+
+  /* Existing styles remain unchanged */
+
+  @media (max-width: 768px) {
+    .inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .linksSection {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+}
+
+@media(min-width: 1300px){
+  .inner{
+    padding: 75px 187px;
+  }
+  .leftSection{
+    gap: 212px;
+  }
+
+  .rightSection{
+    gap: 120px;
+  }
+}

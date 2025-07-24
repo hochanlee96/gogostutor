@@ -1,36 +1,18 @@
 import React, { useState } from "react";
 import { Route, Navigate, Routes, Outlet } from "react-router-dom";
 
-// import Navigation from "../Tutor/Navigation/Navigation";
-import Navigation from "./shared/UI/Navigation/New/Navigation";
+import Navigation from "./Navigation";
 import ScrollToTop from "./shared/UI/Navigation/New/ScrollToTop";
-import Sidebar from "./shared/components/Sidebar/Sidebar";
-// import Footer from "./shared/UI/Navigation/Footer";
-import Footer from "./shared/components/Footer/Footer";
-// import FooterOld from "./shared/UI/Navigation/New/Footer";
-
+import Sidebar from "./shared/component/Sidebar/Sidebar";
+import Footer from "./shared/component/Footer/new/Footer";
 import Error from "./Pages/Error/containers/Error";
 import AppWithErrorBoundary from "./ErrorBoundary";
-
-// import Home from "../Tutor/Home/pages/Home";
-import Home from "./Pages/Home/old/containers/Home";
-// import Home from "./Pages/Home/New/containers/Home";
-// import Home from "./Pages/Home/Test/pages/HomeTest";
-
-//Remove old authentication components
-// import Login from "./Pages/Authentication/old/containers/Login";
-// import ForgotPassword from "./Pages/Authentication/old/containers/ForgotPassword";
-// import ResetPassword from "./Pages/Authentication/old/containers/ResetPassword";
-// import Signup from "./Pages/Authentication/old/containers/Signup";
-// import CompleteProfile from "./Pages/Authentication/old/containers/CompleteProfile";
-// import EmailVerifiedRedirect from "./Pages/Verify/containers/EmailVerifiedRedirect";
-
-import Login from "./Pages/Authentication/Login/containers/Login";
-import Signup from "./Pages/Authentication/Signup/containers/Signup";
-import EmailVerifiedRedirect from "./Pages/Authentication/Verify/containers/EmailVerifiedRedirect";
-// import ForgotPassword from "./Pages/Authentication/old/containers/ForgotPassword";
-// import ResetPassword from "./Pages/Authentication/old/containers/ResetPassword";
-
+import Home from "./Pages/Home/New/containers/Home";
+import Login from "./Pages/Authentication/containers/Login";
+import ForgotPassword from "./Pages/Authentication/containers/ForgotPassword";
+import ResetPassword from "./Pages/Authentication/containers/ResetPassword";
+import Signup from "./Pages/Authentication/containers/Signup";
+import CompleteProfile from "./Pages/Authentication/containers/CompleteProfile";
 import Dashboard from "./Pages/Dashboard/New/containers/Dashboard";
 import Profile from "./Pages/Profile/New/containers/Profile";
 import MySubjects from "./Pages/Subject/containers/MySubjects";
@@ -39,7 +21,6 @@ import Classroom from "./Pages/Classroom/containers/Classroom";
 import Chatting from "./Pages/Chatting/containers/Chatting";
 import Learn from "./Pages/Learn/containers/Learn";
 import Settings from "./Pages/Settings/containers/AccountSettings";
-// import Test from "../Tutor/Test/pages/Test";
 import VerifyEmail from "./Pages/Verify/containers/VerifyEmail";
 import PaymentTest from "./Pages/PaymentTest/containers/PaymentTest";
 import Test from "./Pages/Test/Test";
