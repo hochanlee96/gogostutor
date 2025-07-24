@@ -1,0 +1,148 @@
+@media (min-width: 992px) {
+  .headerContainer {
+    display: flex;
+    width: 100%;
+    height: 81px;
+    padding: 0px 80px;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: var(--grayscale-background_1);
+    border-bottom: 1px solid var(--grayscale-foreground_1);
+    backdrop-filter: blur(6px);
+  }
+
+  .logoAndNavContainer {
+    display: flex;
+    align-items: center;
+    gap: 39.75px;
+    align-self: stretch;
+  }
+
+  .logoContainer {
+    display: flex;
+    width: 89.25px;
+    align-items: center;
+    gap: 7.5px;
+    align-self: stretch;
+  }
+
+  .logoContainerIcon {
+    width: 26.279px;
+    height: 21.35025px;
+    flex-shrink: 0;
+  }
+
+  .logoContainer {
+    align-self: stretch;
+    width: 75.0405px;
+    max-height: 100%;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .navContainer {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    align-self: stretch;
+  }
+
+  .navButton {
+    display: flex;
+    height: 39px;
+    padding: 0px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 10.5px;
+    border-radius: 24px;
+    cursor: pointer;
+    color: var(--Grayscale-inline_default, #222325);
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+  }
+
+  .actionsContainer {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 9px;
+  }
+
+  .navButton:hover {
+    background-color: var(--grayscale-foreground_1);
+  }
+
+  .navButton:active {
+    background-color: var(--grayscale-foreground_2_hover);
+  }
+
+  .tutorButton {
+    color: var(--danger-danger);
+    text-decoration: none;
+  }
+
+  .tutorButton:hover {
+    color: var(--danger-danger_press);
+    background-color: var(--danger-danger_light_1);
+  }
+
+  .tutorButton:active {
+    color: var(--danger-danger_press);
+    background-color: var(--danger-danger_light_2);
+  }
+
+  .startButton {
+    display: flex;
+    height: 39px;
+    padding: 0px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 10.5px;
+    border-radius: 24px;
+    border: 1.5px solid var(--Grayscale-inline_default, #222325);
+  }
+}
+
+@media (min-width: 1300px) {
+  .logoAndNavContainer {
+    gap: 53px;
+  }
+  .logoContainer {
+    width: 119px;
+    padding-top: 5px;
+    gap: 10px;
+  }
+
+  .logoContainerIcon {
+    width: 35.039px;
+    height: 28.467px;
+  }
+  .logoContainer {
+    width: 100.054px;
+  }
+  .navContainer {
+    gap: 12px;
+  }
+  .navButton {
+    height: 52px;
+    padding: 0px 24px;
+    gap: 14px;
+    border-radius: 32px;
+  }
+  .actionsContainer {
+    gap: 12px;
+  }
+  .startButton {
+    height: 52px;
+    padding: 0px 24px;
+    gap: 14px;
+    border-radius: 32px;
+    border: 1.5px solid var(--Grayscale-inline_default, #222325);
+  }
+}

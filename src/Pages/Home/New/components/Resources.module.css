@@ -1,0 +1,240 @@
+@media (min-width: 992px) {
+  .sectionContainer {
+    align-self: stretch;
+    display: flex;
+    align-items: flex-start;
+    gap: 75px;
+    padding: 80px 100px;
+    flex: 1 0 0;
+    background: var(--grayscale-background_1, #fff);
+  }
+
+  .mainContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  .titleBox {
+    align-self: stretch;
+    justify-content: space-between;
+    display: flex;
+    height: 39px;
+    padding-left: 18px;
+  }
+
+  .titleText {
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 120%;
+    letter-spacing: -0.42px;
+    color: var(--grayscale-inline_default, #222325);
+  }
+
+  .questionButton {
+    height: 39px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10.5px;
+    padding: 0px 13.5px;
+    border-radius: 32px;
+    background: var(--grayscale-inline_default, #222325);
+    color: #fff;
+    fill: #fff;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .questionButton:hover {
+    background: #2f3033;
+  }
+
+  .questionButton:active {
+    background: #1a1b1d;
+  }
+
+  .sparkleIcon {
+    width: 18px;
+    height: 18px;
+    fill: inherit;
+  }
+
+  .buttonText {
+    color: var(--grayscale-background_1, #fff);
+    font-family: var(--font-satoshi);
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 140%;
+  }
+
+  .arrowIcon {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    fill: inherit;
+  }
+
+  .questionsBox {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 7.5px;
+    font-size: 13.5px;
+  }
+
+  .questionBox {
+    height: 67.5px;
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    box-sizing: border-box;
+    padding: 10.5px 24px;
+    font-size: 13.5px;
+    cursor: pointer;
+    fill: var(--grayscale-inline_default);
+    opacity: 0.4;
+  }
+
+  .borderBottom {
+    border-bottom: 1px solid var(--grayscale-border_1);
+  }
+
+  .chevronIcon {
+    height: 10.5px;
+    fill: inherit;
+  }
+
+  .questionText {
+    flex: 1;
+    position: relative;
+    letter-spacing: 0.01em;
+    line-height: 140%;
+  }
+
+  .questionBoxOpen {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    box-shadow: 0px 0px 0px 1px rgba(152, 161, 178, 0.1),
+      0px 2px 18px -3px rgba(17, 24, 38, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.03);
+    border-radius: 24px;
+    padding: 24px;
+    background-color: var(--grayscale-background_1, #fff);
+    border-bottom: 1px solid var(--grayscale-border_1);
+  }
+
+  .titleBoxOpen {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .questionTitleOpen {
+    color: var(--grayscale-inline_default);
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 0.18px;
+    flex: 1 0 0;
+  }
+
+  .questionTextOpen {
+    position: relative;
+    color: var(--grayscale-inline_default, #222325);
+    font-size: 13.5px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    flex: 1 0 0;
+    padding: 0 18px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .sectionContainer {
+    gap: 100px;
+    padding: 150px 187px 100px 187px;
+  }
+
+  .mainContainer {
+    gap: 32px;
+  }
+
+  .titleBox {
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .titleText {
+    font-size: 56px;
+    letter-spacing: -0.56px;
+  }
+
+  .questionButton {
+    height: 52px;
+    gap: 14px;
+    padding: 0px 18px;
+  }
+
+  .sparkleIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .buttonText {
+    font-size: 18px;
+  }
+
+  .arrowIcon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .questionsBox {
+    row-gap: 10px;
+    font-size: 18px;
+  }
+
+  .questionBox {
+    height: 90px;
+    gap: 20px;
+    padding: 14px 32px;
+    font-size: 18px;
+  }
+
+  .chevronIcon {
+    height: 14px;
+  }
+
+  .questionBoxOpen {
+    gap: 16px;
+    padding: 32px;
+  }
+
+  .titleBoxOpen {
+    gap: 16px;
+  }
+
+  .questionTitleOpen {
+    font-size: 18px;
+  }
+
+  .questionTextOpen {
+    font-size: 18px;
+    padding: 0 24px;
+  }
+}
