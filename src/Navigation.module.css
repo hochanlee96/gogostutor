@@ -1,44 +1,44 @@
 @media (min-width: 992px) {
   .headerContainer {
-    display: flex;
     width: 100%;
     height: 81px;
-    padding: 0px 80px;
+    box-sizing: border-box;
+
+    position: fixed;
+    z-index: 5;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
-    background-color: var(--grayscale-background_1);
-    border-bottom: 1px solid var(--grayscale-foreground_1);
-    backdrop-filter: blur(6px);
+
+    padding: 0px 40px;
+    background-color: var(--grayscale-background_1, #ffffff);
+    border-bottom: 1px solid var(--grayscale-foreground_1, #f2f2f2);
   }
 
   .logoAndNavContainer {
-    display: flex;
-    align-items: center;
-    gap: 39.75px;
     align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
   }
 
   .logoContainer {
-    display: flex;
-    width: 89.25px;
-    align-items: center;
-    gap: 7.5px;
-    align-self: stretch;
-  }
-
-  .logoContainerIcon {
-    width: 26.279px;
-    height: 21.35025px;
-    flex-shrink: 0;
-  }
-
-  .logoContainer {
-    align-self: stretch;
-    width: 75.0405px;
     max-height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
     cursor: pointer;
     flex-shrink: 0;
+    user-select: none;
+  }
+  .logoIcon {
+    width: 35px;
+    height: 28px;
   }
 
   .navContainer {
@@ -110,22 +110,18 @@
 }
 
 @media (min-width: 1300px) {
+  .headerContainer {
+    padding: 0px 80px;
+  }
+
   .logoAndNavContainer {
     gap: 53px;
   }
-  .logoContainer {
-    width: 119px;
-    padding-top: 5px;
-    gap: 10px;
-  }
 
   .logoContainerIcon {
-    width: 35.039px;
-    height: 28.467px;
+    width: 100px;
   }
-  .logoContainer {
-    width: 100.054px;
-  }
+
   .navContainer {
     gap: 12px;
   }
