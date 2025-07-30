@@ -7,6 +7,7 @@ import Resources from "../components/Resources";
 import Apply from "../components/Apply";
 
 import classes from "./Home.module.css";
+
 const Home = () => {
   return (
     <div className={classes.container}>

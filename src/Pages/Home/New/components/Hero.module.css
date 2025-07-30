@@ -28,7 +28,6 @@
     align-items: flex-start;
     gap: 32px;
   }
-
   .textContainerTop {
     display: flex;
     flex-direction: column;
