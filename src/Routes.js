@@ -9,6 +9,8 @@ import AppWithErrorBoundary from "./ErrorBoundary";
 import Home from "./Pages/Home/New/containers/Home";
 import Login from "./Pages/Authentication/Login/containers/Login";
 import Signup from "./Pages/Authentication/Signup/containers/Signup";
+import EmailVerifiedRedirect from "./Pages/Authentication/Verify/containers/EmailVerifiedRedirect";
+
 import Dashboard from "./Pages/Dashboard/New/containers/Dashboard";
 import Profile from "./Pages/Profile/New/containers/Profile";
 import MySubjects from "./Pages/Subject/containers/MySubjects";
@@ -78,6 +80,10 @@ const TutorRoutes = ({ isSignedIn, profileCompleted }) => {
         <Routes>
           <Route element={<ErrorBoundaryLayout />}>
             {/* Public Routes */}
+            <Route
+              path="/email-verification-redirect/:status"
+              element={<EmailVerifiedRedirect />}
+            />
             {!isSignedIn && (
               <>
                 <Route path="/login" element={<Login />} />
