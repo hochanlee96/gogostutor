@@ -1,0 +1,87 @@
+.ButtonContainer {
+  max-width: 60%;
+
+  position: absolute;
+  right: 40px;
+  top: 40px;
+
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-end;
+  gap: 26px;
+}
+.StudentButton {
+  display: flex;
+  height: 45px;
+  padding: 0px 18px;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+
+  border-radius: 32px;
+  border-width: 0;
+  background-color: transparent;
+  color: var(--brand-cta);
+  text-decoration: none;
+}
+
+.StudentButton:hover {
+  background-color: var(--brand-cta_light_1);
+  text-decoration: none;
+}
+.StudentButton:active {
+  background-color: var(--brand-cta_light_2);
+  text-decoration: none;
+}
+.StudentButton:focus {
+  text-decoration: none;
+}
+
+.StudentText {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.234px;
+}
+
+.Icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.SignupButton {
+  height: 45px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+
+  padding: 0px 18px;
+  border-radius: 32px;
+  border-width: 0;
+  background-color: transparent;
+
+  color: var(--grayscale-inline_default);
+  fill: var(--grayscale-inline_default);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.SignupButton:hover {
+  background-color: var(--grayscale-foreground_1);
+}
+.SignupButton:active {
+  background-color: var(--grayscale-foreground_2_hover);
+}
+
+.SignupText {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: -0.234px;
+}

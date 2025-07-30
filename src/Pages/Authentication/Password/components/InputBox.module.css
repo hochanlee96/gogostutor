@@ -1,0 +1,64 @@
+@media (min-width: 333px) {
+  .InputTitle {
+    align-self: stretch;
+    color: var(--grayscale-dark-hover, #555962);
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: -0.48px;
+  }
+
+  .PasswordBox {
+    position: relative;
+  }
+
+  .Input {
+    width: 399px;
+    height: 44px;
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--grayscale-border, #dcdfe3);
+  }
+
+  .InputError {
+    border: 1.75px solid var(--danger-danger, #f95746);
+  }
+  .ErrorMessageBox {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform: translateX(95%) translateY(90%);
+
+    z-index: 1;
+    display: inline-block;
+
+    border-radius: 2px 12px 12px 12px;
+    border: 0.5px solid var(--danger-danger_border_1);
+    background-color: var(--danger-danger_light_4);
+    padding: 4px 8px;
+    color: var(--danger-danger_border_2);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  ::placeholder {
+    color: var(--grayscale-inline-placeholder, #9b9b9b);
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: -0.216px;
+  }
+  .ShowPasswordButton {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    border-width: 0;
+    background-color: transparent;
+    padding-right: 10px;
+  }
+}

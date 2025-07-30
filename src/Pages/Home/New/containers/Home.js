@@ -5,9 +5,12 @@ import How from "../components/How";
 import SimpleSteps from "../components/SimpleSteps";
 import Resources from "../components/Resources";
 import Apply from "../components/Apply";
+
+import classes from "./Home.module.css";
+
 const Home = () => {
   return (
-    <div>
+    <div className={classes.container}>
       <Hero />
       <Banner />
       <How />

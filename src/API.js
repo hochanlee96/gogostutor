@@ -121,10 +121,9 @@ export const API_Logout = async () => {
 export const API_CheckEmailExists = async (email) => {
   try {
     const response = await fetch(
-      process.env.REACT_APP_BACKEND_URL + `/tutors/email-exists`,
+      process.env.REACT_APP_BACKEND_URL + `/tutors/email-exists?email=${email}`,
       {
-        method: "POST",
-        body: JSON.stringify({ email: email }),
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },

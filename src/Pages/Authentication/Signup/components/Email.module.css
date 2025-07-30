@@ -1,0 +1,242 @@
+@media (min-width: 333px) {
+  .EmailContainer {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+    border-radius: 24px 0px 0px 24px;
+    background: #fff;
+  }
+
+  .ContentContainer {
+    margin-top: 100px;
+    width: 472px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 42px;
+  }
+
+  .TextContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .titleText {
+    position: relative;
+
+    font-size: 40px;
+    line-height: 120%;
+    color: var(--grayscale-inline_default);
+    text-align: center;
+  }
+
+  .DescriptionText {
+    position: relative;
+    font-size: 24px;
+    line-height: 125%;
+    color: var(--grayscale-inline_default);
+    text-align: center;
+  }
+
+  .signUpFormBody {
+    width: 85%;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+
+    text-align: left;
+    font-size: 18px;
+    color: var(--grayscale-placeholder);
+  }
+
+  .Emailbox {
+    position: relative;
+  }
+
+  .emailInput {
+    width: 399px;
+    height: 44px;
+    line-height: 44px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-radius: 12px;
+    border: 1px solid var(--grayscale-border_1);
+    box-sizing: border-box;
+    padding: 0px 14px;
+
+    font-size: 16px;
+  }
+
+  .emailInputError {
+    border: 2px solid var(--danger-danger);
+  }
+
+  .emailInput:hover {
+    border: 1.4px solid var(--grayscale-border_2_hover);
+    cursor: pointer;
+  }
+
+  .ErrorMessageBox {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform: translateX(90%) translateY(90%);
+
+    z-index: 1;
+    display: inline-block;
+
+    border-radius: 2px 12px 12px 12px;
+    border: 0.5px solid var(--danger-danger_border_1);
+    background-color: var(--danger-danger_light_4);
+    padding: 4px 8px;
+    color: var(--danger-danger_border_2);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .termsBox {
+    width: 100%;
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+
+    font-size: 14px;
+  }
+
+  .customCheckbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 16px;
+    position: relative;
+  }
+
+  .checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 1.4px solid var(--grayscale-border_1);
+    border-radius: 4px;
+    position: relative;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .checkmarkError {
+    border: 1.5px solid var(--danger-danger_border_2);
+  }
+
+  /* Hover state */
+  .customCheckbox:hover .checkmark {
+    border-color: var(--grayscale-border_2_hover);
+  }
+
+  /* Checked state background + checkmark */
+  .checkbox:checked + .checkmark {
+    background-color: var(--danger-danger);
+    border-color: var(--danger-danger);
+  }
+
+  .checkbox:checked + .checkmark {
+    background-color: var(--danger-danger);
+
+    border: 1.4px solid var(--danger-danger);
+    background-image: url("../../../../shared/assets/icons/check-white.svg");
+    color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 12px;
+  }
+
+  .termsText {
+    width: 339px;
+    position: relative;
+    line-height: 140%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .termsOfService {
+    text-decoration: underline;
+    color: var(--grayscale-inline_default);
+    cursor: pointer;
+  }
+
+  .createButton {
+    width: 100%;
+    height: 52px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 12px;
+    background-color: var(--danger-danger);
+    padding: 0px 24px;
+    box-sizing: border-box;
+    color: var(--grayscale-background_1, #fff);
+
+    font-size: 16px;
+    line-height: 160%;
+    font-weight: 500;
+
+    cursor: pointer;
+  }
+  .createButton:hover {
+    background-color: var(--danger-danger_hover);
+  }
+  .createButton:active {
+    background-color: var(--danger-danger_press);
+  }
+  .createButton:disabled {
+    background-color: var(--grayscale-foreground_1);
+    color: var(--grayscale-disabled);
+    cursor: default;
+  }
+
+  .recaptchaText {
+    width: 100%;
+
+    position: relative;
+    font-size: 14px;
+    line-height: 140%;
+    display: inline-block;
+  }
+
+  .link {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

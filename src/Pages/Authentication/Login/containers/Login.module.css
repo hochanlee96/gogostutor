@@ -1,0 +1,344 @@
+@media (min-width: 992px) {
+  .Container {
+    width: 100vw;
+    height: 100vh;
+    min-height: 800px;
+
+    position: absolute;
+    z-index: 0;
+
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+
+    background-color: var(--danger-danger);
+  }
+
+  .LeftContainer {
+    flex-basis: 45%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+  }
+
+  .GogosLogo {
+    position: absolute;
+    top: 33.48px;
+    left: 80px;
+    width: 100.054px;
+    height: 19.04px;
+    flex-shrink: 0;
+    border-width: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .Header {
+    width: 367px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    padding: 150px 0px 40px 0px;
+    color: #fff;
+    text-align: center;
+    font-size: 32px;
+    line-height: 140%; /* 44.8px */
+  }
+
+  .SubText {
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    line-height: 140%;
+    margin-top: -16px;
+    padding-bottom: 10px;
+  }
+
+  .RightContainer {
+    flex-basis: 55%;
+    height: 100%;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 42px;
+
+    border-radius: 24px 0px 0px 24px;
+    background: #fff;
+  }
+
+  .ContentContainer {
+    height: auto;
+    max-height: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 40px;
+    animation: fadeIn 0.6s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .SigninContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .SigninText {
+    color: var(--grayscale-inline-default, #222325);
+    text-align: center;
+    font-size: 40px;
+    line-height: 120%; /* 48px */
+  }
+
+  .SigninSubText {
+    color: var(--grayscale-inline-default, #222325);
+    text-align: center;
+    font-size: 24px;
+    line-height: 125%; /* 30px */
+  }
+
+  .LoginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+
+  .SocialLoginContainer {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .SocialLoginText {
+    color: var(--grayscale-inline-placeholder, #9b9b9b);
+    font-size: 18px;
+    line-height: 140%; /* 25.2px */
+  }
+  .RegularLoginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .EmailAndPassword {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .EmailBox {
+    position: relative;
+  }
+
+  .Input {
+    width: 399px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--grayscale-border_1, #dcdfe3);
+  }
+  .InputError {
+    border: 2px solid var(--danger-danger);
+  }
+  .ErrorMessageBox {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform: translateX(90%) translateY(90%);
+
+    z-index: 1;
+    display: inline-block;
+
+    border-radius: 2px 12px 12px 12px;
+    border: 0.5px solid var(--danger-danger_border_1);
+    background-color: var(--danger-danger_light_4);
+    padding: 4px 8px;
+
+    color: var(--danger-danger_border_2);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .PasswordBox {
+    position: relative;
+  }
+
+  .ShowPasswordButton {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    background-color: transparent;
+    border-width: 0;
+    padding-right: 10px;
+  }
+  .ShowPasswordIcon {
+    fill: var(--grayscale-placeholder);
+  }
+
+  .LoginOptionsContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .customCheckbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 16px;
+    position: relative;
+  }
+
+  .checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 1.4px solid var(--grayscale-border_1);
+    border-radius: 4px;
+    position: relative;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  /* Hover state */
+  .customCheckbox:hover .checkmark {
+    border-color: var(--grayscale-border_2_hover);
+  }
+
+  /* Checked state background + checkmark */
+  .checkbox:checked + .checkmark {
+    background-color: var(--danger-danger);
+    border-color: var(--danger-danger);
+  }
+
+  .checkbox:checked + .checkmark {
+    background-color: var(--danger-danger);
+
+    border: 1.4px solid var(--danger-danger);
+    background-image: url("../../../../shared/assets/icons/check-white.svg");
+    color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 12px;
+  }
+
+  .RememberMeText {
+    flex: 1 0 0;
+    color: var(--grayscale-inline-default, #222325);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 160%; /* 22.4px */
+  }
+  .ForgotPasswordButton {
+    background-color: transparent;
+    border-width: 0;
+  }
+
+  .ForgotPasswordText {
+    color: var(--grayscale-inline-default, #222325);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 160%;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+  }
+
+  .ForgotPasswordText:hover {
+    font-weight: 501;
+  }
+
+  .SignInButton {
+    height: 52px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    gap: 14px;
+
+    padding: 0px 24px;
+    border-radius: 12px;
+    background: var(--danger-danger);
+    border-width: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .SignInButton:hover {
+    background-color: var(--danger-danger_hover);
+  }
+  .SignInButton:active {
+    background-color: var(--danger-danger_press);
+  }
+
+  .SignInButtonText {
+    color: var(--grayscale-inline-inverse, #fff);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 160%; /* 28.8px */
+    letter-spacing: -0.234px;
+  }
+
+  .PrivacyNotice {
+    width: 339px;
+    color: var(--grayscale-inline-placeholder, #9b9b9b);
+    font-size: 14px;
+    line-height: 140%;
+  }
+
+  .PrivacyPolicy {
+    color: var(--grayscale-inline-placeholder, #9b9b9b);
+    font-size: 14px;
+    line-height: 140%;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    cursor: pointer;
+  }
+}

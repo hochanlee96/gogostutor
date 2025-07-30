@@ -3,38 +3,47 @@ import { BrowserRouter } from "react-router-dom";
 import io from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
 
-import api, { setupAxiosInterceptors } from "./customFetch";
+import { setupAxiosInterceptors } from "./customFetch";
 
 import Routes from "./Routes";
 
 import { AuthContext } from "./shared/context/auth-context";
 import { UserContext } from "./shared/context/user-context";
 
-import { API_GetProfileData, API_Logout } from "./API";
+import { API_Logout } from "./API";
 
-// const login_duration = process.env.REACT_APP_LOGIN_DURATION;
+const { env } = process.env.REACT_APP_ENV;
 let logoutTimer;
 function App() {
+  const [checkedLoginStatus, setCheckedLoginStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [accessToken, setAccessToken] = useState(null);
+  const [id, setId] = useState(null);
+  const [expiration, setExpiration] = useState(null);
   const [socket, setSocket] = useState(null);
+
   const [userData, setUserData] = useState(null);
   const [profile, setProfile] = useState(null);
   const [profileCompleted, setProfileCompleted] = useState(false);
 
-  const [accessToken, setAccessToken] = useState(null);
-  const [id, setId] = useState(null);
-  const [expiration, setExpiration] = useState(null);
-  const [checkedLoginStatus, setCheckedLoginStatus] = useState(false);
-
-  const [loading, setLoading] = useState(true);
-
+  //Set accessToken, set userId, set Expiration, set Socket
   const updateAuthData = useCallback(
     (token = null) => {
       if (token) {
         setAccessToken(token);
         const decoded = jwtDecode(token);
+
         setId(decoded.id);
         setExpiration(decoded.exp * 1000);
-        const newSocket = io(`${process.env.REACT_APP_SOCKET_URL}`);
+        const newSocket =
+          env === "production"
+            ? io(`${process.env.REACT_APP_TUTOR_URL}`, {
+                path: "/chat",
+                transports: ["websocket"],
+                withCredentials: true,
+              })
+            : io(`${process.env.REACT_APP_SOCKET_URL}`);
         setSocket(newSocket);
         setupAxiosInterceptors(() => accessToken, setAccessToken);
       } else {
@@ -51,25 +60,13 @@ function App() {
     [socket, accessToken]
   );
 
+  //clear auth states and user states
   const clearUserData = useCallback(() => {
     setUserData(null);
-    setAccessToken(null);
     updateAuthData(null);
   }, [updateAuthData]);
 
-  useEffect(() => {
-    const handleStorage = (event) => {
-      if (event.key === "logout") {
-        // Clear tokens or state as needed
-        clearUserData();
-      } else if (event.key === "login") {
-        window.location.reload();
-      }
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, [clearUserData]);
-
+  //clear refreshtoken in the cookie
   const logout = useCallback(async () => {
     try {
       const response = await API_Logout();
@@ -103,10 +100,8 @@ function App() {
         const data = await response.json();
 
         if (data.status === 200) {
-          // setProfileData({ ...data.profileData });
           setUserData({ ...data.data });
           setProfile({ ...data.profileData });
-
           setProfileCompleted(data.profileCompleted);
         } else if (data.status === 404) {
           logout();
@@ -120,8 +115,6 @@ function App() {
   const getUserData = useCallback(
     async (tutorId, accessToken) => {
       try {
-        // const response = await API_GetProfileData(tutorId, accessToken);
-
         const response = await fetch(
           process.env.REACT_APP_BACKEND_URL + `/tutors/${tutorId}/profile`,
           {
@@ -135,7 +128,6 @@ function App() {
         const data = await response.json();
 
         if (data.status === 200) {
-          // setProfileData({ ...data.profileData });
           setUserData({ ...data.data });
           setProfile({ ...data.profileData });
           setProfileCompleted(data.profileCompleted);
@@ -150,10 +142,28 @@ function App() {
   );
 
   const login = useCallback(
-    async (token) => {
-      updateAuthData(token);
-      const decoded = jwtDecode(token);
-      getUserData(decoded.id, token);
+    async (token, onComplete) => {
+      setIsLoggingIn(true);
+      let decoded = null;
+
+      try {
+        updateAuthData(token);
+        decoded = jwtDecode(token);
+      } catch (err) {
+        console.error("Login failed", err);
+      } finally {
+        if (decoded?.id) {
+          getUserData(decoded.id, token);
+
+          // Only set login event if this tab hasn't already done it
+          if (!sessionStorage.getItem("loginSyncSent")) {
+            localStorage.setItem("login", Date.now());
+            sessionStorage.setItem("loginSyncSent", "true");
+          }
+        }
+        setIsLoggingIn(false);
+        if (onComplete) onComplete();
+      }
     },
     [updateAuthData, getUserData]
   );
@@ -171,9 +181,9 @@ function App() {
         }
       );
       const data = await response.json(); // {userId, email, token: refreshtoken: expirationDate, message:}
-      let newAccessToken;
+      const newAccessToken = data.accessToken;
+
       if (data.message === "new tokens generated") {
-        newAccessToken = data.accessToken;
         login(newAccessToken);
       } else {
         logout();
@@ -211,19 +221,50 @@ function App() {
       }
     };
   }, [refreshToken, socket, checkedLoginStatus]);
-  //test
+
+  //login status synchronization across tabs
+  useEffect(() => {
+    const handleStorage = (event) => {
+      if (event.key === "logout") {
+        clearUserData();
+      } else if (event.key === "login") {
+        // Only respond if this tab DIDN'T initiate the login
+        if (!sessionStorage.getItem("loginSyncSent")) {
+          const lastLoginSync = sessionStorage.getItem("lastLoginSync");
+          const now = Date.now();
+
+          if (!lastLoginSync || now - Number(lastLoginSync) > 1000) {
+            sessionStorage.setItem("lastLoginSync", now.toString());
+            sessionStorage.setItem("loginSyncDone", "true");
+            window.location.reload();
+          }
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [clearUserData]);
+
   let routes;
-  if (loading) {
+  if (loading || isLoggingIn) {
     routes = <div>Loading...</div>;
   } else {
     routes = (
-      <Routes isSignedIn={!!accessToken} profileCompleted={profileCompleted} />
+      <Routes
+        isSignedIn={!!accessToken}
+        profileCompleted={profileCompleted}
+        loading={loading}
+        isLoggingIn={isLoggingIn}
+        checkedLoginStatus={checkedLoginStatus}
+      />
     );
   }
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: !!accessToken,
+        isLoggingIn: isLoggingIn,
         accessToken: accessToken,
         id: id,
         socket: socket,

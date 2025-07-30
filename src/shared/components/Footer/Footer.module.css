@@ -1,0 +1,92 @@
+.wrapper {
+  background-color: #f8fafc;
+  padding: 3rem 2rem;
+  color: #1f2937;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10rem;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+}
+
+.linksSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 150px;
+}
+
+.column h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.column p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.column p:hover {
+  text-decoration: underline;
+}
+
+.column a {
+  all: unset;
+  cursor: pointer;
+}
+.column a:hover {
+  all: unset;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Existing styles remain unchanged */
+
+@media (max-width: 768px) {
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .linksSection {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
