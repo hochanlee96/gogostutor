@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 
-import Sidebar from "../../../shared/components/Sidebar/Sidebar.js";
+import Sidebar from "../../../shared/components/Sidebar/Old/Sidebar.js";
 
 import { EditSession } from "../components/Session.js";
 import CalendarView from "../components/Calendar.js";

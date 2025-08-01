@@ -13,6 +13,8 @@ import { UserContext } from "./shared/context/user-context";
 import { API_Logout } from "./API";
 
 const { env } = process.env.REACT_APP_ENV;
+
+console.log(env);
 let logoutTimer;
 function App() {
   const [checkedLoginStatus, setCheckedLoginStatus] = useState(false);

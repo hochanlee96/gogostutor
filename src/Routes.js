@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Route, Navigate, Routes, Outlet } from "react-router-dom";
+import { Route, Navigate, Routes, Outlet, useLocation } from "react-router-dom";
 
 import Navigation from "./Navigation";
 import ScrollToTop from "./shared/UI/Navigation/New/ScrollToTop";
 import Footer from "./shared/component/Footer/new/Footer";
+import Sidebar from "./shared/components/Sidebar/New/Sidebar";
 import AppWithErrorBoundary from "./ErrorBoundary";
 
 import Home from "./Pages/Home/New/containers/Home";
@@ -11,7 +12,7 @@ import Login from "./Pages/Authentication/Login/containers/Login";
 import Signup from "./Pages/Authentication/Signup/containers/Signup";
 import EmailVerifiedRedirect from "./Pages/Authentication/Verify/containers/EmailVerifiedRedirect";
 
-import Dashboard from "./Pages/Dashboard/New/containers/Dashboard";
+import Dashboard from "./Pages/Dashboard/Old/containers/Dashboard";
 import Profile from "./Pages/Profile/New/containers/Profile";
 import MySubjects from "./Pages/Subject/containers/MySubjects";
 import Schedule from "./Pages/Schedule/containers/Schedule";
@@ -31,12 +32,17 @@ import Error from "./Pages/Error/containers/Error";
 
 import classes from "./Routes.module.css";
 
-const NavigationLayout = ({ isSignedIn }) => (
-  <div>
-    <Navigation isSignedIn={isSignedIn} />
-    <Outlet />
-  </div>
-);
+const NavigationLayout = ({ isSignedIn }) => {
+  const location = useLocation();
+  const hidNavBarPaths = ["/dashboard"];
+  const shouldShowNavBar = !hidNavBarPaths.includes(location.pathname);
+  return (
+    <div>
+      {shouldShowNavBar && <Navigation isSignedIn={isSignedIn} />}
+      <Outlet />
+    </div>
+  );
+};
 
 const FooterLayout = () => (
   <div>
@@ -58,7 +64,7 @@ const SidebarLayout = ({ collapsed, setCollapsed }) => (
         collapsed ? classes.SidebarContainerCollapsed : ""
       }`}
     >
-      {/* Add Sidebar component if needed */}
+      <Sidebar />
     </div>
     <div
       className={`${classes.MainContainer} ${
