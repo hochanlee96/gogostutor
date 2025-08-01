@@ -81,7 +81,7 @@ const Navigation = ({ isSignedIn }) => {
           <div
             tabIndex="0"
             onClick={() => {
-              auth.logout();
+              navigate("/dashboard");
             }}
             className={classes.navButton}
           >

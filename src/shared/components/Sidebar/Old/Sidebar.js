@@ -16,7 +16,7 @@ import {
 import { MdSpaceDashboard } from "react-icons/md";
 
 import classes from "./Sidebar.module.css"; // Importing CSS module
-import GogosLogo from "../../assets/icons/GogosEdu_icon_text_logo.svg";
+import GogosLogo from "../../../assets/icons/GogosEdu_icon_text_logo.svg";
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();

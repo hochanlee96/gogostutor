@@ -1,6 +1,5 @@
 .SidebarContainer {
   width: 20vw;
-  height: 100vh;
   padding-right: 50px;
   transition: width 0.3s ease-in-out;
   overflow: hidden;
